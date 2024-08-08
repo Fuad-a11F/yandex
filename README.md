@@ -1,8 +1,8 @@
 Приложение чат! Готова верстка абсолютно всех старниц!
 
 Доступные команды:
-- npm start (npm run start) - запуск в режиме разработки
-- npm run build - сборка проекта
 
-Ссылка на проект: https://boisterous-pixie-571d14.netlify.app/
-Навигация пока не реализована
+ - npm start (npm run start) - запуск в режиме разработки
+ - npm run build - сборка проекта
+
+Ссылка на проект: https://earnest-tulumba-72a6f1.netlify.app/ Навигация пока не реализована
