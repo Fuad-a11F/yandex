@@ -7,6 +7,9 @@
     "start": "vite --port 3000",
     "build": "vite build"
   },
+  "engines": {
+    "node": "18.12.1"
+  },
   "devDependencies": {
     "typescript": "^5.2.2",
     "vite": "^5.3.4"
