@@ -1,0 +1,57 @@
+@import "../../assets/styles/colors";
+
+.chatHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid $light_gray_2;
+  margin-bottom: 10px;
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+  }
+
+  &__avatar {
+    height: 52px;
+    width: 52px;
+    background: $light_gray;
+    border-radius: 50%;
+  }
+
+  &__addition {
+    position: relative;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 12px;
+
+    & > div {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    &_icon {
+      border-radius: 50%;
+      border: 1.5px solid $blue;
+      height: 22px;
+      width: 22px;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      padding: 4px;
+
+      &_reverse {
+        transform: rotate(45deg);
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+@import "../../assets/styles/colors";
+
+.button {
+  width: 100%;
+  height: 36px;
+  background: $blue;
+  border-radius: 8px;
+  outline: none;
+  border: none;
+  color: white;
+  transition: .5s;
+
+  &:hover {
+    background: $blue_hover;
+    cursor: pointer;
+  }
+
+  &__inline {
+    background: transparent;
+    color: $blue;
+    width: auto;
+    text-align: left;
+    font-weight: 600;
+
+    &:hover {
+      background: transparent;
+      color: $blue_hover;
+      cursor: pointer;
+
+    }
+  }
+
+  &__danger {
+    color: $error;
+  }
+}

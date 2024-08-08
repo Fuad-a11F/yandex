@@ -1,0 +1,24 @@
+<div class="uploadAvatar">
+    <img src="./icons/avatar.svg" alt="img">
+
+    <div class="uploadAvatar__hover">Change <br> avatar</div>
+</div>
+
+{{#> Modal isVisible=isVisibleModalChangeAvatar }}
+    <div class="uploadAvatar__modal">
+        <h3>Upload file</h3>
+
+        <form>
+            <div class="uploadAvatar__input">
+                <label for="upload-photo">Choose a file on your computer</label>
+                <input id="upload-photo" type="file" name="avatar">
+            </div>
+
+            <div>
+                {{> Button type="submit" text="Change" }}
+            </div>
+        </form>
+
+        {{#if isError}}<p>You need choose a file</p>{{/if}}
+    </div>
+{{/Modal}}

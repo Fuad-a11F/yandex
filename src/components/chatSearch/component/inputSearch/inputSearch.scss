@@ -1,0 +1,53 @@
+@import "../../../../assets/styles/colors";
+
+.inputSearch {
+  position: relative;
+
+  &__placeholder {
+    position: absolute;
+    top: 6px;
+    color: $gray;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    pointer-events: none;
+  }
+
+  &__prefix {
+    display: none;
+  }
+
+  input {
+    width: 100%;
+    height: 32px;
+    background: $light_gray;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding-left: 30px;
+
+    &:focus + .inputSearch__placeholder {
+        display: none;
+    }
+
+    &:focus + .inputSearch__placeholder + .inputSearch__prefix {
+      display: block;
+      position: absolute;
+      top: 6px;
+      left: 6px;
+    }
+
+    &:valid + .inputSearch__placeholder {
+      display: none;
+    }
+
+    &:valid + .inputSearch__placeholder + .inputSearch__prefix {
+      display: block;
+      position: absolute;
+      top: 6px;
+      left: 6px;
+    }
+  }
+}

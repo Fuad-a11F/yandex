@@ -1,0 +1,71 @@
+<main class="chat">
+    <aside class="chat__items">
+        {{> ChatSearch }}
+
+        {{#each chats as |chat|}}
+            <hr>
+            {{> ChatItem }}
+        {{/each}}
+    </aside>
+
+    {{#if isEmpty}}
+        <div class="chat__messages_empty">
+            Select a chat to send a message
+        </div>
+    {{else}}
+        <div class="chat__messages">
+            <div>
+                {{> ChatHeader isVisible=isVisibleActions}}
+            </div>
+
+            <div class="chat__messages_zone">
+                {{#each messages as |message|}}
+                    <div class="chat__date">{{message.date}}</div>
+
+                    <div class="chat__messages_wrapper">
+                        {{#each message.messages as |messageItem|}}
+                            <div class="chat__message_{{#if messageItem.ownMessage}}own{{/if}}{{#if messageItem.guestMessage}}guest{{/if}}">{{messageItem.text}}</div>
+                        {{/each}}
+                    </div>
+                {{/each}}
+            </div>
+
+
+            <div>
+                {{> MessageForm isVisible=isVisibleFiles }}
+            </div>
+        </div>
+    {{/if}}
+</main>
+
+{{#> Modal isVisible=isVisibleAddUser }}
+    <div class="modal__actionUser">
+        <h3>Add user</h3>
+
+        <form>
+            <div>
+                {{> Input name="login" type="text" placeholder="Login"}}
+            </div>
+
+            <div>
+                {{> Button type="submit" text="Add" }}
+            </div>
+        </form>
+    </div>
+{{/Modal}}
+
+{{#> Modal isVisible=isVisibleRemoveUser }}
+    <div class="modal__actionUser">
+        <h3>Remove user</h3>
+
+        <form>
+            <div>
+                {{> Input name="login" type="text" placeholder="Login"}}
+            </div>
+
+            <div>
+                {{> Button type="submit" text="Remove" }}
+            </div>
+        </form>
+    </div>
+{{/Modal}}

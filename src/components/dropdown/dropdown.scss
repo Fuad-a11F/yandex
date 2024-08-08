@@ -1,0 +1,16 @@
+@import "../../assets/styles/colors";
+
+.dropdown {
+  position: absolute;
+  box-shadow: 0 0 6px 0 $box_shadow;
+  border-radius: 12px;
+  display: none;
+  padding: 15px;
+  white-space: nowrap;
+  z-index: 1000;
+  background: $white;
+
+  &__active {
+    display: block;
+  }
+}

@@ -1,0 +1,15 @@
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 25px;
+  min-height: 100vh;
+  text-align: center;
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+}
