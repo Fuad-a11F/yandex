@@ -1,6 +1,6 @@
 <div class="input {{#if isError}}input__error{{/if}}">
     <label for="{{name}}">
-        <input id="{{name}}" type="{{type}}" value="{{value}}" placeholder="{{placeholder}}">
+        <input id="{{name}}" name="{{name}}" type="{{type}}" value="{{value}}" placeholder="{{placeholder}}">
         {{#if errorMessage}}<span>{{errorMessage}}</span>{{/if}}
     </label>
 </div>

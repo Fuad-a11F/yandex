@@ -4,11 +4,10 @@
     {{#if isEditting}}
        <div class="profileRow__value_edit">
            <label>
-               <input type="{{#if isPassword}}password{{else}}text{{/if}}" value="{{value}}">
+               <input type="{{#if isPassword}}password{{else}}text{{/if}}" name="{{name}}" value="{{value}}">
            </label>
        </div>
     {{else}}
         <div class="profileRow__value">{{value}}</div>
     {{/if}}
-
 </div>
