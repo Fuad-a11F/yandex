@@ -1,0 +1,33 @@
+<div class="chatHeader">
+    <div class="chatHeader__info">
+        <div class="chatHeader__avatar"><img src="" alt="avatar"></div>
+
+        <p>Вадим</p>
+    </div>
+    
+    <div class="chatHeader__addition">
+        <div>
+            <img src="./icons/more.svg" alt="more icon">
+        </div>
+
+        {{#> Dropdown isVisible=isVisible top=30 right=0}}
+            <div class="chatHeader__actions">
+                <div>
+                    <div class="chatHeader__actions_icon">
+                        <img src="./icons/plus.svg" alt="add">
+                    </div>
+
+                    <p>Добавить пользователя</p>
+                </div>
+
+                <div>
+                    <div class="chatHeader__actions_icon chatHeader__actions_icon_reverse">
+                        <img src="./icons/plus.svg" alt="delete">
+                    </div>
+
+                    <p>Удалить пользователя</p>
+                </div>
+            </div>
+        {{/Dropdown}}
+    </div>
+</div>

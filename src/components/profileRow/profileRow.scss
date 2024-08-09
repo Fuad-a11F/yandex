@@ -1,0 +1,25 @@
+@import "../../assets/styles/colors";
+
+.profileRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+
+  &__label {
+    font-weight: 600;
+  }
+
+  &__value {
+    color: $gray;
+
+    &_edit {
+      input {
+        color: $gray;
+        text-align: right;
+        outline: none;
+        border: none;
+      }
+    }
+  }
+}

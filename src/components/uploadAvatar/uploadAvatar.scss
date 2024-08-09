@@ -1,0 +1,77 @@
+@import "../../assets/styles/colors";
+
+.uploadAvatar {
+  min-height: 130px;
+  width: 130px;
+  background: $light_gray;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  &__modal {
+    h3 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-weight: 500;
+    }
+
+    p {
+      margin-top: 4px;
+      color: $error;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+    }
+  }
+
+  &__input {
+    input {
+      opacity: 0;
+      position: absolute;
+      z-index: -1;
+    }
+
+    label {
+      cursor: pointer;
+      color: $blue;
+      text-decoration: underline;
+      text-align: center;
+      display: block;
+      max-width: 220px;
+      margin: 0 auto;
+    }
+  }
+
+  &__hover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    color: $white;
+    text-align: center;
+    background: $black;
+    transition: 0.3s;
+    pointer-events: none;
+  }
+
+  &:hover {
+    img + .uploadAvatar__hover {
+      opacity: 0.5;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+  }
+}
