@@ -4,7 +4,7 @@ import * as Pages from "./pages";
 import { chats, chatsWithNotActive, messages } from "./mockData.ts";
 
 const pages = {
-  login: [Pages.Login, { test: "123" }],
+  login: [Pages.LoginPage, { test: "123" }],
   registration: [Pages.Registration],
   main: [Pages.Main],
   chat: [Pages.Chat, { chats, messages }],
@@ -48,12 +48,22 @@ Handlebars.registerHelper("ifLogicOr", function (v1, v2, options) {
 });
 
 function navigate(page: string) {
+  //@ts-ignore
   const [source, context] = pages[page];
   const container = document.getElementById("app")!;
+
+  if (source instanceof Object) {
+    const page = new source(context);
+    container.innerHTML = "";
+    container.append(page.getContent());
+    page.dispatchComponentDidMount();
+    return;
+  }
+
   container.innerHTML = Handlebars.compile(source)(context);
 }
 
-document.addEventListener("DOMContentLoaded", () => navigate("main"));
+document.addEventListener("DOMContentLoaded", () => navigate("login"));
 
 document.addEventListener("click", (e) => {
   //@ts-ignore

@@ -1,2 +1,2 @@
-import './authForm.scss'
-export { default as AuthForm } from './authForm.hbs?raw';
+import "./authForm.scss";
+export { AuthForm } from "./authForm.ts";
