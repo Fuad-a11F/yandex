@@ -11,11 +11,11 @@ export class AuthForm extends Block {
 
   render() {
     return `
-            <main class="authForm__wrapper">
-                <div class="authForm">
-                    <form action="">{{{ FormLogin }}}</form>
-                </div>
-            </main>
-        `;
+      <main class="authForm__wrapper">
+        <div class="authForm">
+          <form action="">{{{ FormLogin }}}</form>
+        </div>
+      </main>
+    `;
   }
 }

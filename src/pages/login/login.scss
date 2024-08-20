@@ -1,4 +1,10 @@
 .login {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 390px;
+  gap: 40px;
+
   &__title {
     margin: 20px 0;
     text-align: center;

@@ -7,14 +7,6 @@
   min-height: 450px;
   padding: 30px;
 
-  form {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    min-height: 390px;
-    gap: 40px;
-  }
-
   &__wrapper {
     display: flex;
     align-items: center;

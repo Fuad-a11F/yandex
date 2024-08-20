@@ -1,5 +1,6 @@
 import Block from "../../core/block.ts";
 import { Input } from "../input";
+import { Button } from "../button";
 
 export class FormLogin extends Block {
   constructor() {
@@ -18,15 +19,29 @@ export class FormLogin extends Block {
       placeholder: "Password",
     });
 
+    const LoginButton = new Button({
+      text: "Sign in",
+      type: "submit",
+    });
+
+    const RegisterButton = new Button({
+      text: "Don't have an account?",
+      type: "button",
+      isLink: true,
+    });
+
     this.children = {
       ...this.children,
       InputLogin,
       FormPassword,
+      LoginButton,
+      RegisterButton,
     };
   }
 
   render() {
     return `
+      <div class="login">
         <div>
             <h1 class="login__title">Login</h1>
     
@@ -35,12 +50,13 @@ export class FormLogin extends Block {
         </div>
     
         <div>
-<!--            {{> Button type="submit" text="Sign in" }}-->
-<!--    -->
-<!--            <div class="login__center">-->
-<!--                {{> Button type="button" text="Don't have an account?" isLink=true }}-->
-<!--            </div>-->
+            {{{ LoginButton }}}
+
+          <div class="login__center">
+              {{{ RegisterButton }}}
+          </div>
         </div>
-        `;
+      </div>
+      `;
   }
 }

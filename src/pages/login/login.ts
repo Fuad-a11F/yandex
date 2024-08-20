@@ -1,7 +1,7 @@
 import Block from "../../core/block.ts";
 import { AuthForm } from "../../components";
 
-export class LoginPage extends Block {
+export class Login extends Block {
   constructor(props) {
     super({ ...props, AuthForm: new AuthForm({}) });
   }
