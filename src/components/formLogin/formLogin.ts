@@ -1,6 +1,7 @@
 import Block from "../../core/block.ts";
 import { Input } from "../input";
 import { Button } from "../button";
+import { passwordValidation } from "../../shared/validation.ts";
 
 class FormLogin extends Block {
   constructor() {
@@ -8,23 +9,26 @@ class FormLogin extends Block {
   }
 
   init() {
-    const InputLogin = new Input({
+    const handlePasswordBlur = this.handlePasswordBlur.bind(this);
+
+    const inputLogin = new Input({
       name: "login",
       type: "text",
       placeholder: "Login",
     });
-    const FormPassword = new Input({
+    const inputPassword = new Input({
       name: "password",
       type: "password",
       placeholder: "Password",
+      onBlur: handlePasswordBlur,
     });
 
-    const LoginButton = new Button({
+    const loginButton = new Button({
       text: "Sign in",
       type: "submit",
     });
 
-    const RegisterButton = new Button({
+    const registerButton = new Button({
       text: "Don't have an account?",
       type: "button",
       isLink: true,
@@ -32,11 +36,26 @@ class FormLogin extends Block {
 
     this.children = {
       ...this.children,
-      InputLogin,
-      FormPassword,
-      LoginButton,
-      RegisterButton,
+      inputLogin,
+      inputPassword,
+      loginButton,
+      registerButton,
     };
+  }
+
+  handlePasswordBlur(value) {
+    if (!passwordValidation(value)) {
+      this.children.inputPassword.setProps({
+        isError: true,
+        errorMessage:
+          "Password must contain at least 8 characters, 1 special character, 1 capital letter and 1 lowercase letter",
+      });
+    } else {
+      this.children.inputPassword.setProps({
+        isError: false,
+        errorMessage: null,
+      });
+    }
   }
 
   render() {
@@ -45,15 +64,15 @@ class FormLogin extends Block {
         <div>
             <h1 class="login__title">Login</h1>
     
-            {{{ InputLogin }}}
-            {{{ FormPassword }}}
+            {{{ inputLogin }}}
+            {{{ inputPassword }}}
         </div>
     
         <div>
-            {{{ LoginButton }}}
+            {{{ loginButton }}}
 
           <div class="login__center">
-              {{{ RegisterButton }}}
+              {{{ registerButton }}}
           </div>
         </div>
       </div>

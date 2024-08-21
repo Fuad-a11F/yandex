@@ -76,7 +76,7 @@ class Block {
     this._render();
   }
 
-  componentDidUpdate(oldProps, newProps) {
+  componentDidUpdate() {
     return true;
   }
 

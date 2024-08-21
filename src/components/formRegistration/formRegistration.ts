@@ -1,6 +1,12 @@
 import Block from "../../core/block.ts";
 import { Input } from "../input";
 import { Button } from "../button";
+import {
+  emailValidation,
+  namesValidation,
+  passwordValidation,
+  phoneValidation,
+} from "../../shared/validation.ts";
 
 class FormRegistration extends Block {
   constructor() {
@@ -8,71 +14,154 @@ class FormRegistration extends Block {
   }
 
   init() {
-    const InputFirstName = new Input({
+    const handlePasswordBlur = this.handlePasswordBlur.bind(this);
+    const handleEmailBlur = this.handleEmailBlur.bind(this);
+    const handlePhoneBlur = this.handlePhoneBlur.bind(this);
+    const handleFirstNameBlur = this.handleFirstNameBlur.bind(this);
+    const handleSecondNameBlur = this.handleSecondNameBlur.bind(this);
+
+    const inputFirstName = new Input({
       name: "first_name",
       type: "text",
       placeholder: "First name",
+      onBlur: handleFirstNameBlur,
     });
 
-    const InputSecondName = new Input({
+    const inputSecondName = new Input({
       name: "second_name",
       type: "text",
       placeholder: "Second name",
+      onBlur: handleSecondNameBlur,
     });
 
-    const InputLogin = new Input({
+    const inputLogin = new Input({
       name: "login",
       type: "text",
       placeholder: "Login",
     });
 
-    const InputEmail = new Input({
+    const inputEmail = new Input({
       name: "email",
       type: "text",
       placeholder: "Email",
+      onBlur: handleEmailBlur,
     });
 
-    const InputPhone = new Input({
+    const inputPhone = new Input({
       name: "phone",
       type: "text",
       placeholder: "Phone",
+      onBlur: handlePhoneBlur,
     });
 
-    const InputPassword = new Input({
+    const inputPassword = new Input({
       name: "password",
       type: "password",
       placeholder: "Password",
+      onBlur: handlePasswordBlur,
     });
 
-    const InputPasswordRepeat = new Input({
+    const inputPasswordRepeat = new Input({
       name: "repassword",
       type: "password",
       placeholder: "Repeat password",
+      onBlur: handlePasswordBlur,
     });
 
-    const LoginButton = new Button({
+    const loginButton = new Button({
       text: "Sign in",
       type: "submit",
       isLink: true,
     });
 
-    const RegisterButton = new Button({
+    const registerButton = new Button({
       text: "Sign up",
       type: "submit",
     });
 
     this.children = {
       ...this.children,
-      InputFirstName,
-      InputSecondName,
-      InputLogin,
-      InputEmail,
-      InputPhone,
-      InputPassword,
-      InputPasswordRepeat,
-      LoginButton,
-      RegisterButton,
+      inputFirstName,
+      inputSecondName,
+      inputLogin,
+      inputEmail,
+      inputPhone,
+      inputPassword,
+      inputPasswordRepeat,
+      loginButton,
+      registerButton,
     };
+  }
+
+  handlePasswordBlur(value) {
+    if (!passwordValidation(value)) {
+      this.children.inputPassword.setProps({
+        isError: true,
+        errorMessage:
+          "Password must contain at least 8 characters, 1 special character, 1 capital letter and 1 lowercase letter",
+      });
+    } else {
+      this.children.inputPassword.setProps({
+        isError: false,
+        errorMessage: null,
+      });
+    }
+  }
+
+  handleEmailBlur(value) {
+    if (!emailValidation(value)) {
+      this.children.inputEmail.setProps({
+        isError: true,
+        errorMessage: "Email is wrong",
+      });
+    } else {
+      this.children.inputEmail.setProps({
+        isError: false,
+        errorMessage: null,
+      });
+    }
+  }
+
+  handlePhoneBlur(value) {
+    if (!phoneValidation(value)) {
+      this.children.inputPhone.setProps({
+        isError: true,
+        errorMessage: "Phone is wrong",
+      });
+    } else {
+      this.children.inputPhone.setProps({
+        isError: false,
+        errorMessage: null,
+      });
+    }
+  }
+
+  handleFirstNameBlur(value) {
+    if (!namesValidation(value)) {
+      this.children.inputFirstName.setProps({
+        isError: true,
+        errorMessage: "Name can only contain letters",
+      });
+    } else {
+      this.children.inputFirstName.setProps({
+        isError: false,
+        errorMessage: null,
+      });
+    }
+  }
+
+  handleSecondNameBlur(value) {
+    if (!namesValidation(value)) {
+      this.children.inputSecondName.setProps({
+        isError: true,
+        errorMessage: "Second name can only contain letters",
+      });
+    } else {
+      this.children.inputSecondName.setProps({
+        isError: false,
+        errorMessage: null,
+      });
+    }
   }
 
   render() {
@@ -81,20 +170,20 @@ class FormRegistration extends Block {
         <div>
             <h1 class="registration__title">Registration</h1>
     
-            {{{ InputFirstName }}}
-            {{{ InputSecondName }}}
-            {{{ InputLogin }}}
-            {{{ InputEmail }}}
-            {{{ InputPhone }}}
-            {{{ InputPassword }}}
-            {{{ InputPasswordRepeat }}}
+            {{{ inputFirstName }}}
+            {{{ inputSecondName }}}
+            {{{ inputLogin }}}
+            {{{ inputEmail }}}
+            {{{ inputPhone }}}
+            {{{ inputPassword }}}
+            {{{ inputPasswordRepeat }}}
         </div>
     
         <div>
-          {{{ RegisterButton }}}
+          {{{ registerButton }}}
   
           <div class="registration__center">
-              {{{ LoginButton }}}
+              {{{ loginButton }}}
           </div>
         </div>
     </div>

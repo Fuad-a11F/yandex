@@ -17,7 +17,7 @@ class Form extends Block {
   }
 
   render() {
-    return `<form action="">{{{ formBody }}}</form>`;
+    return `<form>{{{ formBody }}}</form>`;
   }
 }
 

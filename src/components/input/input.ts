@@ -1,19 +1,24 @@
 import Block from "../../core/block.ts";
+import InputElement from "./components/inputElement.ts";
 
 class Input extends Block {
-  constructor(props) {
-    super({ ...props });
+  init() {
+    const inputElement = new InputElement({ ...this.props });
+
+    this.children = {
+      ...this.children,
+      inputElement,
+    };
   }
 
   render() {
     return `
       <div class="input {{#if isError}}input__error{{/if}}">
         <label for="{{name}}">
-            <input id="{{name}}" name="{{name}}" type="{{type}}" value="{{value}}" placeholder="{{placeholder}}">
+            {{{ inputElement }}}
             {{#if errorMessage}}<span>{{errorMessage}}</span>{{/if}}
         </label>
-    </div>
-
+      </div>
     `;
   }
 }
