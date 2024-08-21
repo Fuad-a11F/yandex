@@ -22,16 +22,6 @@ const pages = {
     { chats, isVisibleFiles: true, isVisibleActions: true, messages },
   ],
   profile: [Pages.Profile],
-  profileChangeAvatarModal: [
-    Pages.Profile,
-    { isVisibleModalChangeAvatar: true },
-  ],
-  profileChangeAvatarModalError: [
-    Pages.Profile,
-    { isVisibleModalChangeAvatar: true, isErrorUploadAvatar: true },
-  ],
-  profileChangeData: [Pages.Profile, { isChangeData: true }],
-  profileChangePassword: [Pages.Profile, { isChangePassword: true }],
   "404page": [Pages.Page404],
   "500page": [Pages.Page500],
 };
@@ -62,7 +52,7 @@ function navigate(page: string) {
   container.innerHTML = Handlebars.compile(source)(context);
 }
 
-document.addEventListener("DOMContentLoaded", () => navigate("registration"));
+document.addEventListener("DOMContentLoaded", () => navigate("main"));
 
 document.addEventListener("click", (e) => {
   //@ts-ignore

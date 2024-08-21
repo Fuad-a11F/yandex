@@ -2,7 +2,7 @@ import Block from "../../core/block.ts";
 
 export class Button extends Block {
   constructor(props) {
-    super({ ...props });
+    super({ ...props, events: { click: props.onClick } });
   }
 
   render() {
