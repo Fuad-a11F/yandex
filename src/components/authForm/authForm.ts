@@ -1,11 +1,9 @@
 import Block from "../../core/block.ts";
-import { FormLogin } from "../formLogin";
 
 export class AuthForm extends Block {
   constructor(props) {
     super({
       ...props,
-      FormLogin: new FormLogin(),
     });
   }
 
@@ -13,7 +11,7 @@ export class AuthForm extends Block {
     return `
       <main class="authForm__wrapper">
         <div class="authForm">
-          <form action="">{{{ FormLogin }}}</form>
+          <form action="">{{{ formBody }}}</form>
         </div>
       </main>
     `;
