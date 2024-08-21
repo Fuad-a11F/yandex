@@ -3,12 +3,26 @@ import { AuthForm } from "../../components";
 import { FormLogin } from "../../components";
 
 class Login extends Block {
-  constructor(props) {
-    super({ ...props, AuthForm: new AuthForm({ formBody: new FormLogin() }) });
+  init() {
+    const formSubmit = this.formSubmit.bind(this);
+
+    const authForm = new AuthForm({
+      formBody: new FormLogin(),
+      formSubmit,
+    });
+
+    this.children = {
+      ...this.children,
+      authForm,
+    };
+  }
+
+  formSubmit(data) {
+    console.log(data);
   }
 
   render() {
-    return `<div>{{{AuthForm}}}</div>`;
+    return `<div>{{{authForm}}}</div>`;
   }
 }
 

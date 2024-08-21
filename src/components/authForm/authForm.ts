@@ -1,9 +1,14 @@
 import Block from "../../core/block.ts";
+import Form from "./components/form.ts";
 
 class AuthForm extends Block {
   constructor(props) {
     super({
       ...props,
+      form: new Form({
+        formBody: props.formBody,
+        formSubmit: props.formSubmit,
+      }),
     });
   }
 
@@ -11,7 +16,7 @@ class AuthForm extends Block {
     return `
       <main class="authForm__wrapper">
         <div class="authForm">
-          <form action="">{{{ formBody }}}</form>
+          {{{ form }}}
         </div>
       </main>
     `;
