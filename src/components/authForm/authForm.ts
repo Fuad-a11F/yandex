@@ -1,6 +1,6 @@
 import Block from "../../core/block.ts";
 
-export class AuthForm extends Block {
+class AuthForm extends Block {
   constructor(props) {
     super({
       ...props,
@@ -17,3 +17,5 @@ export class AuthForm extends Block {
     `;
   }
 }
+
+export default AuthForm;

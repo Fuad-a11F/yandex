@@ -1,10 +1,6 @@
 import Block from "../../core/block.ts";
 
 class Main extends Block {
-  constructor() {
-    super();
-  }
-
   render() {
     return `
     <nav class="links">

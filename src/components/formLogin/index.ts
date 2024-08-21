@@ -1,2 +1,2 @@
 import "./formLogin.scss";
-export { FormLogin } from "./formLogin.ts";
+export { default as FormLogin } from "./formLogin.ts";

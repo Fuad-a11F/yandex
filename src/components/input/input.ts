@@ -1,6 +1,6 @@
 import Block from "../../core/block.ts";
 
-export class Input extends Block {
+class Input extends Block {
   constructor(props) {
     super({ ...props });
   }
@@ -17,3 +17,5 @@ export class Input extends Block {
     `;
   }
 }
+
+export default Input;

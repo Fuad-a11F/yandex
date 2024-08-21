@@ -2,7 +2,7 @@ import Block from "../../core/block.ts";
 import { Input } from "../input";
 import { Button } from "../button";
 
-export class FormLogin extends Block {
+class FormLogin extends Block {
   constructor() {
     super();
   }
@@ -60,3 +60,5 @@ export class FormLogin extends Block {
       `;
   }
 }
+
+export default FormLogin;

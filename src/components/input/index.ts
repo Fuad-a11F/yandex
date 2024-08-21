@@ -1,2 +1,2 @@
 import "./input.scss";
-export { Input } from "./input.ts";
+export { default as Input } from "./input.ts";

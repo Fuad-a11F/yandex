@@ -1,2 +1,2 @@
 import "./formRegistration.scss";
-export { FormRegistration } from "./formRegistration.ts";
+export { default as FormRegistration } from "./formRegistration.ts";

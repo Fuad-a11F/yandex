@@ -1,2 +1,2 @@
 import "./authForm.scss";
-export { AuthForm } from "./authForm.ts";
+export { default as AuthForm } from "./authForm.ts";
