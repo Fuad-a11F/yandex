@@ -8,6 +8,10 @@
   padding-top: 16px;
   position: relative;
 
+  &__add {
+    cursor: pointer;
+  }
+
   &__actions {
     display: flex;
     flex-direction: column;

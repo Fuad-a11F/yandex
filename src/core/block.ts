@@ -57,6 +57,13 @@ class Block {
     this.componentDidMount();
 
     Object.values(this.children).forEach((child) => {
+      if (Array.isArray(child)) {
+        child.forEach((item) => {
+          item.dispatchComponentDidMount();
+        });
+
+        return;
+      }
       child.dispatchComponentDidMount();
     });
   }
@@ -116,15 +123,7 @@ class Block {
 
     const fragment = this._createDocumentElement("template");
 
-    if (this.name === "LoginPage") {
-      console.log(this.render());
-      console.log(propsAndStubs);
-    }
-
     fragment.innerHTML = Handlebars.compile(this.render())(propsAndStubs);
-    if (this.name === "LoginPage") {
-      console.log(fragment.innerHTML);
-    }
 
     const newElement = fragment.content.firstElementChild;
 

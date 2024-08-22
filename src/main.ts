@@ -7,20 +7,7 @@ const pages = {
   login: [Pages.Login],
   registration: [Pages.Registration],
   main: [Pages.Main],
-  chat: [Pages.Chat, { chats, messages }],
-  chatEmpty: [Pages.Chat, { chats: chatsWithNotActive, isEmpty: true }],
-  chatWithAddUserModal: [
-    Pages.Chat,
-    { chats, messages, isVisibleAddUser: true },
-  ],
-  chatWithRemoveUserModal: [
-    Pages.Chat,
-    { chats, messages, isVisibleRemoveUser: true },
-  ],
-  chatWithDropdown: [
-    Pages.Chat,
-    { chats, isVisibleFiles: true, isVisibleActions: true, messages },
-  ],
+  chat: [Pages.Chat],
   profile: [Pages.Profile],
   "404page": [Pages.Page404],
   "500page": [Pages.Page500],
@@ -52,7 +39,7 @@ function navigate(page: string) {
   container.innerHTML = Handlebars.compile(source)(context);
 }
 
-document.addEventListener("DOMContentLoaded", () => navigate("main"));
+document.addEventListener("DOMContentLoaded", () => navigate("chat"));
 
 document.addEventListener("click", (e) => {
   const page = e.target.getAttribute("page");

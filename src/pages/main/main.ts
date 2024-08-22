@@ -24,30 +24,6 @@ class Main extends Block {
     
         <ul>
             <li>
-                <a href="#" page="chatEmpty">Chat empty</a>
-            </li>
-        </ul>
-    
-        <ul>
-            <li>
-                <a href="#" page="chatWithDropdown">Chat with dropdown</a>
-            </li>
-        </ul>
-    
-        <ul>
-            <li>
-                <a href="#" page="chatWithAddUserModal">Chat with add user modal</a>
-            </li>
-        </ul>
-    
-        <ul>
-            <li>
-                <a href="#" page="chatWithRemoveUserModal">Chat with remove user modal</a>
-            </li>
-        </ul>
-    
-        <ul>
-            <li>
                 <a href="#" page="profile">Profile</a>
             </li>
         </ul>

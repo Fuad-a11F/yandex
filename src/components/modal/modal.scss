@@ -10,6 +10,7 @@
   display: none;
   align-items: center;
   justify-content: center;
+  z-index: 100;
 
   &__active {
     display: flex;
