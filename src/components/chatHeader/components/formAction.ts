@@ -11,7 +11,10 @@ class FormAction extends Block {
             document.querySelector(`#${this.props.formId}`),
           );
           const formObject = Object.fromEntries(formData.entries());
-          props.formSubmit && props.formSubmit(formObject);
+
+          if (props.formSubmit) {
+            props.formSubmit(formObject);
+          }
         },
       },
     });

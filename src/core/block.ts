@@ -11,26 +11,23 @@ class Block {
   } as const;
 
   _element = null;
-  _meta = null;
   _id = nanoid(6);
-
-  private _eventbus;
 
   constructor(propsWithChildren = {}) {
     const eventBus = new EventBus();
-    const { props, children } = this._getChildrenAndProps(propsWithChildren);
-    this.props = this._makePropsProxy({ ...props });
+    const { props, children } = this.getChildrenAndProps(propsWithChildren);
+    this.props = this.makePropsProxy({ ...props });
     this.children = children;
     this.name = "";
 
     this.eventBus = () => eventBus;
 
-    this._registerEvents(eventBus);
+    this.registerEvents(eventBus);
 
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _addEvents() {
+  private addEvents() {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
@@ -38,22 +35,58 @@ class Block {
     });
   }
 
-  _registerEvents(eventBus: EventBus) {
-    eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+  private registerEvents(eventBus: EventBus) {
+    eventBus.on(Block.EVENTS.INIT, this.initPrivate.bind(this));
+    eventBus.on(
+      Block.EVENTS.FLOW_CDM,
+      this.componentDidMountPrivate.bind(this),
+    );
+    eventBus.on(
+      Block.EVENTS.FLOW_CDU,
+      this.componentDidUpdatePrivate.bind(this),
+    );
+    eventBus.on(Block.EVENTS.FLOW_RENDER, this.renderPrivate.bind(this));
   }
 
-  _init() {
+  private initPrivate() {
     this.init();
 
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  init() {}
+  private makePropsProxy(props) {
+    return new Proxy(props, {
+      get: (target, prop) => {
+        const value = target[prop];
+        return typeof value === "function" ? value.bind(target) : value;
+      },
+      set: (target, prop, value) => {
+        const oldTarget = { ...target };
+        target[prop] = value;
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+        return true;
+      },
+      deleteProperty: () => {
+        throw new Error("Нет доступа");
+      },
+    });
+  }
 
-  _componentDidMount() {
+  private createDocumentElement(tagName) {
+    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
+    return document.createElement(tagName);
+  }
+
+  private componentDidUpdatePrivate(oldProps, newProps) {
+    console.log("CDU");
+    const response = this.componentDidUpdate(oldProps, newProps);
+    if (!response) {
+      return;
+    }
+    this.renderPrivate();
+  }
+
+  private componentDidMountPrivate() {
     this.componentDidMount();
 
     Object.values(this.children).forEach((child) => {
@@ -68,26 +101,7 @@ class Block {
     });
   }
 
-  componentDidMount() {}
-
-  dispatchComponentDidMount() {
-    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
-  }
-
-  _componentDidUpdate(oldProps, newProps) {
-    console.log("CDU");
-    const response = this.componentDidUpdate(oldProps, newProps);
-    if (!response) {
-      return;
-    }
-    this._render();
-  }
-
-  componentDidUpdate() {
-    return true;
-  }
-
-  _getChildrenAndProps(propsAndChildren) {
+  private getChildrenAndProps(propsAndChildren) {
     const children = {};
     const props = {};
 
@@ -102,26 +116,14 @@ class Block {
     return { children, props };
   }
 
-  setProps = (nextProps) => {
-    if (!nextProps) {
-      return;
-    }
-
-    Object.assign(this.props, nextProps);
-  };
-
-  get element() {
-    return this._element;
-  }
-
-  _render() {
+  private renderPrivate() {
     const propsAndStubs = { ...this.props };
 
     Object.entries(this.children).forEach(([key, child]) => {
       propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
     });
 
-    const fragment = this._createDocumentElement("template");
+    const fragment = this.createDocumentElement("template");
 
     fragment.innerHTML = Handlebars.compile(this.render())(propsAndStubs);
 
@@ -139,8 +141,32 @@ class Block {
 
     this._element = newElement;
 
-    this._addEvents();
+    this.addEvents();
   }
+
+  get element() {
+    return this._element;
+  }
+
+  init() {}
+
+  componentDidMount() {}
+
+  dispatchComponentDidMount() {
+    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+  }
+
+  componentDidUpdate() {
+    return true;
+  }
+
+  setProps = (nextProps) => {
+    if (!nextProps) {
+      return;
+    }
+
+    Object.assign(this.props, nextProps);
+  };
 
   render() {}
 
@@ -157,33 +183,6 @@ class Block {
     }
 
     return this._element;
-  }
-
-  _makePropsProxy(props) {
-    // Можно и так передать this
-    // Такой способ больше не применяется с приходом ES6+
-    const self = this;
-
-    return new Proxy(props, {
-      get(target, prop) {
-        const value = target[prop];
-        return typeof value === "function" ? value.bind(target) : value;
-      },
-      set(target, prop, value) {
-        const oldTarget = { ...target };
-        target[prop] = value;
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
-        return true;
-      },
-      deleteProperty() {
-        throw new Error("Нет доступа");
-      },
-    });
-  }
-
-  _createDocumentElement(tagName) {
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
-    return document.createElement(tagName);
   }
 
   show() {

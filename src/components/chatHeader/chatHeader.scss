@@ -57,8 +57,7 @@
       height: 22px;
       width: 22px;
       display: flex;
-      justify-content: center;
-      align-content: center;
+      place-content: center;
       padding: 4px;
 
       &_reverse {

@@ -1,5 +1,5 @@
 import Block from "../../core/block.ts";
-import { ChatHeader, ChatItem, ChatSearch } from "../../components";
+import { ChatHeader, ChatSearch } from "../../components";
 import { chats, messages } from "../../mockData.ts";
 import MessageForm from "../../components/messageForm/messageForm.ts";
 
