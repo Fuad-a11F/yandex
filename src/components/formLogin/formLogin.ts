@@ -1,7 +1,10 @@
 import Block from "../../core/block.ts";
 import { Input } from "../input";
 import { Button } from "../button";
-import { passwordValidation } from "../../shared/validation.ts";
+import {
+  loginValidation,
+  passwordValidation,
+} from "../../shared/validation.ts";
 
 class FormLogin extends Block {
   constructor() {
@@ -9,18 +12,21 @@ class FormLogin extends Block {
   }
 
   init() {
-    const handlePasswordBlur = this.handlePasswordBlur.bind(this);
+    const handleValidate = this.handleValidate.bind(this);
 
     const inputLogin = new Input({
       name: "login",
       type: "text",
       placeholder: "Login",
+      onBlur: (value: string) =>
+        handleValidate(value, loginValidation, inputLogin, "sdf"),
     });
     const inputPassword = new Input({
       name: "password",
       type: "password",
       placeholder: "Password",
-      onBlur: handlePasswordBlur,
+      onBlur: (value: string) =>
+        handleValidate(value, passwordValidation, inputPassword, "sdf"),
     });
 
     const loginButton = new Button({
@@ -43,15 +49,14 @@ class FormLogin extends Block {
     };
   }
 
-  handlePasswordBlur(value) {
-    if (!passwordValidation(value)) {
-      this.children.inputPassword.setProps({
+  handleValidate(value, validateFunction, input, errorMessage) {
+    if (!validateFunction(value)) {
+      this.children[input].setProps({
         isError: true,
-        errorMessage:
-          "Password must contain at least 8 characters, 1 special character, 1 capital letter and 1 lowercase letter",
+        errorMessage,
       });
     } else {
-      this.children.inputPassword.setProps({
+      this.children[input].setProps({
         isError: false,
         errorMessage: null,
       });

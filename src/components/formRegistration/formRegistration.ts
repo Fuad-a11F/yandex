@@ -3,6 +3,7 @@ import { Input } from "../input";
 import { Button } from "../button";
 import {
   emailValidation,
+  loginValidation,
   namesValidation,
   passwordValidation,
   phoneValidation,
@@ -14,58 +15,61 @@ class FormRegistration extends Block {
   }
 
   init() {
-    const handlePasswordBlur = this.handlePasswordBlur.bind(this);
-    const handleEmailBlur = this.handleEmailBlur.bind(this);
-    const handlePhoneBlur = this.handlePhoneBlur.bind(this);
-    const handleFirstNameBlur = this.handleFirstNameBlur.bind(this);
-    const handleSecondNameBlur = this.handleSecondNameBlur.bind(this);
+    const handleValidate = this.handleValidate.bind(this);
 
     const inputFirstName = new Input({
       name: "first_name",
       type: "text",
       placeholder: "First name",
-      onBlur: handleFirstNameBlur,
+      onBlur: (value: string) =>
+        handleValidate(value, namesValidation, inputFirstName, "sdf"),
     });
 
     const inputSecondName = new Input({
       name: "second_name",
       type: "text",
       placeholder: "Second name",
-      onBlur: handleSecondNameBlur,
+      onBlur: (value: string) =>
+        handleValidate(value, namesValidation, inputSecondName, "sdf"),
     });
 
     const inputLogin = new Input({
       name: "login",
       type: "text",
       placeholder: "Login",
+      onBlur: (value: string) =>
+        handleValidate(value, loginValidation, inputLogin, "sdf"),
     });
 
     const inputEmail = new Input({
       name: "email",
       type: "text",
       placeholder: "Email",
-      onBlur: handleEmailBlur,
+      onBlur: (value: string) =>
+        handleValidate(value, emailValidation, inputEmail, "sdf"),
     });
 
     const inputPhone = new Input({
       name: "phone",
       type: "text",
       placeholder: "Phone",
-      onBlur: handlePhoneBlur,
+      onBlur: (value: string) =>
+        handleValidate(value, phoneValidation, inputPhone, "sdf"),
     });
 
     const inputPassword = new Input({
       name: "password",
       type: "password",
       placeholder: "Password",
-      onBlur: handlePasswordBlur,
+      onBlur: (value: string) =>
+        handleValidate(value, passwordValidation, inputPassword, "sdf"),
     });
 
     const inputPasswordRepeat = new Input({
       name: "repassword",
       type: "password",
       placeholder: "Repeat password",
-      onBlur: handlePasswordBlur,
+      onBlur: () => {},
     });
 
     const loginButton = new Button({
@@ -93,71 +97,14 @@ class FormRegistration extends Block {
     };
   }
 
-  handlePasswordBlur(value) {
-    if (!passwordValidation(value)) {
-      this.children.inputPassword.setProps({
+  handleValidate(value, validateFunction, input, errorMessage) {
+    if (!validateFunction(value)) {
+      this.children[input].setProps({
         isError: true,
-        errorMessage:
-          "Password must contain at least 8 characters, 1 special character, 1 capital letter and 1 lowercase letter",
+        errorMessage,
       });
     } else {
-      this.children.inputPassword.setProps({
-        isError: false,
-        errorMessage: null,
-      });
-    }
-  }
-
-  handleEmailBlur(value) {
-    if (!emailValidation(value)) {
-      this.children.inputEmail.setProps({
-        isError: true,
-        errorMessage: "Email is wrong",
-      });
-    } else {
-      this.children.inputEmail.setProps({
-        isError: false,
-        errorMessage: null,
-      });
-    }
-  }
-
-  handlePhoneBlur(value) {
-    if (!phoneValidation(value)) {
-      this.children.inputPhone.setProps({
-        isError: true,
-        errorMessage: "Phone is wrong",
-      });
-    } else {
-      this.children.inputPhone.setProps({
-        isError: false,
-        errorMessage: null,
-      });
-    }
-  }
-
-  handleFirstNameBlur(value) {
-    if (!namesValidation(value)) {
-      this.children.inputFirstName.setProps({
-        isError: true,
-        errorMessage: "Name can only contain letters",
-      });
-    } else {
-      this.children.inputFirstName.setProps({
-        isError: false,
-        errorMessage: null,
-      });
-    }
-  }
-
-  handleSecondNameBlur(value) {
-    if (!namesValidation(value)) {
-      this.children.inputSecondName.setProps({
-        isError: true,
-        errorMessage: "Second name can only contain letters",
-      });
-    } else {
-      this.children.inputSecondName.setProps({
+      this.children[input].setProps({
         isError: false,
         errorMessage: null,
       });

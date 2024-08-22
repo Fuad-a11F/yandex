@@ -18,7 +18,8 @@ class Login extends Block {
   }
 
   formSubmit(data) {
-    console.log(data);
+    this.children.authForm.children.formBody.handleLoginBlur(data.login);
+    this.children.authForm.children.formBody.handlePasswordBlur(data.password);
   }
 
   render() {

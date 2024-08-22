@@ -17,7 +17,16 @@ export class Registration extends Block {
   }
 
   formSubmit(data) {
-    console.log(data);
+    this.children.authForm.children.formBody.handleFirstNameBlur(
+      data.first_name,
+    );
+    this.children.authForm.children.formBody.handleSecondNameBlur(
+      data.second_name,
+    );
+    this.children.authForm.children.formBody.handleLoginBlur(data.login);
+    this.children.authForm.children.formBody.handlePasswordBlur(data.password);
+    this.children.authForm.children.formBody.handleEmailBlur(data.email);
+    this.children.authForm.children.formBody.handlePhoneBlur(data.phone);
   }
 
   render() {
