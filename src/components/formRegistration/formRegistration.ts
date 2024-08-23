@@ -22,7 +22,12 @@ class FormRegistration extends Block {
       type: "text",
       placeholder: "First name",
       onBlur: (value: string) =>
-        handleValidate(value, namesValidation, inputFirstName, "sdf"),
+        handleValidate(
+          value,
+          namesValidation,
+          "inputFirstName",
+          "First name is wrong",
+        ),
     });
 
     const inputSecondName = new Input({
@@ -30,7 +35,12 @@ class FormRegistration extends Block {
       type: "text",
       placeholder: "Second name",
       onBlur: (value: string) =>
-        handleValidate(value, namesValidation, inputSecondName, "sdf"),
+        handleValidate(
+          value,
+          namesValidation,
+          "inputSecondName",
+          "Second name is wrong",
+        ),
     });
 
     const inputLogin = new Input({
@@ -38,7 +48,7 @@ class FormRegistration extends Block {
       type: "text",
       placeholder: "Login",
       onBlur: (value: string) =>
-        handleValidate(value, loginValidation, inputLogin, "sdf"),
+        handleValidate(value, loginValidation, "inputLogin", "Login is wrong"),
     });
 
     const inputEmail = new Input({
@@ -46,7 +56,7 @@ class FormRegistration extends Block {
       type: "text",
       placeholder: "Email",
       onBlur: (value: string) =>
-        handleValidate(value, emailValidation, inputEmail, "sdf"),
+        handleValidate(value, emailValidation, "inputEmail", "Email is wrong"),
     });
 
     const inputPhone = new Input({
@@ -54,7 +64,7 @@ class FormRegistration extends Block {
       type: "text",
       placeholder: "Phone",
       onBlur: (value: string) =>
-        handleValidate(value, phoneValidation, inputPhone, "sdf"),
+        handleValidate(value, phoneValidation, "inputPhone", "Phone is wrong"),
     });
 
     const inputPassword = new Input({
@@ -62,7 +72,12 @@ class FormRegistration extends Block {
       type: "password",
       placeholder: "Password",
       onBlur: (value: string) =>
-        handleValidate(value, passwordValidation, inputPassword, "sdf"),
+        handleValidate(
+          value,
+          passwordValidation,
+          "inputPassword",
+          "Password is wrong",
+        ),
     });
 
     const inputPasswordRepeat = new Input({

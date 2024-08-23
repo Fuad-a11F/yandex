@@ -1,72 +1,17 @@
 import Block from "../../core/block.ts";
 import { Button, ProfileRow, UploadAvatar } from "../../components";
+import UserInfo from "./components/userInfo.ts";
+import login from "../login/login.ts";
 
 class Profile extends Block {
   init() {
     const changeDataHandler = this.changeDataHandler.bind(this);
     const changePasswordHandler = this.changePasswordHandler.bind(this);
-    const saveHandler = this.saveHandler.bind(this);
+    const formSubmit = this.formSubmit.bind(this);
 
     const uploadAvatar = new UploadAvatar({});
+    const userInfo = new UserInfo({ ...this.props, formSubmit });
 
-    const profileRowOldPassword = new ProfileRow({
-      label: "Old password",
-      value: "test2001",
-      isPassword: true,
-      name: "oldPassword",
-    });
-
-    const profileRowNewPassword = new ProfileRow({
-      label: "New password",
-      value: "text2001New",
-      isPassword: true,
-      name: "newPassword",
-    });
-
-    const profileRowNewRePassword = new ProfileRow({
-      label: "Repeat new password",
-      value: "text2001New",
-      isPassword: true,
-      name: "rePassword",
-    });
-
-    const profileRowEmail = new ProfileRow({
-      label: "Email",
-      value: "pochta@yandex.ru",
-      name: "email",
-    });
-
-    const profileRowLogin = new ProfileRow({
-      label: "Login",
-      value: "ivanivanov",
-      name: "login",
-    });
-
-    const profileRowName = new ProfileRow({
-      label: "Name",
-      value: "Иван",
-      name: "first_name",
-    });
-
-    const profileRowLastName = new ProfileRow({
-      label: "Last name",
-      value: "Иванов",
-      name: "second_name",
-    });
-
-    const profileRowDisplayName = new ProfileRow({
-      label: "Name in chat",
-      value: "Иван",
-      name: "display_name",
-    });
-
-    const profileRowPhone = new ProfileRow({
-      label: "Phone",
-      value: "+7 (909) 967 30 30",
-      name: "phone",
-    });
-
-    const buttonSave = new Button({ text: "Save", onClick: saveHandler });
     const buttonChangeData = new Button({
       text: "Change data",
       isLink: true,
@@ -86,16 +31,7 @@ class Profile extends Block {
     this.children = {
       ...this.children,
       uploadAvatar,
-      profileRowOldPassword,
-      profileRowNewPassword,
-      profileRowNewRePassword,
-      profileRowEmail,
-      profileRowLogin,
-      profileRowName,
-      profileRowLastName,
-      profileRowDisplayName,
-      profileRowPhone,
-      buttonSave,
+      userInfo,
       buttonChangeData,
       buttonChangePassword,
       buttonLogout,
@@ -104,26 +40,48 @@ class Profile extends Block {
 
   changeDataHandler() {
     this.setProps({ isChangeData: true });
+    this.children.userInfo.setProps({ isChangeData: true });
 
-    this.children.profileRowEmail.setProps({ isEditting: true });
-    this.children.profileRowLogin.setProps({ isEditting: true });
-    this.children.profileRowName.setProps({ isEditting: true });
-    this.children.profileRowLastName.setProps({ isEditting: true });
-    this.children.profileRowDisplayName.setProps({ isEditting: true });
-    this.children.profileRowPhone.setProps({ isEditting: true });
+    console.log(this.children);
+
+    this.children.userInfo.children.profileRowEmail.setProps({
+      isEditting: true,
+    });
+    this.children.userInfo.children.profileRowLogin.setProps({
+      isEditting: true,
+    });
+    this.children.userInfo.children.profileRowName.setProps({
+      isEditting: true,
+    });
+    this.children.userInfo.children.profileRowLastName.setProps({
+      isEditting: true,
+    });
+    this.children.userInfo.children.profileRowDisplayName.setProps({
+      isEditting: true,
+    });
+    this.children.userInfo.children.profileRowPhone.setProps({
+      isEditting: true,
+    });
   }
 
   changePasswordHandler() {
     this.setProps({ isChangePassword: true });
+    this.children.userInfo.setProps({ isChangePassword: true });
 
-    this.children.profileRowOldPassword.setProps({ isEditting: true });
-    this.children.profileRowNewPassword.setProps({ isEditting: true });
-    this.children.profileRowNewRePassword.setProps({ isEditting: true });
+    this.children.userInfo.children.profileRowOldPassword.setProps({
+      isEditting: true,
+    });
+    this.children.userInfo.children.profileRowNewPassword.setProps({
+      isEditting: true,
+    });
+    this.children.userInfo.children.profileRowNewRePassword.setProps({
+      isEditting: true,
+    });
   }
 
-  saveHandler() {
-    this.setProps({ isChangeData: false });
-    this.setProps({ isChangePassword: false });
+  formSubmit() {
+    this.children.userInfo.setProps({ isChangeData: false });
+    this.children.userInfo.setProps({ isChangePassword: false });
 
     this.children.profileRowEmail.setProps({ isEditting: false });
     this.children.profileRowLogin.setProps({ isEditting: false });
@@ -152,36 +110,9 @@ class Profile extends Block {
                       Иван
                   </div>
           
-                  <{{#ifLogicOr isChangeData isChangePassword}}form{{else}}div{{/ifLogicOr}}>
-                      {{#if isChangePassword}}
-                          <div>
-                              {{{ profileRowOldPassword }}}
-                              <hr>
-                              {{{ profileRowNewPassword }}}
-                              <hr>
-                              {{{ profileRowNewRePassword }}}
-                          </div>
-                      {{else}}
-                          <div>
-                              {{{ profileRowEmail }}}
-                              <hr>
-                              {{{ profileRowLogin }}}
-                              <hr>
-                              {{{ profileRowName }}}
-                              <hr>
-                              {{{ profileRowLastName }}}
-                              <hr>
-                              {{{ profileRowDisplayName }}}
-                              <hr>
-                              {{{ profileRowPhone }}}
-                          </div>
-                      {{/if}}
-                  </{{#ifLogicOr isChangeData isChangePassword}}form{{else}}div{{/ifLogicOr}}>
-             
-                 {{#ifLogicOr isChangeData isChangePassword}}
-                      <div class="profile__button_save">
-                          {{{ buttonSave }}}
-                      </div>
+                   {{{ userInfo }}}
+         
+                  {{#ifLogicOr isChangeData isChangePassword}}
                   {{else}}
                     <div class="profile__buttons">
                         {{{ buttonChangeData }}}

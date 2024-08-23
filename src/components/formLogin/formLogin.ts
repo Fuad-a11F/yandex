@@ -19,14 +19,19 @@ class FormLogin extends Block {
       type: "text",
       placeholder: "Login",
       onBlur: (value: string) =>
-        handleValidate(value, loginValidation, inputLogin, "sdf"),
+        handleValidate(value, loginValidation, inputLogin, "Login is wrong"),
     });
     const inputPassword = new Input({
       name: "password",
       type: "password",
       placeholder: "Password",
       onBlur: (value: string) =>
-        handleValidate(value, passwordValidation, inputPassword, "sdf"),
+        handleValidate(
+          value,
+          passwordValidation,
+          inputPassword,
+          "Password is wrong",
+        ),
     });
 
     const loginButton = new Button({
