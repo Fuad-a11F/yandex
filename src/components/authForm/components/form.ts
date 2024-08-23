@@ -5,7 +5,7 @@ class Form extends Block {
     super({
       ...props,
       events: {
-        submit: (e) => {
+        submit: (e: SubmitEvent) => {
           e.preventDefault();
           const formData = new FormData(document.querySelector("form"));
           const formObject = Object.fromEntries(formData.entries());

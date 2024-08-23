@@ -1,18 +1,24 @@
 import Block from "../../../core/block.ts";
 import { Input } from "../../input";
 import { Button } from "../../button";
-import { loginValidation } from "../../../shared/validation.ts";
+import { loginValidation } from "../../../shared/validation/validation.ts";
 import FormAction from "./formAction.ts";
+import { validationFunctionForField } from "../../../shared/validation/validationFunction.ts";
 
 class ModalRemoveUserModal extends Block {
   init() {
-    const handleBlur = this.handleBlur.bind(this);
     const formSubmit = this.formSubmit.bind(this);
 
     const loginInput = new Input({
       name: "login",
       placeholder: "Login",
-      onBlur: handleBlur,
+      onBlur: (value) =>
+        validationFunctionForField(
+          loginValidation,
+          value,
+          this.children.loginInput,
+          "Login is wrong",
+        ),
     });
     const removeButton = new Button({ text: "Remove" });
 
@@ -31,7 +37,7 @@ class ModalRemoveUserModal extends Block {
     };
   }
 
-  formSubmit(data) {
+  formSubmit(data: { login: string }) {
     if (!loginValidation(data.login)) {
       this.children.loginInput.setProps({
         isError: true,
@@ -46,20 +52,6 @@ class ModalRemoveUserModal extends Block {
     });
 
     console.log(data);
-  }
-
-  handleBlur(value) {
-    if (!loginValidation(value)) {
-      this.children.loginInput.setProps({
-        isError: true,
-        errorMessage: "Login is wrong",
-      });
-    } else {
-      this.children.loginInput.setProps({
-        isError: false,
-        errorMessage: null,
-      });
-    }
   }
 
   render() {

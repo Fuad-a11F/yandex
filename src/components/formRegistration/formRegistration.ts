@@ -7,7 +7,8 @@ import {
   namesValidation,
   passwordValidation,
   phoneValidation,
-} from "../../shared/validation.ts";
+} from "../../shared/validation/validation.ts";
+import { validationFunctionForField } from "../../shared/validation/validationFunction.ts";
 
 class FormRegistration extends Block {
   constructor() {
@@ -15,17 +16,15 @@ class FormRegistration extends Block {
   }
 
   init() {
-    const handleValidate = this.handleValidate.bind(this);
-
     const inputFirstName = new Input({
       name: "first_name",
       type: "text",
       placeholder: "First name",
       onBlur: (value: string) =>
-        handleValidate(
-          value,
+        validationFunctionForField(
           namesValidation,
-          "inputFirstName",
+          value,
+          this.children.inputFirstName,
           "First name is wrong",
         ),
     });
@@ -35,10 +34,10 @@ class FormRegistration extends Block {
       type: "text",
       placeholder: "Second name",
       onBlur: (value: string) =>
-        handleValidate(
-          value,
+        validationFunctionForField(
           namesValidation,
-          "inputSecondName",
+          value,
+          this.children.inputSecondName,
           "Second name is wrong",
         ),
     });
@@ -48,7 +47,12 @@ class FormRegistration extends Block {
       type: "text",
       placeholder: "Login",
       onBlur: (value: string) =>
-        handleValidate(value, loginValidation, "inputLogin", "Login is wrong"),
+        validationFunctionForField(
+          loginValidation,
+          value,
+          this.children.inputLogin,
+          "Login is wrong",
+        ),
     });
 
     const inputEmail = new Input({
@@ -56,7 +60,12 @@ class FormRegistration extends Block {
       type: "text",
       placeholder: "Email",
       onBlur: (value: string) =>
-        handleValidate(value, emailValidation, "inputEmail", "Email is wrong"),
+        validationFunctionForField(
+          emailValidation,
+          value,
+          this.children.inputEmail,
+          "Email is wrong",
+        ),
     });
 
     const inputPhone = new Input({
@@ -64,7 +73,12 @@ class FormRegistration extends Block {
       type: "text",
       placeholder: "Phone",
       onBlur: (value: string) =>
-        handleValidate(value, phoneValidation, "inputPhone", "Phone is wrong"),
+        validationFunctionForField(
+          phoneValidation,
+          value,
+          this.children.inputPhone,
+          "Phone is wrong",
+        ),
     });
 
     const inputPassword = new Input({
@@ -72,10 +86,10 @@ class FormRegistration extends Block {
       type: "password",
       placeholder: "Password",
       onBlur: (value: string) =>
-        handleValidate(
-          value,
+        validationFunctionForField(
           passwordValidation,
-          "inputPassword",
+          value,
+          this.children.inputPassword,
           "Password is wrong",
         ),
     });
@@ -110,20 +124,6 @@ class FormRegistration extends Block {
       loginButton,
       registerButton,
     };
-  }
-
-  handleValidate(value, validateFunction, input, errorMessage) {
-    if (!validateFunction(value)) {
-      this.children[input].setProps({
-        isError: true,
-        errorMessage,
-      });
-    } else {
-      this.children[input].setProps({
-        isError: false,
-        errorMessage: null,
-      });
-    }
   }
 
   render() {

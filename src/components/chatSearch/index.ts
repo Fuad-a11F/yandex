@@ -1,4 +1,4 @@
 import "./chatSearch.scss";
-import "./component/inputSearch/inputSearch.scss";
+import "./components/inputSearch/inputSearch.scss";
 export { default as ChatSearch } from "./chatSearch.ts";
-export { default as InputSearch } from "./component/inputSearch/inputSearch.ts";
+export { default as InputSearch } from "./components/inputSearch/inputSearch.ts";

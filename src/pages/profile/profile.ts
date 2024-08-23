@@ -1,7 +1,12 @@
 import Block from "../../core/block.ts";
-import { Button, ProfileRow, UploadAvatar } from "../../components";
-import UserInfo from "./components/userInfo.ts";
-import login from "../login/login.ts";
+import { Button, UploadAvatar } from "../../components";
+import { UserInfo } from "./index.ts";
+import {
+  getUserInfoDataValidateFields,
+  getUserInfoPasswordValidateFields,
+} from "../../shared/validation/inputsForValidate.ts";
+import validationFunction from "../../shared/validation/validationFunction.ts";
+import { ProfileInterface } from "../../interface/profile/profileInterface.ts";
 
 class Profile extends Block {
   init() {
@@ -10,7 +15,11 @@ class Profile extends Block {
     const formSubmit = this.formSubmit.bind(this);
 
     const uploadAvatar = new UploadAvatar({});
-    const userInfo = new UserInfo({ ...this.props, formSubmit });
+
+    const userInfo = new UserInfo({
+      ...this.props,
+      formSubmit,
+    });
 
     const buttonChangeData = new Button({
       text: "Change data",
@@ -41,26 +50,17 @@ class Profile extends Block {
   changeDataHandler() {
     this.setProps({ isChangeData: true });
     this.children.userInfo.setProps({ isChangeData: true });
-
-    console.log(this.children);
-
-    this.children.userInfo.children.profileRowEmail.setProps({
-      isEditting: true,
-    });
-    this.children.userInfo.children.profileRowLogin.setProps({
-      isEditting: true,
-    });
-    this.children.userInfo.children.profileRowName.setProps({
-      isEditting: true,
-    });
-    this.children.userInfo.children.profileRowLastName.setProps({
-      isEditting: true,
-    });
-    this.children.userInfo.children.profileRowDisplayName.setProps({
-      isEditting: true,
-    });
-    this.children.userInfo.children.profileRowPhone.setProps({
-      isEditting: true,
+    [
+      "profileRowEmail",
+      "profileRowLogin",
+      "profileRowName",
+      "profileRowLastName",
+      "profileRowDisplayName",
+      "profileRowPhone",
+    ].forEach((item) => {
+      this.children.userInfo.children[item].setProps({
+        isEditting: true,
+      });
     });
   }
 
@@ -79,19 +79,48 @@ class Profile extends Block {
     });
   }
 
-  formSubmit() {
+  formSubmit(data: Partial<ProfileInterface>) {
+    const error = { isError: false };
+    if (this.props.isChangePassword) {
+      validationFunction(
+        getUserInfoPasswordValidateFields(data),
+        this.children.userInfo.children,
+        error,
+        "children.input",
+      );
+    } else if (this.props.isChangeData) {
+      validationFunction(
+        getUserInfoDataValidateFields(data),
+        this.children.userInfo.children,
+        error,
+        "children.input",
+      );
+    }
+
+    if (error.isError) return;
+
+    this.setProps({ isChangePassword: false });
+    this.setProps({ isChangeData: false });
     this.children.userInfo.setProps({ isChangeData: false });
     this.children.userInfo.setProps({ isChangePassword: false });
 
-    this.children.profileRowEmail.setProps({ isEditting: false });
-    this.children.profileRowLogin.setProps({ isEditting: false });
-    this.children.profileRowName.setProps({ isEditting: false });
-    this.children.profileRowLastName.setProps({ isEditting: false });
-    this.children.profileRowDisplayName.setProps({ isEditting: false });
-    this.children.profileRowPhone.setProps({ isEditting: false });
-    this.children.profileRowOldPassword.setProps({ isEditting: false });
-    this.children.profileRowNewPassword.setProps({ isEditting: false });
-    this.children.profileRowNewRePassword.setProps({ isEditting: false });
+    [
+      "profileRowEmail",
+      "profileRowLogin",
+      "profileRowName",
+      "profileRowLastName",
+      "profileRowDisplayName",
+      "profileRowPhone",
+      "profileRowOldPassword",
+      "profileRowNewPassword",
+      "profileRowNewRePassword",
+    ].forEach((item) => {
+      this.children.userInfo.children[item].setProps({
+        isEditting: false,
+      });
+    });
+
+    console.log(data);
   }
 
   render() {

@@ -1,5 +1,5 @@
 import Block from "../../core/block.ts";
-import InputElement from "./components/inputElement.ts";
+import { InputElement } from "./index.ts";
 
 class Input extends Block {
   init() {
@@ -13,7 +13,7 @@ class Input extends Block {
 
   render() {
     return `
-      <div class="input {{#if isError}}input__error{{/if}}">
+      <div class="input {{#if isError}}input__error{{/if}} {{#if isProfileRow}}input__profile{{/if}}">
         <label for="{{name}}">
             {{{ inputElement }}}
             {{#if errorMessage}}<span>{{errorMessage}}</span>{{/if}}

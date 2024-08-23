@@ -6,7 +6,9 @@ import {
   AddUser,
   MoreAction,
   ModalRemoveUserModal,
+  DropdownHeader,
 } from "./index.ts";
+import { Dropdown } from "../dropdown";
 
 class ChatHeader extends Block {
   init() {
@@ -17,6 +19,11 @@ class ChatHeader extends Block {
     const moreAction = new MoreAction({ onClose });
     const addUser = new AddUser({ onAddUser });
     const removeUser = new RemoveUser({ onRemoveUser });
+
+    const dropdown = new Dropdown({
+      dropdownBody: new DropdownHeader({ addUser, removeUser }),
+    });
+
     const modalAddUser = new Modal({
       ModalBody: new ModalAddUserModal(),
     });
@@ -27,25 +34,32 @@ class ChatHeader extends Block {
     this.children = {
       ...this.children,
       moreAction,
-      addUser,
-      removeUser,
       modalAddUser,
       modalRemoveUser,
+      dropdown,
     };
   }
 
   onClose() {
-    this.setProps({ isVisible: !this.props.isVisible });
+    this.children.dropdown.setProps({
+      isVisible: !this.children.dropdown.props.isVisible,
+      top: 30,
+      right: 0,
+    });
   }
 
   onAddUser() {
     this.children.modalAddUser.setProps({ isVisible: true });
-    this.setProps({ isVisible: !this.props.isVisible });
+    this.children.dropdown.setProps({
+      isVisible: !this.children.dropdown.props.isVisible,
+    });
   }
 
   onRemoveUser() {
     this.children.modalRemoveUser.setProps({ isVisible: true });
-    this.setProps({ isVisible: !this.props.isVisible });
+    this.children.dropdown.setProps({
+      isVisible: !this.children.dropdown.props.isVisible,
+    });
   }
 
   render() {
@@ -61,13 +75,7 @@ class ChatHeader extends Block {
             <div class="chatHeader__addition">
                 {{{ moreAction }}}
           
-               {{#> Dropdown isVisible=isVisible top=30 right=0}}
-                  <div class="chatHeader__actions">
-                      {{{ addUser }}}       
-                      
-                      {{{ removeUser }}}
-                  </div>
-              {{/Dropdown}}
+               {{{ dropdown }}}
             </div>
         </div>
         

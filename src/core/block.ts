@@ -5,13 +5,17 @@ import EventBus from "./eventBus.ts";
 class Block {
   static EVENTS = {
     INIT: "init",
-    FLOW_CDM: "flow:component-did-mount",
-    FLOW_CDU: "flow:component-did-update",
+    FLOW_CDM: "flow:components-did-mount",
+    FLOW_CDU: "flow:components-did-update",
     FLOW_RENDER: "flow:render",
   } as const;
 
   _element = null;
   _id = nanoid(6);
+  props = null;
+  children = null;
+  name = null;
+  eventBus = null;
 
   constructor(propsWithChildren = {}) {
     const eventBus = new EventBus();
@@ -156,7 +160,8 @@ class Block {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(oldProps, newProps) {
+    console.log(oldProps, newProps);
     return true;
   }
 

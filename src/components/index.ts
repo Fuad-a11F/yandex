@@ -4,7 +4,6 @@ export { AuthForm } from "./authForm";
 export { FormRegistration } from "./formRegistration";
 export { FormLogin } from "./formLogin";
 export { ChatSearch, InputSearch } from "./chatSearch";
-export { ChatItem } from "./chatItem";
 export { MessageForm } from "./messageForm";
 export { ChatHeader } from "./chatHeader";
 export { ProfileRow } from "./profileRow";

@@ -1,31 +1,30 @@
 import Block from "../../core/block.ts";
-import Avatar from "./components/avatar.ts";
+import { Avatar, AvatarModal } from "./index.ts";
 import { Modal } from "../modal";
-import AvatarModal from "./components/avatarModal.ts";
 
 class UploadAvatar extends Block {
-  handleClick() {
-    this.children.Modal.setProps({ isVisible: true });
-  }
-
   init() {
     const handleClick = this.handleClick.bind(this);
 
     this.children = {
       ...this.children,
-      Avatar: new Avatar({ handleClick: handleClick }),
-      Modal: new Modal({
+      avatar: new Avatar({ handleClick }),
+      modal: new Modal({
         ModalBody: new AvatarModal(),
       }),
     };
   }
 
+  handleClick() {
+    this.children.Modal.setProps({ isVisible: true });
+  }
+
   render() {
     return `
       <div>
-          {{{ Avatar }}}
+          {{{ avatar }}}
           
-          {{{ Modal }}}
+          {{{ modal }}}
       </div>
     `;
   }

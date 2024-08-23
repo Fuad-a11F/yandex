@@ -1,7 +1,6 @@
 import Block from "../../core/block.ts";
-import { ChatHeader, ChatSearch } from "../../components";
+import { ChatHeader, ChatSearch, MessageForm } from "../../components";
 import { chats, messages } from "../../mockData.ts";
-import MessageForm from "../../components/messageForm/messageForm.ts";
 
 class Chat extends Block {
   constructor(props) {

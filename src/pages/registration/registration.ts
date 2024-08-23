@@ -1,13 +1,8 @@
 import Block from "../../core/block.ts";
 import { AuthForm, FormRegistration } from "../../components";
-import {
-  emailValidation,
-  loginValidation,
-  namesValidation,
-  passwordValidation,
-  phoneValidation,
-} from "../../shared/validation.ts";
-import { getRegistrationValidateFields } from "../../shared/inputsForValidate.ts";
+import { getRegistrationValidateFields } from "../../shared/validation/inputsForValidate.ts";
+import validationFunction from "../../shared/validation/validationFunction.ts";
+import { RegistrationInterface } from "../../interface/auth/registrationInterface.ts";
 
 export class Registration extends Block {
   init() {
@@ -24,26 +19,16 @@ export class Registration extends Block {
     };
   }
 
-  formSubmit(data) {
-    const registrationFieldsValidate = getRegistrationValidateFields(data);
-    let isError = false;
+  formSubmit(data: RegistrationInterface) {
+    const error = { isError: false };
 
-    registrationFieldsValidate.forEach((item) => {
-      if (!item.validateFunction(item.value)) {
-        this.children.authForm.children.formBody.children[item.input].setProps({
-          isError: true,
-          errorMessage: item.errorMessage,
-        });
-        isError = true;
-      } else {
-        this.children.authForm.children.formBody.children[item.input].setProps({
-          isError: false,
-          errorMessage: null,
-        });
-      }
-    });
+    validationFunction(
+      getRegistrationValidateFields(data),
+      this.children.authForm.children.formBody.children,
+      error,
+    );
 
-    if (isError) return;
+    if (error.isError) return;
 
     console.log(data);
   }

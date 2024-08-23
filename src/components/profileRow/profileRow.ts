@@ -13,7 +13,7 @@ class ProfileRow extends Block {
             {{#if isEditting}}
                <div class="profileRow__value_edit">
                    <label>
-                       <input type="{{#if isPassword}}password{{else}}text{{/if}}" name="{{name}}" value="{{value}}">
+                       {{{ input }}}
                    </label>
                </div>
             {{else}}

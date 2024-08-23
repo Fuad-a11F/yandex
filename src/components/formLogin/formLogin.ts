@@ -4,7 +4,8 @@ import { Button } from "../button";
 import {
   loginValidation,
   passwordValidation,
-} from "../../shared/validation.ts";
+} from "../../shared/validation/validation.ts";
+import { validationFunctionForField } from "../../shared/validation/validationFunction.ts";
 
 class FormLogin extends Block {
   constructor() {
@@ -12,24 +13,27 @@ class FormLogin extends Block {
   }
 
   init() {
-    const handleValidate = this.handleValidate.bind(this);
-
     const inputLogin = new Input({
       name: "login",
       type: "text",
       placeholder: "Login",
       onBlur: (value: string) =>
-        handleValidate(value, loginValidation, inputLogin, "Login is wrong"),
+        validationFunctionForField(
+          loginValidation,
+          value,
+          this.children.inputLogin,
+          "Login is wrong",
+        ),
     });
     const inputPassword = new Input({
       name: "password",
       type: "password",
       placeholder: "Password",
       onBlur: (value: string) =>
-        handleValidate(
-          value,
+        validationFunctionForField(
           passwordValidation,
-          inputPassword,
+          value,
+          this.children.inputPassword,
           "Password is wrong",
         ),
     });
@@ -52,20 +56,6 @@ class FormLogin extends Block {
       loginButton,
       registerButton,
     };
-  }
-
-  handleValidate(value, validateFunction, input, errorMessage) {
-    if (!validateFunction(value)) {
-      this.children[input].setProps({
-        isError: true,
-        errorMessage,
-      });
-    } else {
-      this.children[input].setProps({
-        isError: false,
-        errorMessage: null,
-      });
-    }
   }
 
   render() {

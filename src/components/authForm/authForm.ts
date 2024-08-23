@@ -1,5 +1,5 @@
 import Block from "../../core/block.ts";
-import Form from "./components/form.ts";
+import { Form } from "./index.ts";
 
 class AuthForm extends Block {
   constructor(props) {

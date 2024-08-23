@@ -5,7 +5,7 @@ class FormAction extends Block {
     super({
       ...props,
       events: {
-        submit: (e) => {
+        submit: (e: SubmitEvent) => {
           e.preventDefault();
           const formData = new FormData(
             document.querySelector(`#${this.props.formId}`),

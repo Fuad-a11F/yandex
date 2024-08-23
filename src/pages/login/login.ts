@@ -1,6 +1,8 @@
 import Block from "../../core/block.ts";
 import { AuthForm, FormLogin } from "../../components";
-import { getLoginValidateFields } from "../../shared/inputsForValidate.ts";
+import { getLoginValidateFields } from "../../shared/validation/inputsForValidate.ts";
+import validationFunction from "../../shared/validation/validationFunction.ts";
+import { LoginInterface } from "../../interface/auth/loginInterface.ts";
 
 class Login extends Block {
   init() {
@@ -17,11 +19,16 @@ class Login extends Block {
     };
   }
 
-  formSubmit(data) {
-    const loginFieldsValidate = getLoginValidateFields(data);
-    let isError = false;
+  formSubmit(data: LoginInterface) {
+    const error = { isError: false };
 
-    if (isError) return;
+    validationFunction(
+      getLoginValidateFields(data),
+      this.children.authForm.children.formBody.children,
+      error,
+    );
+
+    if (error.isError) return;
 
     console.log(data);
   }
