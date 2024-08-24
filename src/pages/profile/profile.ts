@@ -48,7 +48,7 @@ class Profile extends Block {
 
   changeDataHandler() {
     this.setProps({ isChangeData: true });
-    this.children.userInfo?.setProps({ isChangeData: true });
+    this?.children?.userInfo?.setProps({ isChangeData: true });
     [
       "profileRowEmail",
       "profileRowLogin",
