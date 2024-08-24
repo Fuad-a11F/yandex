@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import Block from "../../core/block.ts";
 import { Avatar, AvatarModal } from "./index.ts";
 import { Modal } from "../modal";

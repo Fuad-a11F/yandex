@@ -8,10 +8,6 @@ import {
 import { validationFunctionForField } from "../../shared/validation/validationFunction.ts";
 
 class FormLogin extends Block {
-  constructor() {
-    super();
-  }
-
   init() {
     const inputLogin = new Input({
       name: "login",
@@ -37,12 +33,10 @@ class FormLogin extends Block {
           "Password is wrong",
         ),
     });
-
     const loginButton = new Button({
       text: "Sign in",
       type: "submit",
     });
-
     const registerButton = new Button({
       text: "Don't have an account?",
       type: "button",
