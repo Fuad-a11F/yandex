@@ -1,7 +1,7 @@
 import Block from "../../core/block.ts";
 
 interface FieldsInterface {
-  validateFunction;
+  validateFunction: (value: string) => boolean;
   value: string;
   errorMessage: string;
   input: string;

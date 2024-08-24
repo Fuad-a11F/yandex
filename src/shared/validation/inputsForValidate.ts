@@ -6,6 +6,7 @@ import {
   phoneValidation,
 } from "./validation.ts";
 import { RegistrationInterface } from "../../interface/auth/registrationInterface.ts";
+import { LoginInterface } from "../../interface/auth/loginInterface.ts";
 
 export const getRegistrationValidateFields = (data: RegistrationInterface) => {
   return [
@@ -54,7 +55,7 @@ export const getRegistrationValidateFields = (data: RegistrationInterface) => {
   ];
 };
 
-export const getLoginValidateFields = (data) => {
+export const getLoginValidateFields = (data: LoginInterface) => {
   return [
     {
       validateFunction: loginValidation,
@@ -71,7 +72,7 @@ export const getLoginValidateFields = (data) => {
   ];
 };
 
-export const getUserInfoDataValidateFields = (data) => {
+export const getUserInfoDataValidateFields = (data: RegistrationInterface) => {
   return [
     {
       validateFunction: emailValidation,
@@ -112,7 +113,10 @@ export const getUserInfoDataValidateFields = (data) => {
   ];
 };
 
-export const getUserInfoPasswordValidateFields = (data) => {
+export const getUserInfoPasswordValidateFields = (data: {
+  oldPassword: string;
+  newPassword: string;
+}) => {
   return [
     {
       validateFunction: passwordValidation,
