@@ -7,7 +7,7 @@ const METHODS = {
   DELETE: "DELETE",
 };
 
-const queryStringify = (data: Object): string => {
+const queryStringify = (data: object): string => {
   if (!data || typeof data !== "object") {
     return "";
   }
