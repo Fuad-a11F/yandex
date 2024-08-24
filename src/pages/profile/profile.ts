@@ -38,7 +38,6 @@ class Profile extends Block {
     });
 
     this.children = {
-      ...this.children,
       uploadAvatar,
       userInfo,
       buttonChangeData,
@@ -58,24 +57,27 @@ class Profile extends Block {
       "profileRowDisplayName",
       "profileRowPhone",
     ].forEach((item) => {
-      this.children.userInfo.children[item]?.setProps({
-        isEditting: true,
-      });
+      const child = this.children.userInfo?.children[item];
+      if (child) {
+        child.setProps({ isEditting: true });
+      }
     });
   }
 
   changePasswordHandler() {
     this.setProps({ isChangePassword: true });
-    this.children.userInfo.setProps({ isChangePassword: true });
+    this.children.userInfo?.setProps({ isChangePassword: true });
 
-    this.children.userInfo.children.profileRowOldPassword.setProps({
-      isEditting: true,
-    });
-    this.children.userInfo.children.profileRowNewPassword.setProps({
-      isEditting: true,
-    });
-    this.children.userInfo.children.profileRowNewRePassword.setProps({
-      isEditting: true,
+    const passwordFields = [
+      "profileRowOldPassword",
+      "profileRowNewPassword",
+      "profileRowNewRePassword",
+    ];
+    passwordFields.forEach((item) => {
+      const child = this.children.userInfo?.children[item];
+      if (child) {
+        child.setProps({ isEditting: true });
+      }
     });
   }
 
@@ -84,14 +86,14 @@ class Profile extends Block {
     if (this.props.isChangePassword) {
       validationFunction(
         getUserInfoPasswordValidateFields(data),
-        this.children.userInfo.children,
+        this.children.userInfo?.children || {},
         error,
         "children.input",
       );
     } else if (this.props.isChangeData) {
       validationFunction(
         getUserInfoDataValidateFields(data),
-        this.children.userInfo.children,
+        this.children.userInfo?.children || {},
         error,
         "children.input",
       );
@@ -99,12 +101,13 @@ class Profile extends Block {
 
     if (error.isError) return;
 
-    this.setProps({ isChangePassword: false });
-    this.setProps({ isChangeData: false });
-    this.children.userInfo.setProps({ isChangeData: false });
-    this.children.userInfo.setProps({ isChangePassword: false });
+    this.setProps({ isChangePassword: false, isChangeData: false });
+    this.children.userInfo?.setProps({
+      isChangeData: false,
+      isChangePassword: false,
+    });
 
-    [
+    const allFields = [
       "profileRowEmail",
       "profileRowLogin",
       "profileRowName",
@@ -114,10 +117,12 @@ class Profile extends Block {
       "profileRowOldPassword",
       "profileRowNewPassword",
       "profileRowNewRePassword",
-    ].forEach((item) => {
-      this.children.userInfo.children[item].setProps({
-        isEditting: false,
-      });
+    ];
+    allFields.forEach((item) => {
+      const child = this.children.userInfo?.children[item];
+      if (child) {
+        child.setProps({ isEditting: false });
+      }
     });
 
     console.log(data);
