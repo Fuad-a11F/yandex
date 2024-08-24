@@ -48,7 +48,7 @@ class Profile extends Block {
 
   changeDataHandler() {
     this.setProps({ isChangeData: true });
-    this?.children?.userInfo?.setProps({ isChangeData: true });
+    this.children.userInfo.setProps({ isChangeData: true });
     [
       "profileRowEmail",
       "profileRowLogin",
@@ -57,7 +57,7 @@ class Profile extends Block {
       "profileRowDisplayName",
       "profileRowPhone",
     ].forEach((item) => {
-      const child = this.children.userInfo?.children[item];
+      const child = this.children.userInfo.children[item];
       if (child) {
         child.setProps({ isEditting: true });
       }

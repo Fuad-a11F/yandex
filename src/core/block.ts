@@ -12,10 +12,6 @@ class Block {
 
   _element = null;
   _id = nanoid(6);
-  props = null;
-  children = null;
-  name = null;
-  eventBus = null;
 
   constructor(propsWithChildren = {}) {
     const eventBus = new EventBus();
