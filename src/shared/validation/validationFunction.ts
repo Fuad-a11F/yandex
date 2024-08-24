@@ -60,7 +60,7 @@ const validationFunction = (
 };
 
 export const validationFunctionForField = (
-  validateFunction,
+  validateFunction: (value: string) => boolean,
   value: string,
   selector: Block,
   errorMessage: string,

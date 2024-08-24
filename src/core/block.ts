@@ -77,12 +77,12 @@ class Block {
     });
   }
 
-  private createDocumentElement(tagName) {
+  private createDocumentElement(tagName: string) {
     // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     return document.createElement(tagName);
   }
 
-  private componentDidUpdatePrivate(oldProps, newProps) {
+  private componentDidUpdatePrivate(oldProps: object, newProps: object) {
     console.log("CDU");
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {

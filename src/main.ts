@@ -47,5 +47,13 @@ document.addEventListener("click", (e) => {
     navigate(page);
     e.preventDefault();
     e.stopImmediatePropagation();
+  } else {
+    const page = e.target.closest("a[page]")?.getAttribute("page");
+
+    if (page) {
+      navigate(page);
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }
   }
 });

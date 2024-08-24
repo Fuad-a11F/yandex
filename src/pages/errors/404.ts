@@ -20,7 +20,7 @@ class Page404 extends Block {
                 <p>Not found</p>
             </div>
         
-            {{{ backButton }}}
+            <a href="#" page="chat">{{{ backButton }}}</a>
         </main>
     `;
   }

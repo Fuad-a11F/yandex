@@ -72,7 +72,7 @@ class FormLogin extends Block {
             {{{ loginButton }}}
 
           <div class="login__center">
-              {{{ registerButton }}}
+              <a href="#" page="registration">{{{ registerButton }}}</a>
           </div>
         </div>
       </div>

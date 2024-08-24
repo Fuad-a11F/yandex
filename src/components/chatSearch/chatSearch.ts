@@ -19,7 +19,8 @@ class ChatSearch extends Block {
     return `
     <div class="chatSearch">
         <div class="chatSearch__profile">
-            <button>Profile</button>
+            <a href="#" page="profile"><button>Profile</button></a>
+         
             <img src="./icons/arrow.svg" alt="arrow">
         </div>
     

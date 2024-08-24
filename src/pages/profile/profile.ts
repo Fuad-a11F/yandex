@@ -132,7 +132,7 @@ class Profile extends Block {
     return `
           <div class="profile">
               <aside class="profile__back">
-                  <img src="./icons/buttonArrow.svg" alt="back">
+                  <a href="#" page="chat"><img src="./icons/buttonArrow.svg" alt="back"></a>
               </aside>
           
               <main class="profile__information">
@@ -156,8 +156,8 @@ class Profile extends Block {
                         {{{ buttonChangePassword }}}
                   
                         <hr>
-                  
-                        {{{ buttonLogout }}}
+                        
+                        <a href="#" page="login">{{{ buttonLogout }}}</a>
                     </div>
                   {{/ifLogicOr}}
               </main>
