@@ -34,6 +34,12 @@ export const getRegistrationValidateFields = (data: RegistrationInterface) => {
       input: "inputPassword",
     },
     {
+      validateFunction: passwordValidation,
+      value: data.repassword,
+      errorMessage: "Password is wrong",
+      input: "inputPasswordRepeat",
+    },
+    {
       validateFunction: emailValidation,
       value: data.email,
       errorMessage: "Email is wrong",

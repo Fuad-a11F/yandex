@@ -28,6 +28,15 @@ export class Registration extends Block {
       error,
     );
 
+    if (data.password !== data.repassword) {
+      this.children.authForm.children.formBody.children.inputPasswordRepeat.setProps(
+        {
+          isError: true,
+          errorMessage: "Passwords are different",
+        },
+      );
+    }
+
     if (error.isError) return;
 
     console.log(data);

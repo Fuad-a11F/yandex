@@ -5,7 +5,6 @@ import { Dropdown } from "../dropdown";
 class MessageForm extends Block {
   init() {
     const onAddFiles = this.onAddFiles.bind(this);
-    const formSubmit = this.formSubmit.bind(this);
 
     const addFiles = new AddFiles({ onAddFiles });
     const messageInput = new MessageInput();

@@ -1,7 +1,7 @@
 import Block from "../../core/block.ts";
 
 interface FieldsInterface {
-  validateFunction: Function;
+  validateFunction;
   value: string;
   errorMessage: string;
   input: string;
@@ -20,7 +20,7 @@ const validationFunction = (
 
         let value = selector[item.input];
 
-        for (let key of keys) {
+        for (const key of keys) {
           value = value[key];
         }
         value.setProps({
@@ -41,7 +41,7 @@ const validationFunction = (
 
         let value = selector[item.input];
 
-        for (let key of keys) {
+        for (const key of keys) {
           value = value[key];
         }
 
@@ -60,7 +60,7 @@ const validationFunction = (
 };
 
 export const validationFunctionForField = (
-  validateFunction: Function,
+  validateFunction,
   value: string,
   selector: Block,
   errorMessage: string,

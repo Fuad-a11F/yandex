@@ -54,17 +54,21 @@ class UserInfo extends Block {
         isProfileRow: true,
         name: "newPassword",
         id: "newPassword",
-        value: "text2001New",
         type: "password",
-        onBlur: (value) =>
+        value: "text2001New",
+        onBlur: (value) => {
           validationFunctionForField(
             passwordValidation,
             value,
             this.children.profileRowNewPassword.children.input,
             "Password is wrong",
-          ),
+          );
+          this.setProps({ password: value });
+        },
       }),
     });
+
+    this.setProps({ password: "text2001New" });
 
     const profileRowNewRePassword = new ProfileRow({
       label: "Repeat new password",
@@ -75,6 +79,21 @@ class UserInfo extends Block {
         id: "rePassword",
         value: "text2001New",
         type: "password",
+        onBlur: (value) => {
+          console.log(value);
+          validationFunctionForField(
+            passwordValidation,
+            value,
+            this.children.profileRowNewRePassword.children.input,
+            "Password is wrong",
+          );
+          if (this.props.password !== value) {
+            this.children.profileRowNewRePassword.children.input.setProps({
+              isError: true,
+              errorMessage: "Passwords are different",
+            });
+          }
+        },
       }),
     });
 
@@ -225,7 +244,6 @@ class UserInfo extends Block {
                   <hr>
                   {{{ profileRowDisplayName }}}
                   <hr>
-                  {{{ inputPassword22 }}}
                   {{{ profileRowPhone }}}
               </div>
           {{/if}}

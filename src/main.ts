@@ -38,7 +38,7 @@ function navigate(page: string) {
   container.innerHTML = Handlebars.compile(source)(context);
 }
 
-document.addEventListener("DOMContentLoaded", () => navigate("chat"));
+document.addEventListener("DOMContentLoaded", () => navigate("main"));
 
 document.addEventListener("click", (e) => {
   const page = e.target.getAttribute("page");

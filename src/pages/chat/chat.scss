@@ -125,8 +125,6 @@
   }
 }
 
-@import "../../assets/styles/colors";
-
 .chatItem {
   display: grid;
   grid-template-columns: 62px 1fr;
@@ -154,6 +152,9 @@
     background: $light_gray;
     border-radius: 50%;
     margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &__row {

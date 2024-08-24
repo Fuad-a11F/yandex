@@ -67,7 +67,7 @@ class ChatHeader extends Block {
     <div>
         <div class="chatHeader">
             <div class="chatHeader__info">
-                <div class="chatHeader__avatar"><img src="" alt="avatar"></div>
+                <div class="chatHeader__avatar"><img src="vite.svg" alt="avatar"></div>
         
                 <p>Вадим</p>
             </div>

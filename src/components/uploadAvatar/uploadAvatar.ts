@@ -16,7 +16,7 @@ class UploadAvatar extends Block {
   }
 
   handleClick() {
-    this.children.Modal.setProps({ isVisible: true });
+    this.children.modal.setProps({ isVisible: true });
   }
 
   render() {

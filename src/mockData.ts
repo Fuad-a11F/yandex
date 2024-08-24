@@ -1,6 +1,6 @@
 export const chats = [
   {
-    avatar: "",
+    avatar: "vite.svg",
     name: "Вадим",
     countNewMessages: 2,
     time: "12:00",
@@ -8,14 +8,14 @@ export const chats = [
     lastMessage: "Изображение",
   },
   {
-    avatar: "",
+    avatar: "vite.svg",
     name: "Андрей",
     time: "13:00",
     lastMessage: "Друзья, у меня для вас особенный выпуск новостей!...",
     isYourMessage: true,
   },
   {
-    avatar: "",
+    avatar: "vite.svg",
     name: "Катя",
     countNewMessages: 1,
     time: "Пт",
@@ -23,14 +23,14 @@ export const chats = [
     isYourMessage: true,
   },
   {
-    avatar: "",
+    avatar: "vite.svg",
     name: "Катя",
     countNewMessages: 1,
     time: "Пт",
     lastMessage: "В 2008 году художник Jon Rafman начал собирать...",
   },
   {
-    avatar: "",
+    avatar: "vite.svg",
     name: "Катя",
     time: "Пт",
     lastMessage: "В 2008 году художник Jon Rafman начал собирать...",
@@ -38,7 +38,7 @@ export const chats = [
 ];
 export const chatsWithNotActive = [
   {
-    avatar: "",
+    avatar: "vite.svg",
     name: "Вадим",
     countNewMessages: 2,
     time: "12:00",
@@ -46,13 +46,13 @@ export const chatsWithNotActive = [
     lastMessage: "Изображение",
   },
   {
-    avatar: "",
+    avatar: "vite.svg",
     name: "Андрей",
     time: "13:00",
     lastMessage: "Друзья, у меня для вас особенный выпуск новостей!...",
   },
   {
-    avatar: "",
+    avatar: "vite.svg",
     name: "Катя",
     countNewMessages: 1,
     time: "Пт",

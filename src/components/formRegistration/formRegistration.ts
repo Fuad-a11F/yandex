@@ -85,20 +85,35 @@ class FormRegistration extends Block {
       name: "password",
       type: "password",
       placeholder: "Password",
-      onBlur: (value: string) =>
+      onBlur: (value: string) => {
         validationFunctionForField(
           passwordValidation,
           value,
           this.children.inputPassword,
           "Password is wrong",
-        ),
+        );
+        this.setProps({ password: value });
+      },
     });
 
     const inputPasswordRepeat = new Input({
       name: "repassword",
       type: "password",
       placeholder: "Repeat password",
-      onBlur: () => {},
+      onBlur: (value: string) => {
+        validationFunctionForField(
+          passwordValidation,
+          value,
+          this.children.inputPasswordRepeat,
+          "Password is wrong",
+        );
+        if (this.props.password !== value) {
+          this.children.inputPasswordRepeat.setProps({
+            isError: true,
+            errorMessage: "Passwords are different",
+          });
+        }
+      },
     });
 
     const loginButton = new Button({
