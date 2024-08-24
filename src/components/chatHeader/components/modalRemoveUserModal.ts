@@ -12,7 +12,7 @@ class ModalRemoveUserModal extends Block {
     const loginInput = new Input({
       name: "login",
       placeholder: "Login",
-      onBlur: (value) =>
+      onBlur: (value: string) =>
         validationFunctionForField(
           loginValidation,
           value,

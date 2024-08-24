@@ -1,8 +1,8 @@
 import Block from "../../../core/block.ts";
 
 class AddUser extends Block {
-  constructor(props) {
-    super({ ...props, events: { click: props.onAddUser } });
+  constructor(props: { onAddUser: () => void }) {
+    super({ events: { click: props.onAddUser } });
   }
 
   render() {

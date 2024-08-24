@@ -37,7 +37,7 @@ class UserInfo extends Block {
         id: "oldPassword",
         value: "test2001",
         type: "password",
-        onBlur: (value) =>
+        onBlur: (value: string) =>
           validationFunctionForField(
             passwordValidation,
             value,
@@ -56,7 +56,7 @@ class UserInfo extends Block {
         id: "newPassword",
         type: "password",
         value: "text2001New",
-        onBlur: (value) => {
+        onBlur: (value: string) => {
           validationFunctionForField(
             passwordValidation,
             value,
@@ -79,8 +79,7 @@ class UserInfo extends Block {
         id: "rePassword",
         value: "text2001New",
         type: "password",
-        onBlur: (value) => {
-          console.log(value);
+        onBlur: (value: string) => {
           validationFunctionForField(
             passwordValidation,
             value,
@@ -105,7 +104,7 @@ class UserInfo extends Block {
         name: "email",
         id: "email",
         value: "pochta@yandex.ru",
-        onBlur: (value) =>
+        onBlur: (value: string) =>
           validationFunctionForField(
             emailValidation,
             value,
@@ -123,7 +122,7 @@ class UserInfo extends Block {
         name: "login",
         id: "login",
         value: "ivanivanov",
-        onBlur: (value) =>
+        onBlur: (value: string) =>
           validationFunctionForField(
             loginValidation,
             value,
@@ -141,7 +140,7 @@ class UserInfo extends Block {
         name: "first_name",
         id: "first_name",
         value: "Иван",
-        onBlur: (value) =>
+        onBlur: (value: string) =>
           validationFunctionForField(
             namesValidatio,
             value,
@@ -159,7 +158,7 @@ class UserInfo extends Block {
         name: "second_name",
         id: "second_name",
         value: "Иванов",
-        onBlur: (value) =>
+        onBlur: (value: string) =>
           validationFunctionForField(
             namesValidation,
             value,
@@ -177,7 +176,7 @@ class UserInfo extends Block {
         name: "display_name",
         id: "display_name",
         value: "Иван",
-        onBlur: (value) =>
+        onBlur: (value: string) =>
           validationFunctionForField(
             loginValidation,
             value,
@@ -195,7 +194,7 @@ class UserInfo extends Block {
         name: "phone",
         id: "phone",
         value: "+7 (909) 967 30 30",
-        onBlur: (value) =>
+        onBlur: (value: string) =>
           validationFunctionForField(
             phoneValidation,
             value,

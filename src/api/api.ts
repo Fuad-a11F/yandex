@@ -1,3 +1,5 @@
+import { ApiOptionInterface } from "../interface/api/apiInterface.ts";
+
 const METHODS = {
   GET: "GET",
   POST: "POST",
@@ -55,7 +57,11 @@ class HTTPTransport {
     );
   };
 
-  request = (url: string, options = {}, timeout: number = 5000) => {
+  request = (
+    url: string,
+    options: ApiOptionInterface | {} = {},
+    timeout: number = 5000,
+  ) => {
     const { headers = {}, method, data } = options;
 
     return new Promise(function (resolve, reject) {

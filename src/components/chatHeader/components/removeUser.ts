@@ -1,8 +1,8 @@
 import Block from "../../../core/block.ts";
 
 class RemoveUser extends Block {
-  constructor(props) {
-    super({ ...props, events: { click: props.onRemoveUser } });
+  constructor(props: { onRemoveUser: () => void }) {
+    super({ events: { click: props.onRemoveUser } });
   }
 
   render() {
