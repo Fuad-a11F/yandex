@@ -13,7 +13,7 @@ class Block {
   _element = null;
   _id = nanoid(6);
   props = {};
-  children = {};
+  children: unknown = {}; //  @typescript-eslint/no-explicit-any
   name = {};
   eventBus = {};
 
