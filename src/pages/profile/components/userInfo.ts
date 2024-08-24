@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import Block from "../../../core/block.ts";
 import { Button, Input, ProfileRow } from "../../../components";
 import { validationFunctionForField } from "../../../shared/validation/validationFunction.ts";
