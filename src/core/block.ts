@@ -15,7 +15,6 @@ class Block {
 
   _element = null;
   _id = nanoid(6);
-  props = {};
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any = {};
   name = {};
@@ -109,6 +108,14 @@ class Block {
     });
   }
 
+  private removeEvents() {
+    const { events = {} } = this.props;
+
+    Object.keys(events).forEach((eventName) => {
+      this._element.removeEventListener(eventName, events[eventName]);
+    });
+  }
+
   private getChildrenAndProps(propsAndChildren) {
     const children = {};
     const props = {};
@@ -144,9 +151,9 @@ class Block {
     });
 
     if (this._element) {
+      this.removeEvents();
       this._element.replaceWith(newElement);
     }
-
     this._element = newElement;
 
     this.addEvents();
