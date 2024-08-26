@@ -1,7 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../../core/block.ts";
 import { Button, Input, ProfileRow } from "../../../components";
 import { validationFunctionForField } from "../../../shared/validation/validationFunction.ts";
@@ -12,18 +8,23 @@ import {
   passwordValidation,
   phoneValidation,
 } from "../../../shared/validation/validation.ts";
+import { UserInfoInterface } from "../../../interface/modules/profile/userInfoInterface.ts";
 
-class UserInfo extends Block {
-  constructor(props) {
+class UserInfo extends Block<UserInfoInterface> {
+  constructor(props: UserInfoInterface) {
     super({
       ...props,
       events: {
         submit: (e: SubmitEvent) => {
           e.preventDefault();
-          const formData = new FormData(document.querySelector("#userInfo"));
-          const formObject = Object.fromEntries(formData.entries());
+          const form = document.querySelector("#userInfo");
 
-          props.formSubmit(formObject);
+          if (form) {
+            const formData = new FormData();
+            const formObject = Object.fromEntries(formData.entries());
+
+            props.formSubmit(formObject);
+          }
         },
       },
     });
@@ -146,7 +147,7 @@ class UserInfo extends Block {
         value: "Иван",
         onBlur: (value: string) =>
           validationFunctionForField(
-            namesValidatio,
+            namesValidation,
             value,
             this.children.profileRowName.children.input,
             "First name is wrong",

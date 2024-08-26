@@ -1,7 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../core/block.ts";
 import { Button, UploadAvatar } from "../../components";
 import { UserInfo } from "./index.ts";
@@ -10,9 +6,13 @@ import {
   getUserInfoPasswordValidateFields,
 } from "../../shared/validation/inputsForValidate.ts";
 import validationFunction from "../../shared/validation/validationFunction.ts";
-import { ProfileInterface } from "../../interface/profile/profileInterface.ts";
+import { ProfileInterface } from "../../interface/modules/profile/profileInterface.ts";
+import {
+  ProfileChangePasswordInterface,
+  ProfileMainInterface,
+} from "../../interface/profile/profileInterface.ts";
 
-class Profile extends Block {
+class Profile extends Block<ProfileInterface> {
   init() {
     const changeDataHandler = this.changeDataHandler.bind(this);
     const changePasswordHandler = this.changePasswordHandler.bind(this);
@@ -85,18 +85,20 @@ class Profile extends Block {
     });
   }
 
-  formSubmit(data: Partial<ProfileInterface>) {
+  formSubmit(data: ProfileChangePasswordInterface | ProfileMainInterface) {
     const error = { isError: false };
     if (this.props.isChangePassword) {
       validationFunction(
-        getUserInfoPasswordValidateFields(data),
+        getUserInfoPasswordValidateFields(
+          data as ProfileChangePasswordInterface,
+        ),
         this.children.userInfo?.children || {},
         error,
         "children.input",
       );
     } else if (this.props.isChangeData) {
       validationFunction(
-        getUserInfoDataValidateFields(data),
+        getUserInfoDataValidateFields(data as ProfileMainInterface),
         this.children.userInfo?.children || {},
         error,
         "children.input",

@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
 
 import Block from "../../core/block.ts";
 
@@ -13,9 +12,9 @@ interface FieldsInterface {
 
 const validationFunction = (
   fields: FieldsInterface[],
-  selector: Block,
+  selector: Record<string, Block>,
   error: { isError: boolean },
-  selectorContinue = null,
+  selectorContinue: string | null = null,
 ) => {
   fields.forEach((item) => {
     if (!item.validateFunction(item.value)) {

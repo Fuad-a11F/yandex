@@ -1,7 +1,9 @@
-export interface ProfileInterface {
+export interface ProfileChangePasswordInterface {
   oldPassword: string;
   newPassword: string;
-  rePassword: string;
+}
+
+export interface ProfileMainInterface {
   email: string;
   login: string;
   first_name: string;

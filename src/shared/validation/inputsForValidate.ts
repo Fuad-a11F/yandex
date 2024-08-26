@@ -1,8 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import {
   emailValidation,
   loginValidation,
@@ -12,6 +7,10 @@ import {
 } from "./validation.ts";
 import { RegistrationInterface } from "../../interface/auth/registrationInterface.ts";
 import { LoginInterface } from "../../interface/auth/loginInterface.ts";
+import {
+  ProfileChangePasswordInterface,
+  ProfileMainInterface,
+} from "../../interface/profile/profileInterface.ts";
 
 export const getRegistrationValidateFields = (data: RegistrationInterface) => {
   return [
@@ -77,7 +76,7 @@ export const getLoginValidateFields = (data: LoginInterface) => {
   ];
 };
 
-export const getUserInfoDataValidateFields = (data) => {
+export const getUserInfoDataValidateFields = (data: ProfileMainInterface) => {
   return [
     {
       validateFunction: emailValidation,
@@ -118,10 +117,9 @@ export const getUserInfoDataValidateFields = (data) => {
   ];
 };
 
-export const getUserInfoPasswordValidateFields = (data: {
-  oldPassword: string;
-  newPassword: string;
-}) => {
+export const getUserInfoPasswordValidateFields = (
+  data: ProfileChangePasswordInterface,
+) => {
   return [
     {
       validateFunction: passwordValidation,

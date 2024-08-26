@@ -4,8 +4,9 @@
 import { nanoid } from "nanoid";
 import Handlebars from "handlebars";
 import EventBus from "./eventBus.ts";
+import { BlockPropsInterface } from "../interface/core/blockInterface.ts";
 
-class Block {
+class Block<Props extends BlockPropsInterface = unknown> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:components-did-mount",
@@ -15,17 +16,15 @@ class Block {
 
   _element = null;
   _id = nanoid(6);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  children: any = {};
-  name = {};
+  children: Record<string, Block> = {};
   eventBus = {};
+  props: Props = {} as Props;
 
   constructor(propsWithChildren = {}) {
     const eventBus = new EventBus();
     const { props, children } = this.getChildrenAndProps(propsWithChildren);
     this.props = this.makePropsProxy({ ...props });
     this.children = children;
-    this.name = "";
 
     this.eventBus = () => eventBus;
 
