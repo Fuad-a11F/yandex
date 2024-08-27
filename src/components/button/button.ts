@@ -1,7 +1,8 @@
 import Block from "../../core/block.ts";
+import { ButtonInterface } from "../../interface/components/buttonInterface.ts";
 
-class Button extends Block {
-  constructor(props) {
+class Button extends Block<ButtonInterface> {
+  constructor(props: ButtonInterface) {
     super({ ...props, events: { click: props.onClick } });
   }
 

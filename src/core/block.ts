@@ -4,9 +4,13 @@
 import { nanoid } from "nanoid";
 import Handlebars from "handlebars";
 import EventBus from "./eventBus.ts";
-import { BlockPropsInterface } from "../interface/core/blockInterface.ts";
 
-class Block<Props extends BlockPropsInterface = unknown> {
+class Block<
+  Props extends Record<
+    [key: string],
+    string | number | Function | Block
+  > = unknown,
+> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:components-did-mount",

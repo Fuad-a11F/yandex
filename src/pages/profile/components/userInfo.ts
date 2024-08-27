@@ -20,7 +20,7 @@ class UserInfo extends Block<UserInfoInterface> {
           const form = document.querySelector("#userInfo");
 
           if (form) {
-            const formData = new FormData();
+            const formData = new FormData(form as HTMLFormElement);
             const formObject = Object.fromEntries(formData.entries());
 
             props.formSubmit(formObject);

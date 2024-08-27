@@ -1,12 +1,12 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../core/block.ts";
 import { AddFiles, MessageInput } from "./index.ts";
 import { Dropdown } from "../dropdown";
+import {
+  MessageFormInterface,
+  MessageInterface,
+} from "../../interface/components/messageFormInterface.ts";
 
-class MessageForm extends Block {
+class MessageForm extends Block<MessageFormInterface> {
   init() {
     const onAddFiles = this.onAddFiles.bind(this);
 
@@ -33,10 +33,18 @@ class MessageForm extends Block {
       events: {
         submit: (e: SubmitEvent) => {
           e.preventDefault();
-          const formData = new FormData(document.querySelector("#chat"));
-          const formObject = Object.fromEntries(formData.entries());
+          const form = document.querySelector("#chat");
 
-          this.formSubmit(formObject);
+          if (form) {
+            const formData = new FormData(form as HTMLFormElement);
+            const formObject = Object.fromEntries(formData.entries());
+
+            const typedFormObject: MessageInterface = {
+              message: formObject.message as string,
+            };
+
+            this.formSubmit(typedFormObject);
+          }
         },
       },
     });
@@ -51,13 +59,13 @@ class MessageForm extends Block {
 
   onAddFiles() {
     this.children.dropdown.setProps({
-      isVisible: !this.children.dropdown.props.isVisible,
+      isVisible: !this.children.dropdown.props!.isVisible,
       bottom: 45,
       left: 5,
     });
   }
 
-  formSubmit(data) {
+  formSubmit(data: MessageInterface) {
     if (data.message === "") return;
 
     console.log(data);
@@ -66,20 +74,20 @@ class MessageForm extends Block {
   render() {
     return `
     <form id="chat">
-    <div class="messageForm">
-        {{{ dropdown }}}
-
-        {{{ addFiles }}}
-
-        {{{ messageInput }}} 
-
-        <div class="messageForm__send">
-            <button>
-                <img src="./icons/buttonArrow.svg" alt="send message" width="32" height="32">
-            </button>
-        </div>
-    </div>
-</form>
+      <div class="messageForm">
+          {{{ dropdown }}}
+  
+          {{{ addFiles }}}
+  
+          {{{ messageInput }}} 
+  
+          <div class="messageForm__send">
+              <button>
+                  <img src="./icons/buttonArrow.svg" alt="send message" width="32" height="32">
+              </button>
+          </div>
+      </div>
+  </form>
 
     `;
   }

@@ -8,7 +8,7 @@ class MessageInput extends Block {
   render() {
     return `<div class="messageForm__input">
             <label>
-                <input name="message" type="text" placeholder="Message">
+                <input id="message" name="message" type="text" placeholder="Message">
             </label>
         </div>`;
   }

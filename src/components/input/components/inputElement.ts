@@ -1,17 +1,15 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../../core/block.ts";
+import { InputElementInterface } from "../../../interface/components/inputInterface.ts";
 
-class InputElement extends Block {
-  constructor(props) {
+class InputElement extends Block<InputElementInterface> {
+  constructor(props: InputElementInterface) {
     super({
       ...props,
       events: {
-        blur: (e) => {
+        blur: (e: FocusEvent) => {
           if (props.onBlur) {
-            props.onBlur(e.target.value);
+            const target = e.target as HTMLInputElement;
+            props.onBlur(target.value);
           }
         },
       },
