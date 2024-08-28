@@ -1,23 +1,22 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../../core/block.ts";
+import { FormActionInterface } from "../../../interface/components/chatHeaderInterface.ts";
 
-class FormAction extends Block {
-  constructor(props) {
+class FormAction extends Block<FormActionInterface> {
+  constructor(props: FormActionInterface) {
     super({
       ...props,
       events: {
         submit: (e: SubmitEvent) => {
           e.preventDefault();
-          const formData = new FormData(
-            document.querySelector(`#${this.props.formId}`),
-          );
-          const formObject = Object.fromEntries(formData.entries());
+          const form = document.querySelector(`#${this.props.formId}`);
 
-          if (props.formSubmit) {
-            props.formSubmit(formObject);
+          if (form) {
+            const formData = new FormData(form as HTMLFormElement);
+            const formObject = Object.fromEntries(formData.entries());
+
+            if (props.formSubmit) {
+              props.formSubmit(formObject);
+            }
           }
         },
       },

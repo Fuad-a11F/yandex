@@ -4,8 +4,12 @@ import { Button } from "../../button";
 import { loginValidation } from "../../../shared/validation/validation.ts";
 import FormAction from "./formAction.ts";
 import { validationFunctionForField } from "../../../shared/validation/validationFunction.ts";
+import {
+  FormDataInterface,
+  ModalUserModalInterface,
+} from "../../../interface/components/chatHeaderInterface.ts";
 
-class ModalAddUserModal extends Block {
+class ModalAddUserModal extends Block<ModalUserModalInterface> {
   init() {
     const formSubmit = this.formSubmit.bind(this);
 
@@ -31,13 +35,11 @@ class ModalAddUserModal extends Block {
 
     this.children = {
       ...this.children,
-      loginInput,
-      addButton,
       formAction,
     };
   }
 
-  formSubmit(data: { login: string }) {
+  formSubmit(data: FormDataInterface) {
     if (!loginValidation(data.login)) {
       this.children.loginInput.setProps({
         isError: true,
@@ -46,7 +48,7 @@ class ModalAddUserModal extends Block {
 
       return;
     }
-    this.children.loginInput.setProps({
+    this.children.formAction.children.input.setProps({
       isError: false,
       errorMessage: null,
     });

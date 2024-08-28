@@ -1,7 +1,8 @@
 import Block from "../../../core/block.ts";
+import { AddUserInterface } from "../../../interface/components/chatHeaderInterface.ts";
 
-class AddUser extends Block {
-  constructor(props: { onAddUser: () => void }) {
+class AddUser extends Block<AddUserInterface> {
+  constructor(props: AddUserInterface) {
     super({ events: { click: props.onAddUser } });
   }
 

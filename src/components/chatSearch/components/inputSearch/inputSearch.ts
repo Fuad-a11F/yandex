@@ -1,10 +1,6 @@
 import Block from "../../../../core/block.ts";
 
 class InputSearch extends Block {
-  constructor() {
-    super();
-  }
-
   render() {
     return `
     <div class="inputSearch">

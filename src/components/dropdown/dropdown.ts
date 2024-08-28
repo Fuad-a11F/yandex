@@ -3,9 +3,10 @@
 // Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
 
 import Block from "../../core/block.ts";
+import { DropdownInterface } from "../../interface/components/dropdownInterface.ts";
 
-class Dropdown extends Block {
-  constructor(props) {
+class Dropdown extends Block<DropdownInterface> {
+  constructor(props: DropdownInterface) {
     super({ ...props });
   }
 

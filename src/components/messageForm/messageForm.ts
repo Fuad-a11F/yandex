@@ -5,6 +5,7 @@ import {
   MessageFormInterface,
   MessageInterface,
 } from "../../interface/components/messageFormInterface.ts";
+import DropdownActions from "./components/dropdownActions.ts";
 
 class MessageForm extends Block<MessageFormInterface> {
   init() {
@@ -13,19 +14,7 @@ class MessageForm extends Block<MessageFormInterface> {
     const addFiles = new AddFiles({ onAddFiles });
     const messageInput = new MessageInput();
     const dropdown = new Dropdown({
-      dropdownBody: `<div class="messageForm__actions">
-                <div>
-                    <img src="./icons/photo.svg" alt="photo and video"><p>Фото или Видео</p>
-                </div>
-
-                <div>
-                    <img src="./icons/file.svg" alt="file"><p>Файл</p>
-                </div>
-
-                <div>
-                    <img src="./icons/location.svg" alt="location"><p>Локация</p>
-                </div>
-            </div>`,
+      dropdownBody: new DropdownActions(),
     });
 
     this.setProps({
@@ -59,7 +48,7 @@ class MessageForm extends Block<MessageFormInterface> {
 
   onAddFiles() {
     this.children.dropdown.setProps({
-      isVisible: !this.children.dropdown.props!.isVisible,
+      isVisible: !(this.children.dropdown as Dropdown).props!.isVisible,
       bottom: 45,
       left: 5,
     });

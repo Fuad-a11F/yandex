@@ -1,7 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../core/block.ts";
 import { Modal } from "../modal";
 import {
@@ -13,8 +9,9 @@ import {
   DropdownHeader,
 } from "./index.ts";
 import { Dropdown } from "../dropdown";
+import { ChatHeaderInterface } from "../../interface/components/chatHeaderInterface.ts";
 
-class ChatHeader extends Block {
+class ChatHeader extends Block<ChatHeaderInterface> {
   init() {
     const onClose = this.onClose.bind(this);
     const onAddUser = this.onAddUser.bind(this);
@@ -46,7 +43,7 @@ class ChatHeader extends Block {
 
   onClose() {
     this.children.dropdown.setProps({
-      isVisible: !this.children.dropdown.props.isVisible,
+      isVisible: !(this.children.dropdown as Dropdown).props.isVisible,
       top: 30,
       right: 0,
     });
@@ -55,14 +52,14 @@ class ChatHeader extends Block {
   onAddUser() {
     this.children.modalAddUser.setProps({ isVisible: true });
     this.children.dropdown.setProps({
-      isVisible: !this.children.dropdown.props.isVisible,
+      isVisible: !(this.children.dropdown as Dropdown).props.isVisible,
     });
   }
 
   onRemoveUser() {
     this.children.modalRemoveUser.setProps({ isVisible: true });
     this.children.dropdown.setProps({
-      isVisible: !this.children.dropdown.props.isVisible,
+      isVisible: !(this.children.dropdown as Dropdown).props.isVisible,
     });
   }
 

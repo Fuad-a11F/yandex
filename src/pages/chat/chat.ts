@@ -5,6 +5,7 @@
 import Block from "../../core/block.ts";
 import { ChatHeader, ChatSearch, MessageForm } from "../../components";
 import { chats, messages } from "../../mockData.ts";
+import ChatItem from "../../components/chatItem/chatItem.ts";
 
 class Chat extends Block {
   constructor(props) {
@@ -18,7 +19,7 @@ class Chat extends Block {
 
     this.setProps({
       ...this.props,
-      chats,
+      chats: chats.map((item) => new ChatItem({ ...item })),
       messages,
     });
 
@@ -37,31 +38,7 @@ class Chat extends Block {
             {{{ chatSearch }}}
     
             {{#each chats as |chat|}}
-               <div class="chatItem {{#if isActive}}chatItem__active{{/if}}">
-                  <div class="chatItem__image">
-                      <img src="{{avatar}}" alt="avatar">
-                  </div>
-              
-                  <div class="chatItem__info">
-                      <div class="chatItem__row">
-                          <div class="chatItem__name">{{name}}</div>
-                          <div class="chatItem__time">{{time}}</div>
-                      </div>
-              
-                      {{#if isYourMessage}}
-                          <div class="chatItem__message"><span>Вы: </span>{{lastMessage}}</div>
-                      {{else}}
-                          <div class="chatItem__message">{{lastMessage}}</div>
-                      {{/if}}
-                  </div>
-              
-                  {{#if countNewMessages}}
-                      <div class="chatItem__new-message">
-                          {{countNewMessages}}
-                      </div>
-                  {{/if}}
-             
-              </div>
+               {{{chat}}}
             {{/each}}
         </aside>
         

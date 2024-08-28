@@ -1,11 +1,8 @@
 import Block from "../../core/block.ts";
 import { InputSearch } from "./index.ts";
+import { ChatSearchInterface } from "../../interface/components/chatSearchInterface.ts";
 
-class ChatSearch extends Block {
-  constructor() {
-    super();
-  }
-
+class ChatSearch extends Block<ChatSearchInterface> {
   init() {
     const inputSearch = new InputSearch();
 

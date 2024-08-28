@@ -1,11 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../../core/block.ts";
+import { MoreActionInterface } from "../../../interface/components/chatHeaderInterface.ts";
 
-class MoreAction extends Block {
-  constructor(props) {
+class MoreAction extends Block<MoreActionInterface> {
+  constructor(props: MoreActionInterface) {
     super({ ...props, events: { click: props.onClose } });
   }
 
