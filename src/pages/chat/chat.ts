@@ -1,21 +1,21 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../core/block.ts";
 import { ChatHeader, ChatSearch, MessageForm } from "../../components";
 import { chats, messages } from "../../mockData.ts";
 import ChatItem from "../../components/chatItem/chatItem.ts";
+import {
+  ChatChildrenInterface,
+  ChatPropsInterface,
+} from "../../interface/modules/chat/chatInterface.ts";
 
-class Chat extends Block {
-  constructor(props) {
+class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
+  constructor(props: ChatPropsInterface) {
     super({ ...props });
   }
 
   init() {
-    const chatSearch = new ChatSearch();
-    const chatHeader = new ChatHeader();
-    const messageForm = new MessageForm();
+    const chatSearch = new ChatSearch({});
+    const chatHeader = new ChatHeader({});
+    const messageForm = new MessageForm({});
 
     this.setProps({
       ...this.props,

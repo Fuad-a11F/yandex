@@ -40,7 +40,7 @@ function navigate(
   const container = document.getElementById("app")!;
 
   if (source instanceof Object) {
-    const page = new source(context);
+    const page = new source(context as any);
     container.innerHTML = "";
     container.append(page.getContent()!);
     page.dispatchComponentDidMount();

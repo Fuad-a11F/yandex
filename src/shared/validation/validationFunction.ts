@@ -1,8 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
-import Block from "../../core/block.ts";
 import { ChildrenComponent } from "../../interface/core/blockInterface.ts";
+import Block from "../../core/block.ts";
 
 interface FieldsInterface {
   validateFunction: (value: string) => boolean;
@@ -22,9 +19,10 @@ const validationFunction = (
       if (selectorContinue) {
         const keys = selectorContinue.split(".");
 
-        let value = selector[item.input];
+        let value = (selector as { [key: string]: Block<object> })[item.input];
 
         for (const key of keys) {
+          // @ts-ignore
           value = value[key];
         }
         value.setProps({
@@ -32,7 +30,7 @@ const validationFunction = (
           errorMessage: item.errorMessage,
         });
       } else {
-        selector[item.input].setProps({
+        (selector as { [key: string]: Block<object> })[item.input].setProps({
           isError: true,
           errorMessage: item.errorMessage,
         });
@@ -43,9 +41,10 @@ const validationFunction = (
       if (selectorContinue) {
         const keys = selectorContinue.split(".");
 
-        let value = selector[item.input];
+        let value = (selector as { [key: string]: Block<object> })[item.input];
 
         for (const key of keys) {
+          // @ts-ignore
           value = value[key];
         }
 
@@ -54,7 +53,7 @@ const validationFunction = (
           errorMessage: null,
         });
       } else {
-        selector[item.input].setProps({
+        (selector as { [key: string]: Block<object> })[item.input].setProps({
           isError: false,
           errorMessage: null,
         });
@@ -70,15 +69,19 @@ export const validationFunctionForField = (
   errorMessage: string,
 ) => {
   if (!validateFunction(value)) {
-    selector.setProps({
-      isError: true,
-      errorMessage,
-    });
+    if (Object.keys(selector).length > 0 && "setProps" in selector) {
+      selector.setProps({
+        isError: true,
+        errorMessage,
+      });
+    }
   } else {
-    selector.setProps({
-      isError: false,
-      errorMessage: null,
-    });
+    if (Object.keys(selector).length > 0 && "setProps" in selector) {
+      selector.setProps({
+        isError: false,
+        errorMessage: null,
+      });
+    }
   }
 };
 
