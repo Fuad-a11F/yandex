@@ -1,5 +1,5 @@
 import Block from "../../../core/block.ts";
-import { DropdownHeaderInterface } from "../../../interface/components/chatHeaderInterface.ts";
+import { DropdownHeaderInterface } from "../../../interface/components/chatHeaderPropsInterface.ts";
 
 class DropdownHeader extends Block<DropdownHeaderInterface> {
   render() {

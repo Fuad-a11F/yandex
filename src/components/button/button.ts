@@ -1,9 +1,16 @@
 import Block from "../../core/block.ts";
-import { ButtonInterface } from "../../interface/components/buttonInterface.ts";
+import { ButtonPropsInterface } from "../../interface/components/buttonPropsInterface.ts";
 
-class Button extends Block<ButtonInterface> {
-  constructor(props: ButtonInterface) {
-    super({ ...props, events: { click: props.onClick } });
+class Button extends Block<ButtonPropsInterface> {
+  constructor(props: ButtonPropsInterface) {
+    super({
+      ...props,
+      events: {
+        click: (e: MouseEvent) => {
+          props.onClick && props.onClick(e);
+        },
+      },
+    });
   }
 
   render() {

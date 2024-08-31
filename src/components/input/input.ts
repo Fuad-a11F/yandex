@@ -1,8 +1,11 @@
 import Block from "../../core/block.ts";
 import { InputElement } from "./index.ts";
-import { InputInterface } from "../../interface/components/inputInterface.ts";
+import {
+  InputChildrenInterface,
+  InputPropsInterface,
+} from "../../interface/components/inputPropsInterface.ts";
 
-class Input extends Block<InputInterface> {
+class Input extends Block<InputPropsInterface, InputChildrenInterface> {
   init() {
     const inputElement = new InputElement({ ...this.props });
 

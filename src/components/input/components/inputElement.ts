@@ -1,5 +1,5 @@
 import Block from "../../../core/block.ts";
-import { InputElementInterface } from "../../../interface/components/inputInterface.ts";
+import { InputElementInterface } from "../../../interface/components/inputPropsInterface.ts";
 
 class InputElement extends Block<InputElementInterface> {
   constructor(props: InputElementInterface) {

@@ -1,8 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
-import Handlebars from "handlebars";
+import Handlebars, { Template } from "handlebars";
 import * as Components from "./components";
 import * as Pages from "./pages";
 
@@ -17,24 +13,36 @@ const pages = {
 };
 
 Object.entries(Components).forEach(([name, component]) => {
-  Handlebars.registerPartial(name, component);
+  Handlebars.registerPartial(name, component as unknown as Template);
 });
 
-Handlebars.registerHelper("ifLogicOr", function (v1, v2, options) {
-  if (v1 || v2) {
-    return options.fn(this);
-  }
-  return options.inverse(this);
-});
+Handlebars.registerHelper(
+  "ifLogicOr",
+  function (this: unknown, v1: string, v2: string, options) {
+    if (v1 || v2) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  },
+);
 
-function navigate(page: string) {
+function navigate(
+  page:
+    | "login"
+    | "registration"
+    | "main"
+    | "chat"
+    | "profile"
+    | "404page"
+    | "500page",
+) {
   const [source, context] = pages[page];
   const container = document.getElementById("app")!;
 
   if (source instanceof Object) {
     const page = new source(context);
     container.innerHTML = "";
-    container.append(page.getContent());
+    container.append(page.getContent()!);
     page.dispatchComponentDidMount();
     return;
   }
@@ -44,18 +52,38 @@ function navigate(page: string) {
 
 document.addEventListener("DOMContentLoaded", () => navigate("main"));
 
-document.addEventListener("click", (e) => {
-  const page = e.target.getAttribute("page");
+document.addEventListener("click", (e: MouseEvent) => {
+  const page = (e.target as HTMLElement).getAttribute("page");
 
   if (page) {
-    navigate(page);
+    navigate(
+      page as
+        | "login"
+        | "registration"
+        | "main"
+        | "chat"
+        | "profile"
+        | "404page"
+        | "500page",
+    );
     e.preventDefault();
     e.stopImmediatePropagation();
   } else {
-    const page = e.target.closest("a[page]")?.getAttribute("page");
+    const page = (e.target as HTMLElement)
+      .closest("a[page]")
+      ?.getAttribute("page");
 
     if (page) {
-      navigate(page);
+      navigate(
+        page as
+          | "login"
+          | "registration"
+          | "main"
+          | "chat"
+          | "profile"
+          | "404page"
+          | "500page",
+      );
       e.preventDefault();
       e.stopImmediatePropagation();
     }

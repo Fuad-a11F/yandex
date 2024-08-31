@@ -1,12 +1,15 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../core/block.ts";
 import { Form } from "./index.ts";
+import {
+  AuthFormChildrenInterface,
+  AuthFormPropsInterface,
+} from "../../interface/components/authFormInterface.ts";
 
-class AuthForm extends Block {
-  constructor(props) {
+class AuthForm extends Block<
+  AuthFormPropsInterface,
+  AuthFormChildrenInterface
+> {
+  constructor(props: AuthFormPropsInterface & AuthFormChildrenInterface) {
     super({
       ...props,
       form: new Form({

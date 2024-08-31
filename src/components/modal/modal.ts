@@ -1,16 +1,16 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../core/block.ts";
+import {
+  ModalChildrenInterface,
+  ModalPropsInterface,
+} from "../../interface/components/modalInterface.ts";
 
-class Modal extends Block {
-  constructor(props) {
+class Modal extends Block<ModalPropsInterface, ModalChildrenInterface> {
+  constructor(props: ModalPropsInterface | ModalChildrenInterface) {
     super({
       ...props,
       events: {
-        click: (e) => {
-          if (e.target.className.includes("modal__active")) {
+        click: (e: MouseEvent) => {
+          if ((e.target as HTMLElement).className.includes("modal__active")) {
             this.setProps({ isVisible: false });
           }
         },

@@ -1,16 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
 import { nanoid } from "nanoid";
 import Handlebars from "handlebars";
 import EventBus from "./eventBus.ts";
+import { ChildrenComponent } from "../interface/core/blockInterface.ts";
 
-class Block<
-  Props extends Record<
-    [key: string],
-    string | number | Function | Block
-  > = unknown,
-> {
+class Block<Props = object, Children extends ChildrenComponent = {}> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:components-did-mount",
@@ -18,13 +11,13 @@ class Block<
     FLOW_RENDER: "flow:render",
   } as const;
 
-  _element = null;
+  _element: HTMLElement | null = null;
   _id = nanoid(6);
-  children: Record<string, Block> = {};
-  eventBus = {};
-  props: Props = {} as Props;
+  eventBus;
+  props: Props;
+  children: Children;
 
-  constructor(propsWithChildren = {}) {
+  constructor(propsWithChildren: Partial<Props & Children>) {
     const eventBus = new EventBus();
     const { props, children } = this.getChildrenAndProps(propsWithChildren);
     this.props = this.makePropsProxy({ ...props });
@@ -38,14 +31,16 @@ class Block<
   }
 
   private addEvents() {
-    const { events = {} } = this.props;
+    const { events = {} } = this.props as Props & {
+      events: { [key: string]: () => void };
+    };
 
     Object.keys(events).forEach((eventName) => {
-      this._element.addEventListener(eventName, events[eventName]);
+      this._element?.addEventListener(eventName, events[eventName]);
     });
   }
 
-  private registerEvents(eventBus: EventBus) {
+  private registerEvents(eventBus: EventBus<string>) {
     eventBus.on(Block.EVENTS.INIT, this.initPrivate.bind(this));
     eventBus.on(
       Block.EVENTS.FLOW_CDM,
@@ -64,13 +59,13 @@ class Block<
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  private makePropsProxy(props) {
-    return new Proxy(props, {
-      get: (target, prop) => {
+  private makePropsProxy(props: Props): Props {
+    return new Proxy(props as object, {
+      get: (target: { [key: string]: unknown }, prop: string) => {
         const value = target[prop];
         return typeof value === "function" ? value.bind(target) : value;
       },
-      set: (target, prop, value) => {
+      set: (target: { [key: string]: unknown }, prop: string, value) => {
         const oldTarget = { ...target };
         target[prop] = value;
         this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
@@ -79,15 +74,14 @@ class Block<
       deleteProperty: () => {
         throw new Error("Нет доступа");
       },
-    });
+    }) as Props;
   }
 
   private createDocumentElement(tagName: string) {
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     return document.createElement(tagName);
   }
 
-  private componentDidUpdatePrivate(oldProps: object, newProps: object) {
+  private componentDidUpdatePrivate(oldProps: Props, newProps: Props) {
     console.log("CDU");
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
@@ -112,51 +106,62 @@ class Block<
   }
 
   private removeEvents() {
-    const { events = {} } = this.props;
+    const { events = {} } = this.props as Props & {
+      events: { [key: string]: () => void };
+    };
 
     Object.keys(events).forEach((eventName) => {
-      this._element.removeEventListener(eventName, events[eventName]);
+      this._element?.removeEventListener(eventName, events[eventName]);
     });
   }
 
-  private getChildrenAndProps(propsAndChildren) {
-    const children = {};
-    const props = {};
+  private getChildrenAndProps(propsAndChildren: Partial<Props & Children>) {
+    const children: { [key: string]: Block } = {};
+    const props: { [key: string]: unknown } = {};
 
-    Object.entries(propsAndChildren).forEach(([key, value]) => {
-      if (value instanceof Block) {
-        children[key] = value;
-      } else {
-        props[key] = value;
-      }
-    });
+    if (propsAndChildren) {
+      Object.entries(propsAndChildren).forEach(([key, value]) => {
+        if (value instanceof Block) {
+          children[key] = value;
+        } else {
+          props[key] = value;
+        }
+      });
+    }
 
-    return { children, props };
+    return { children, props } as {
+      props: Props;
+      children: Children;
+    };
   }
 
   private renderPrivate() {
-    const propsAndStubs = { ...this.props };
+    const propsAndStubs: Props | Children = { ...this.props };
 
     Object.entries(this.children).forEach(([key, child]) => {
+      // @ts-ignore
       propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
     });
 
-    const fragment = this.createDocumentElement("template");
+    const fragment = this.createDocumentElement(
+      "template",
+    ) as HTMLTemplateElement;
 
     fragment.innerHTML = Handlebars.compile(this.render())(propsAndStubs);
 
-    const newElement = fragment.content.firstElementChild;
+    const newElement = fragment.content.firstElementChild as HTMLElement;
 
     Object.values(this.children).forEach((child) => {
       const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
 
-      stub?.replaceWith(child.getContent());
+      stub?.replaceWith(child.getContent()!);
     });
 
-    if (this._element) {
+    if (this._element && newElement) {
       this.removeEvents();
       this._element.replaceWith(newElement);
     }
+
     this._element = newElement;
 
     this.addEvents();
@@ -174,17 +179,17 @@ class Block<
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  componentDidUpdate(oldProps, newProps) {
+  componentDidUpdate(oldProps: Props, newProps: Props) {
     console.log(oldProps, newProps);
     return true;
   }
 
-  setProps = (nextProps) => {
+  setProps = (nextProps: Props) => {
     if (!nextProps) {
       return;
     }
 
-    Object.assign(this.props, nextProps);
+    Object.assign(this.props as object, nextProps);
   };
 
   render() {}
@@ -205,11 +210,11 @@ class Block<
   }
 
   show() {
-    this.getContent().style.display = "block";
+    this.getContent()!.style.display = "block";
   }
 
   hide() {
-    this.getContent().style.display = "none";
+    this.getContent()!.style.display = "none";
   }
 }
 

@@ -1,7 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../core/block.ts";
 import { Input } from "../input";
 import { Button } from "../button";
@@ -10,8 +6,15 @@ import {
   passwordValidation,
 } from "../../shared/validation/validation.ts";
 import { validationFunctionForField } from "../../shared/validation/validationFunction.ts";
+import {
+  FormLoginChildrenInterface,
+  FormLoginPropsInterface,
+} from "../../interface/components/formLoginInterface.ts";
 
-class FormLogin extends Block {
+class FormLogin extends Block<
+  FormLoginPropsInterface,
+  FormLoginChildrenInterface
+> {
   init() {
     const inputLogin = new Input({
       name: "login",

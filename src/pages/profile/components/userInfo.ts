@@ -8,10 +8,16 @@ import {
   passwordValidation,
   phoneValidation,
 } from "../../../shared/validation/validation.ts";
-import { UserInfoInterface } from "../../../interface/modules/profile/userInfoInterface.ts";
+import {
+  UserInfoChildrenInterface,
+  UserInfoPropsInterface,
+} from "../../../interface/modules/profile/profilePropsInterface.ts";
 
-class UserInfo extends Block<UserInfoInterface> {
-  constructor(props: UserInfoInterface) {
+class UserInfo extends Block<
+  UserInfoPropsInterface,
+  UserInfoChildrenInterface
+> {
+  constructor(props: UserInfoPropsInterface) {
     super({
       ...props,
       events: {
@@ -21,9 +27,9 @@ class UserInfo extends Block<UserInfoInterface> {
 
           if (form) {
             const formData = new FormData(form as HTMLFormElement);
-            const formObject = Object.fromEntries(formData.entries());
+            const formObject = Object.fromEntries(formData.entries()) as any;
 
-            props.formSubmit(formObject);
+            props.formSubmit && props.formSubmit(formObject);
           }
         },
       },

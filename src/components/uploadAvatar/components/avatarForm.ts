@@ -1,20 +1,28 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../../core/block.ts";
+import {
+  AvatarFormChildrenInterface,
+  AvatarFormPropsInterface,
+} from "../../../interface/components/uploadAvatarInterface.ts";
 
-class AvatarForm extends Block {
-  constructor(props) {
+class AvatarForm extends Block<
+  AvatarFormPropsInterface,
+  AvatarFormChildrenInterface
+> {
+  constructor(props: AvatarFormPropsInterface & AvatarFormChildrenInterface) {
     super({
       ...props,
       events: {
         submit: (e: SubmitEvent) => {
           e.preventDefault();
-          const formData = new FormData(document.querySelector("#uploadPhoto"));
-          const formObject = Object.fromEntries(formData.entries());
+          const form: HTMLFormElement | null =
+            document.querySelector("#uploadPhoto");
 
-          props.formSubmit(formObject);
+          if (form) {
+            const formData = new FormData(form);
+            const formObject = Object.fromEntries(formData.entries());
+
+            props.formSubmit && props.formSubmit(formObject);
+          }
         },
       },
     });

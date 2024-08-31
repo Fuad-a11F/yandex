@@ -6,13 +6,19 @@ import {
   getUserInfoPasswordValidateFields,
 } from "../../shared/validation/inputsForValidate.ts";
 import validationFunction from "../../shared/validation/validationFunction.ts";
-import { ProfileInterface } from "../../interface/modules/profile/profileInterface.ts";
+import {
+  ProfileChildrenInterface,
+  ProfilePropsInterface,
+  UserInfoAllFields,
+  UserInfoMainField,
+  UserInfoPasswordField,
+} from "../../interface/modules/profile/profilePropsInterface.ts";
 import {
   ProfileChangePasswordInterface,
   ProfileMainInterface,
 } from "../../interface/profile/profileInterface.ts";
 
-class Profile extends Block<ProfileInterface> {
+class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   init() {
     const changeDataHandler = this.changeDataHandler.bind(this);
     const changePasswordHandler = this.changePasswordHandler.bind(this);
@@ -53,14 +59,16 @@ class Profile extends Block<ProfileInterface> {
   changeDataHandler() {
     this.setProps({ isChangeData: true });
     this.children.userInfo.setProps({ isChangeData: true });
-    [
+    const mainFields: UserInfoMainField = [
       "profileRowEmail",
       "profileRowLogin",
       "profileRowName",
       "profileRowLastName",
       "profileRowDisplayName",
       "profileRowPhone",
-    ].forEach((item) => {
+    ];
+
+    mainFields.forEach((item) => {
       const child = this.children.userInfo.children[item];
       if (child) {
         child.setProps({ isEditting: true });
@@ -72,7 +80,7 @@ class Profile extends Block<ProfileInterface> {
     this.setProps({ isChangePassword: true });
     this.children.userInfo?.setProps({ isChangePassword: true });
 
-    const passwordFields = [
+    const passwordFields: UserInfoPasswordField = [
       "profileRowOldPassword",
       "profileRowNewPassword",
       "profileRowNewRePassword",
@@ -113,7 +121,7 @@ class Profile extends Block<ProfileInterface> {
       isChangePassword: false,
     });
 
-    const allFields = [
+    const allFields: UserInfoAllFields = [
       "profileRowEmail",
       "profileRowLogin",
       "profileRowName",
@@ -124,6 +132,7 @@ class Profile extends Block<ProfileInterface> {
       "profileRowNewPassword",
       "profileRowNewRePassword",
     ];
+
     allFields.forEach((item) => {
       const child = this.children.userInfo?.children[item];
       if (child) {

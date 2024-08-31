@@ -3,14 +3,21 @@ import { AuthForm, FormRegistration } from "../../components";
 import { getRegistrationValidateFields } from "../../shared/validation/inputsForValidate.ts";
 import validationFunction from "../../shared/validation/validationFunction.ts";
 import { RegistrationInterface } from "../../interface/auth/registrationInterface.ts";
+import {
+  RegistrationChildrenInterface,
+  RegistrationPropsInterface,
+} from "../../interface/modules/registration/registrationInterface.ts";
 
-export class Registration extends Block {
+export class Registration extends Block<
+  RegistrationPropsInterface,
+  RegistrationChildrenInterface
+> {
   init() {
     const formSubmit = this.formSubmit.bind(this);
 
     const authForm = new AuthForm({
-      formBody: new FormRegistration(),
-      formSubmit,
+      formBody: new FormRegistration({}),
+      formSubmit: formSubmit,
     });
 
     this.children = {
@@ -29,12 +36,12 @@ export class Registration extends Block {
     );
 
     if (data.password !== data.repassword) {
-      this.children.authForm.children.formBody.children.inputPasswordRepeat.setProps(
-        {
-          isError: true,
-          errorMessage: "Passwords are different",
-        },
-      );
+      (
+        this.children.authForm.children.formBody as FormRegistration
+      ).children.inputPasswordRepeat.setProps({
+        isError: true,
+        errorMessage: "Passwords are different",
+      });
     }
 
     if (error.isError) return;

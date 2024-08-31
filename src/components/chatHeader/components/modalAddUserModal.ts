@@ -6,10 +6,14 @@ import FormAction from "./formAction.ts";
 import { validationFunctionForField } from "../../../shared/validation/validationFunction.ts";
 import {
   FormDataInterface,
-  ModalUserModalInterface,
-} from "../../../interface/components/chatHeaderInterface.ts";
+  ModalUserModalChildrenInterface,
+  ModalUserModalPropsInterface,
+} from "../../../interface/components/chatHeaderPropsInterface.ts";
 
-class ModalAddUserModal extends Block<ModalUserModalInterface> {
+class ModalAddUserModal extends Block<
+  ModalUserModalPropsInterface,
+  ModalUserModalChildrenInterface
+> {
   init() {
     const formSubmit = this.formSubmit.bind(this);
 
@@ -20,7 +24,7 @@ class ModalAddUserModal extends Block<ModalUserModalInterface> {
         validationFunctionForField(
           loginValidation,
           value,
-          this.children.loginInput,
+          this.children.formAction.children.input,
           "Login is wrong",
         ),
     });
@@ -41,7 +45,7 @@ class ModalAddUserModal extends Block<ModalUserModalInterface> {
 
   formSubmit(data: FormDataInterface) {
     if (!loginValidation(data.login)) {
-      this.children.loginInput.setProps({
+      this.children.formAction.children.input.setProps({
         isError: true,
         errorMessage: "Login is wrong",
       });

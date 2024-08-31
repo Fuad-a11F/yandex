@@ -1,7 +1,8 @@
 import Block from "../../../core/block.ts";
+import { AvatarPropsInterface } from "../../../interface/components/uploadAvatarInterface.ts";
 
-class Avatar extends Block {
-  constructor(props: { handleClick: () => void }) {
+class Avatar extends Block<AvatarPropsInterface> {
+  constructor(props: AvatarPropsInterface) {
     super({
       events: {
         click: props.handleClick,

@@ -1,8 +1,8 @@
 import Block from "../../../core/block.ts";
-import { RemoveUserInterface } from "../../../interface/components/chatHeaderInterface.ts";
+import { RemoveUserPropsInterface } from "../../../interface/components/chatHeaderPropsInterface.ts";
 
-class RemoveUser extends Block<RemoveUserInterface> {
-  constructor(props: RemoveUserInterface) {
+class RemoveUser extends Block<RemoveUserPropsInterface> {
+  constructor(props: RemoveUserPropsInterface) {
     super({ events: { click: props.onRemoveUser } });
   }
 

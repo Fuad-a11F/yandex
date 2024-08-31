@@ -1,5 +1,5 @@
 import Block from "../../../core/block.ts";
-import { MoreActionInterface } from "../../../interface/components/chatHeaderInterface.ts";
+import { MoreActionInterface } from "../../../interface/components/chatHeaderPropsInterface.ts";
 
 class MoreAction extends Block<MoreActionInterface> {
   constructor(props: MoreActionInterface) {

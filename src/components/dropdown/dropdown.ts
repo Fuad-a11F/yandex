@@ -1,12 +1,14 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../core/block.ts";
-import { DropdownInterface } from "../../interface/components/dropdownInterface.ts";
+import {
+  DropdownChildrenInterface,
+  DropdownPropsInterface,
+} from "../../interface/components/dropdownPropsInterface.ts";
 
-class Dropdown extends Block<DropdownInterface> {
-  constructor(props: DropdownInterface) {
+class Dropdown extends Block<
+  DropdownPropsInterface,
+  DropdownChildrenInterface
+> {
+  constructor(props: DropdownPropsInterface & DropdownChildrenInterface) {
     super({ ...props });
   }
 

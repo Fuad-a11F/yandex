@@ -1,10 +1,16 @@
 import Block from "../../core/block.ts";
 import { InputSearch } from "./index.ts";
-import { ChatSearchInterface } from "../../interface/components/chatSearchInterface.ts";
+import {
+  ChatSearchChildrenInterface,
+  ChatSearchPropsInterface,
+} from "../../interface/components/chatSearchPropsInterface.ts";
 
-class ChatSearch extends Block<ChatSearchInterface> {
+class ChatSearch extends Block<
+  ChatSearchPropsInterface,
+  ChatSearchChildrenInterface
+> {
   init() {
-    const inputSearch = new InputSearch();
+    const inputSearch = new InputSearch({});
 
     this.children = {
       ...this.children,

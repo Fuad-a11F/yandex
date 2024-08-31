@@ -9,9 +9,15 @@ import {
   DropdownHeader,
 } from "./index.ts";
 import { Dropdown } from "../dropdown";
-import { ChatHeaderInterface } from "../../interface/components/chatHeaderInterface.ts";
+import {
+  ChatHeaderChildrenInterface,
+  ChatHeaderPropsInterface,
+} from "../../interface/components/chatHeaderPropsInterface.ts";
 
-class ChatHeader extends Block<ChatHeaderInterface> {
+class ChatHeader extends Block<
+  ChatHeaderPropsInterface,
+  ChatHeaderChildrenInterface
+> {
   init() {
     const onClose = this.onClose.bind(this);
     const onAddUser = this.onAddUser.bind(this);
@@ -26,10 +32,10 @@ class ChatHeader extends Block<ChatHeaderInterface> {
     });
 
     const modalAddUser = new Modal({
-      ModalBody: new ModalAddUserModal(),
+      ModalBody: new ModalAddUserModal({}),
     });
     const modalRemoveUser = new Modal({
-      ModalBody: new ModalRemoveUserModal(),
+      ModalBody: new ModalRemoveUserModal({}),
     });
 
     this.children = {
@@ -43,7 +49,7 @@ class ChatHeader extends Block<ChatHeaderInterface> {
 
   onClose() {
     this.children.dropdown.setProps({
-      isVisible: !(this.children.dropdown as Dropdown).props.isVisible,
+      isVisible: !this.children.dropdown.props.isVisible,
       top: 30,
       right: 0,
     });
@@ -52,14 +58,14 @@ class ChatHeader extends Block<ChatHeaderInterface> {
   onAddUser() {
     this.children.modalAddUser.setProps({ isVisible: true });
     this.children.dropdown.setProps({
-      isVisible: !(this.children.dropdown as Dropdown).props.isVisible,
+      isVisible: !this.children.dropdown.props.isVisible,
     });
   }
 
   onRemoveUser() {
     this.children.modalRemoveUser.setProps({ isVisible: true });
     this.children.dropdown.setProps({
-      isVisible: !(this.children.dropdown as Dropdown).props.isVisible,
+      isVisible: this.children.dropdown.props.isVisible,
     });
   }
 

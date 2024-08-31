@@ -1,8 +1,14 @@
 import Block from "../../../core/block.ts";
-import { FormActionInterface } from "../../../interface/components/chatHeaderInterface.ts";
+import {
+  FormActionChildrenInterface,
+  FormActionPropsInterface,
+} from "../../../interface/components/chatHeaderPropsInterface.ts";
 
-class FormAction extends Block<FormActionInterface> {
-  constructor(props: FormActionInterface) {
+class FormAction extends Block<
+  FormActionPropsInterface,
+  FormActionChildrenInterface
+> {
+  constructor(props: FormActionPropsInterface | FormActionChildrenInterface) {
     super({
       ...props,
       events: {

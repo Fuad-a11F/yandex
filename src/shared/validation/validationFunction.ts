@@ -2,6 +2,7 @@
 // @ts-nocheck
 
 import Block from "../../core/block.ts";
+import { ChildrenComponent } from "../../interface/core/blockInterface.ts";
 
 interface FieldsInterface {
   validateFunction: (value: string) => boolean;
@@ -12,7 +13,7 @@ interface FieldsInterface {
 
 const validationFunction = (
   fields: FieldsInterface[],
-  selector: Record<string, Block>,
+  selector: ChildrenComponent,
   error: { isError: boolean },
   selectorContinue: string | null = null,
 ) => {
@@ -65,7 +66,7 @@ const validationFunction = (
 export const validationFunctionForField = (
   validateFunction: (value: string) => boolean,
   value: string,
-  selector: Block,
+  selector: ChildrenComponent,
   errorMessage: string,
 ) => {
   if (!validateFunction(value)) {

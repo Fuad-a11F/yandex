@@ -2,19 +2,23 @@ import Block from "../../core/block.ts";
 import { AddFiles, MessageInput } from "./index.ts";
 import { Dropdown } from "../dropdown";
 import {
-  MessageFormInterface,
+  MessageFormChildrenInterface,
+  MessageFormPropsInterface,
   MessageInterface,
-} from "../../interface/components/messageFormInterface.ts";
+} from "../../interface/components/messageFormPropsInterface.ts";
 import DropdownActions from "./components/dropdownActions.ts";
 
-class MessageForm extends Block<MessageFormInterface> {
+class MessageForm extends Block<
+  MessageFormPropsInterface,
+  MessageFormChildrenInterface
+> {
   init() {
     const onAddFiles = this.onAddFiles.bind(this);
 
     const addFiles = new AddFiles({ onAddFiles });
-    const messageInput = new MessageInput();
+    const messageInput = new MessageInput({});
     const dropdown = new Dropdown({
-      dropdownBody: new DropdownActions(),
+      dropdownBody: new DropdownActions({}),
     });
 
     this.setProps({
@@ -22,10 +26,10 @@ class MessageForm extends Block<MessageFormInterface> {
       events: {
         submit: (e: SubmitEvent) => {
           e.preventDefault();
-          const form = document.querySelector("#chat");
+          const form: HTMLFormElement | null = document.querySelector("#chat");
 
           if (form) {
-            const formData = new FormData(form as HTMLFormElement);
+            const formData = new FormData(form);
             const formObject = Object.fromEntries(formData.entries());
 
             const typedFormObject: MessageInterface = {

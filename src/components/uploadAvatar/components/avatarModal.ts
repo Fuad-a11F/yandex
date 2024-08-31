@@ -1,14 +1,17 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../../core/block.ts";
 import { Button } from "../../button";
 import UploadFileInput from "./uploadFileInput.ts";
 import AvatarForm from "./avatarForm.ts";
+import {
+  AvatarModalChildrenInterface,
+  AvatarModalPropsInterface,
+} from "../../../interface/components/uploadAvatarInterface.ts";
 
-class AvatarModal extends Block {
-  constructor(props) {
+class AvatarModal extends Block<
+  AvatarModalPropsInterface,
+  AvatarModalChildrenInterface
+> {
+  constructor(props: AvatarModalPropsInterface) {
     super({ ...props, fileName: null });
   }
 
@@ -30,8 +33,10 @@ class AvatarModal extends Block {
     };
   }
 
-  setFile(e) {
-    this.children.avatarForm.setProps({ fileName: e.target.files[0].name });
+  setFile(e: KeyboardEvent) {
+    this.children.avatarForm.setProps({
+      fileName: (e.target as HTMLInputElement).files![0].name,
+    });
   }
 
   formSubmit(data: { avatar: File }) {

@@ -1,12 +1,15 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю убрать @ts-nocheck во всех файлах в следующей сдаче. Времени просто было очень мало, а дедлайн рушить не хочется
-
 import Block from "../../core/block.ts";
 import { Avatar, AvatarModal } from "./index.ts";
 import { Modal } from "../modal";
+import {
+  UploadAvatarChildrenInterface,
+  UploadAvatarPropsInterface,
+} from "../../interface/components/uploadAvatarInterface.ts";
 
-class UploadAvatar extends Block {
+class UploadAvatar extends Block<
+  UploadAvatarPropsInterface,
+  UploadAvatarChildrenInterface
+> {
   init() {
     const handleClick = this.handleClick.bind(this);
 
@@ -14,7 +17,7 @@ class UploadAvatar extends Block {
       ...this.children,
       avatar: new Avatar({ handleClick }),
       modal: new Modal({
-        ModalBody: new AvatarModal(),
+        ModalBody: new AvatarModal({}),
       }),
     };
   }
