@@ -17,12 +17,14 @@ import {
   ProfileChangePasswordInterface,
   ProfileMainInterface,
 } from "../../interface/profile/profileInterface.ts";
+import AuthApi from "../../api/authApi.ts";
 
 class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   init() {
     const changeDataHandler = this.changeDataHandler.bind(this);
     const changePasswordHandler = this.changePasswordHandler.bind(this);
     const formSubmit = this.formSubmit.bind(this);
+    const logoutHandler = this.logoutHandler.bind(this);
 
     const uploadAvatar = new UploadAvatar({});
 
@@ -30,7 +32,6 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
       ...this.props,
       formSubmit,
     });
-
     const buttonChangeData = new Button({
       text: "Change data",
       isLink: true,
@@ -45,6 +46,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
       text: "Logout",
       isLink: true,
       isDanger: true,
+      onClick: logoutHandler,
     });
 
     this.children = {
@@ -91,6 +93,13 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
         child.setProps({ isEditting: true });
       }
     });
+  }
+
+  async logoutHandler() {
+    const authApi = new AuthApi();
+    const response = await authApi.logout();
+
+    console.log(response);
   }
 
   formSubmit(data: ProfileChangePasswordInterface | ProfileMainInterface) {
@@ -172,7 +181,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
                   
                         <hr>
                         
-                        <a href="#" page="login">{{{ buttonLogout }}}</a>
+                        {{{ buttonLogout }}}
                     </div>
                   {{/ifLogicOr}}
               </main>

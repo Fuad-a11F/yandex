@@ -7,6 +7,7 @@ import {
   LoginChildrenInterface,
   LoginPropsInterface,
 } from "../../interface/modules/login/loginInterface.ts";
+import AuthApi from "../../api/authApi.ts";
 
 class Login extends Block<LoginPropsInterface, LoginChildrenInterface> {
   init() {
@@ -23,7 +24,7 @@ class Login extends Block<LoginPropsInterface, LoginChildrenInterface> {
     };
   }
 
-  formSubmit(data: LoginInterface) {
+  async formSubmit(data: LoginInterface) {
     const error = { isError: false };
 
     validationFunction(
@@ -34,7 +35,10 @@ class Login extends Block<LoginPropsInterface, LoginChildrenInterface> {
 
     if (error.isError) return;
 
-    console.log(data);
+    const authApi = new AuthApi();
+    const response = await authApi.signIn(data);
+
+    console.log(response);
   }
 
   render() {

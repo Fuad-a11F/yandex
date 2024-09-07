@@ -1,103 +1,74 @@
 import { ApiOptionInterface } from "../interface/api/apiInterface.ts";
 
-const METHODS = {
-  GET: "GET",
-  POST: "POST",
-  PUT: "PUT",
-  DELETE: "DELETE",
-};
-
-const queryStringify = (data: object): string => {
-  if (!data || typeof data !== "object") {
-    return "";
-  }
-
-  const params = Object.entries(data).map(([key, value]) => {
-    if (Array.isArray(value)) {
-      value = value.join(",");
-    } else if (typeof value === "object" && value !== null) {
-      value = "[object Object]";
-    }
-    return `${key}=${value}`;
-  });
-
-  return `?${params.join("&")}`;
-};
+enum METHODS {
+  GET = "GET",
+  POST = "POST",
+  PUT = "PUT",
+  DELETE = "DELETE",
+}
 
 class HTTPTransport {
-  get = (url: string, options: { timeout?: number } = {}) => {
-    return this.request(
-      url,
-      { ...options, method: METHODS.GET },
-      options.timeout,
-    );
-  };
+  private apiBaseUrl: string = "";
 
-  post = (url: string, options: { timeout?: number } = {}) => {
-    return this.request(
-      url,
-      { ...options, method: METHODS.POST },
-      options.timeout,
-    );
-  };
+  constructor(apiPath: string) {
+    this.apiBaseUrl = `https://ya-praktikum.tech/api/v2/${apiPath}`;
+  }
 
-  put = (url: string, options: { timeout?: number } = {}) => {
-    return this.request(
-      url,
-      { ...options, method: METHODS.PUT },
-      options.timeout,
-    );
-  };
-
-  delete = (url: string, options: { timeout?: number } = {}) => {
-    return this.request(
-      url,
-      { ...options, method: METHODS.DELETE },
-      options.timeout,
-    );
-  };
-
-  request = (
+  get<TResponse>(
     url: string,
-    options: ApiOptionInterface,
-    timeout: number = 5000,
-  ) => {
-    const { headers, method, data } = options;
+    options: ApiOptionInterface = {},
+  ): Promise<TResponse> {
+    return this.request(`${this.apiBaseUrl}/${url}`, {
+      ...options,
+      method: METHODS.GET,
+    });
+  }
 
-    return new Promise(function (resolve, reject) {
-      if (!method) {
-        reject("No method");
-        return;
-      }
+  post<TResponse>(
+    url: string,
+    options: ApiOptionInterface = {},
+  ): Promise<TResponse> {
+    return this.request(`${this.apiBaseUrl}/${url}`, {
+      ...options,
+      method: METHODS.POST,
+    });
+  }
 
-      const xhr = new XMLHttpRequest();
-      const isGet = method === METHODS.GET;
-
-      xhr.open(method, isGet && !!data ? `${url}${queryStringify(data)}` : url);
-
-      if (headers) {
-        Object.keys(headers).forEach((key) => {
-          xhr.setRequestHeader(key, headers[key]);
-        });
-      }
-
-      xhr.onload = () => {
-        resolve(xhr);
-      };
-
-      xhr.timeout = timeout;
-
-      xhr.onabort = reject;
-      xhr.onerror = reject;
-      xhr.ontimeout = reject;
-
-      if (isGet || !data) {
-        xhr.send();
-      } else {
-        xhr.send(JSON.stringify(data));
-      }
+  put = (url: string, options: ApiOptionInterface = {}) => {
+    return this.request(`${this.apiBaseUrl}/${url}`, {
+      ...options,
+      method: METHODS.PUT,
     });
   };
+
+  delete = (url: string, options: ApiOptionInterface = {}) => {
+    return this.request(`${this.apiBaseUrl}/${url}`, {
+      ...options,
+      method: METHODS.DELETE,
+    });
+  };
+
+  async request<TResponse>(
+    url: string,
+    options: ApiOptionInterface = {},
+  ): Promise<TResponse> {
+    const { method, data } = options;
+
+    const response = await fetch(url, {
+      method: method || METHODS.GET,
+      credentials: "include",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: data ? JSON.stringify(data) : undefined,
+    });
+
+    const isJson = response.headers
+      .get("content-type")
+      ?.includes("application/json");
+    const resultData = (await isJson) ? response.json() : null;
+
+    return resultData as unknown as TResponse;
+  }
 }
 
 export default HTTPTransport;

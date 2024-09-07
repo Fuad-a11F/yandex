@@ -7,6 +7,7 @@ import {
   RegistrationChildrenInterface,
   RegistrationPropsInterface,
 } from "../../interface/modules/registration/registrationInterface.ts";
+import AuthApi from "../../api/authApi.ts";
 
 export class Registration extends Block<
   RegistrationPropsInterface,
@@ -26,7 +27,7 @@ export class Registration extends Block<
     };
   }
 
-  formSubmit(data: RegistrationInterface) {
+  async formSubmit(data: RegistrationInterface) {
     const error = { isError: false };
 
     validationFunction(
@@ -46,7 +47,10 @@ export class Registration extends Block<
 
     if (error.isError) return;
 
-    console.log(data);
+    const authApi = new AuthApi();
+    const response = await authApi.signUp(data);
+
+    console.log(response);
   }
 
   render() {
