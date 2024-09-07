@@ -19,7 +19,6 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
 
     this.setProps({
       ...this.props,
-      chats: chats.map((item) => new ChatItem({ ...item })),
       messages,
     });
 
@@ -28,6 +27,7 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
       chatSearch,
       chatHeader,
       messageForm,
+      chats: chats.map((item) => new ChatItem({ ...item })),
     };
   }
 

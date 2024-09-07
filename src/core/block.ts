@@ -82,7 +82,7 @@ class Block<Props = object, Children extends ChildrenComponent = {}> {
   }
 
   private componentDidUpdatePrivate(oldProps: Props, newProps: Props) {
-    console.log("CDU");
+    // console.log("CDU");
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -139,8 +139,15 @@ class Block<Props = object, Children extends ChildrenComponent = {}> {
     const propsAndStubs: Props | Children = { ...this.props };
 
     Object.entries(this.children).forEach(([key, child]) => {
-      // @ts-ignore
-      propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
+      if (Array.isArray(child)) {
+        // @ts-ignore
+        propsAndStubs[key] = child.map(
+          (item) => `<div data-id="${item._id}"></div>`,
+        );
+      } else {
+        // @ts-ignore
+        propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
+      }
     });
 
     const fragment = this.createDocumentElement(
@@ -152,9 +159,17 @@ class Block<Props = object, Children extends ChildrenComponent = {}> {
     const newElement = fragment.content.firstElementChild as HTMLElement;
 
     Object.values(this.children).forEach((child) => {
-      const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
+      if (Array.isArray(child)) {
+        child.forEach((obj) => {
+          const stub = fragment.content.querySelector(`[data-id="${obj._id}"]`);
 
-      stub?.replaceWith(child.getContent()!);
+          stub?.replaceWith(obj.getContent()!);
+        });
+      } else {
+        const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
+
+        stub?.replaceWith(child.getContent()!);
+      }
     });
 
     if (this._element && newElement) {

@@ -50,7 +50,7 @@ function navigate(
   container.innerHTML = Handlebars.compile(source)(context);
 }
 
-document.addEventListener("DOMContentLoaded", () => navigate("main"));
+document.addEventListener("DOMContentLoaded", () => navigate("chat"));
 
 document.addEventListener("click", (e: MouseEvent) => {
   const page = (e.target as HTMLElement).getAttribute("page");
