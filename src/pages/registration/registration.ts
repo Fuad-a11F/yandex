@@ -8,6 +8,7 @@ import {
   RegistrationPropsInterface,
 } from "../../interface/modules/registration/registrationInterface.ts";
 import AuthApi from "../../api/authApi.ts";
+import { signUIn } from "../../services/auth.ts";
 
 export class Registration extends Block<
   RegistrationPropsInterface,
@@ -47,10 +48,7 @@ export class Registration extends Block<
 
     if (error.isError) return;
 
-    const authApi = new AuthApi();
-    const response = await authApi.signUp(data);
-
-    console.log(response);
+    await signUIn(data);
   }
 
   render() {

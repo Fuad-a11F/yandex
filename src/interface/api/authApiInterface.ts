@@ -20,7 +20,7 @@ export interface ApiError {
   reason: number;
 }
 
-interface UserDtoInterface {
+export interface UserDtoInterface {
   id: number;
   login: string;
   first_name: string;

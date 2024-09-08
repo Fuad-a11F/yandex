@@ -29,10 +29,10 @@ class Router {
   }
 
   start() {
-    window.onpopstate = ((event: PopStateEvent) => {
-      console.log(event.currentTarget);
+    window.onpopstate = function (event: PopStateEvent) {
       this.onRoute((event.currentTarget as Window).location.pathname);
-    }).bind(this);
+    }.bind(this);
+
     this.onRoute(window.location.pathname);
   }
 

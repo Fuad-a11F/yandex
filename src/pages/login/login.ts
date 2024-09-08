@@ -8,6 +8,7 @@ import {
   LoginPropsInterface,
 } from "../../interface/modules/login/loginInterface.ts";
 import AuthApi from "../../api/authApi.ts";
+import { signIn } from "../../services/auth.ts";
 
 class Login extends Block<LoginPropsInterface, LoginChildrenInterface> {
   init() {
@@ -35,10 +36,7 @@ class Login extends Block<LoginPropsInterface, LoginChildrenInterface> {
 
     if (error.isError) return;
 
-    const authApi = new AuthApi();
-    const response = await authApi.signIn(data);
-
-    console.log(response);
+    await signIn(data);
   }
 
   render() {

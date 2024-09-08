@@ -19,6 +19,7 @@ import {
 } from "../../interface/profile/profileInterface.ts";
 import AuthApi from "../../api/authApi.ts";
 import Aside from "./components/aside.ts";
+import { logout } from "../../services/auth.ts";
 
 class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   init() {
@@ -106,10 +107,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   }
 
   async logoutHandler() {
-    const authApi = new AuthApi();
-    const response = await authApi.logout();
-
-    console.log(response);
+    await logout();
   }
 
   formSubmit(data: ProfileChangePasswordInterface | ProfileMainInterface) {
