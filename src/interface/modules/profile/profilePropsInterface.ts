@@ -4,6 +4,8 @@ import {
   ProfileChangePasswordInterface,
   ProfileMainInterface,
 } from "../../profile/profileInterface.ts";
+import Aside from "../../../pages/profile/components/aside.ts";
+import BackButton from "../../../pages/profile/components/backButton.ts";
 
 export interface ProfilePropsInterface {
   isChangePassword?: boolean;
@@ -16,6 +18,7 @@ export interface ProfileChildrenInterface {
   buttonChangeData: Button;
   buttonChangePassword: Button;
   buttonLogout: Button;
+  aside: Aside;
 }
 
 export interface UserInfoPropsInterface {
@@ -41,32 +44,39 @@ export interface UserInfoChildrenInterface {
   profileRowLastName: ProfileRow;
 }
 
-export interface UserInfoPasswordField
-  extends Array<
-    | "profileRowOldPassword"
-    | "profileRowNewPassword"
-    | "profileRowNewRePassword"
-  > {}
+export interface AsidePropsInterface {
+  navigateBack: () => void;
+}
 
-export interface UserInfoMainField
-  extends Array<
-    | "profileRowEmail"
-    | "profileRowLogin"
-    | "profileRowName"
-    | "profileRowLastName"
-    | "profileRowDisplayName"
-    | "profileRowPhone"
-  > {}
+export interface BackButtonPropsInterface {
+  navigateBack: () => void;
+  events?: { click: Function };
+}
 
-export interface UserInfoAllFields
-  extends Array<
-    | "profileRowEmail"
-    | "profileRowLogin"
-    | "profileRowName"
-    | "profileRowLastName"
-    | "profileRowDisplayName"
-    | "profileRowPhone"
-    | "profileRowOldPassword"
-    | "profileRowNewPassword"
-    | "profileRowNewRePassword"
-  > {}
+export interface AsideChildrenInterface {
+  backButton: BackButton;
+}
+
+export type UserInfoPasswordField =
+  | "profileRowOldPassword"
+  | "profileRowNewPassword"
+  | "profileRowNewRePassword";
+
+export type UserInfoMainField =
+  | "profileRowEmail"
+  | "profileRowLogin"
+  | "profileRowName"
+  | "profileRowLastName"
+  | "profileRowDisplayName"
+  | "profileRowPhone";
+
+export type UserInfoAllFields =
+  | "profileRowEmail"
+  | "profileRowLogin"
+  | "profileRowName"
+  | "profileRowLastName"
+  | "profileRowDisplayName"
+  | "profileRowPhone"
+  | "profileRowOldPassword"
+  | "profileRowNewPassword"
+  | "profileRowNewRePassword";

@@ -3,12 +3,22 @@ import { Button } from "../../components";
 
 class Page404 extends Block {
   init() {
-    const backButton = new Button({ text: "Back to the chats", isLink: true });
+    const handleChatNavigate = this.handleChatNavigate.bind(this);
+
+    const backButton = new Button({
+      text: "Back to the chats",
+      isLink: true,
+      onClick: handleChatNavigate,
+    });
 
     this.children = {
       ...this.children,
       backButton,
     };
+  }
+
+  handleChatNavigate() {
+    window.router.go("/chat");
   }
 
   render() {
@@ -20,7 +30,7 @@ class Page404 extends Block {
                 <p>Not found</p>
             </div>
         
-            <a href="#" page="chat">{{{ backButton }}}</a>
+            {{{ backButton }}}
         </main>
     `;
   }

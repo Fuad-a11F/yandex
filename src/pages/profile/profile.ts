@@ -18,6 +18,7 @@ import {
   ProfileMainInterface,
 } from "../../interface/profile/profileInterface.ts";
 import AuthApi from "../../api/authApi.ts";
+import Aside from "./components/aside.ts";
 
 class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   init() {
@@ -25,12 +26,16 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
     const changePasswordHandler = this.changePasswordHandler.bind(this);
     const formSubmit = this.formSubmit.bind(this);
     const logoutHandler = this.logoutHandler.bind(this);
+    const navigateBack = this.navigateBack.bind(this);
 
     const uploadAvatar = new UploadAvatar({});
 
     const userInfo = new UserInfo({
       ...this.props,
       formSubmit,
+    });
+    const aside = new Aside({
+      navigateBack,
     });
     const buttonChangeData = new Button({
       text: "Change data",
@@ -55,13 +60,18 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
       buttonChangeData,
       buttonChangePassword,
       buttonLogout,
+      aside,
     };
+  }
+
+  navigateBack() {
+    window.router.go("/chat");
   }
 
   changeDataHandler() {
     this.setProps({ isChangeData: true });
     this.children.userInfo.setProps({ isChangeData: true });
-    const mainFields: UserInfoMainField = [
+    const mainFields: UserInfoMainField[] = [
       "profileRowEmail",
       "profileRowLogin",
       "profileRowName",
@@ -82,7 +92,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
     this.setProps({ isChangePassword: true });
     this.children.userInfo?.setProps({ isChangePassword: true });
 
-    const passwordFields: UserInfoPasswordField = [
+    const passwordFields: UserInfoPasswordField[] = [
       "profileRowOldPassword",
       "profileRowNewPassword",
       "profileRowNewRePassword",
@@ -130,7 +140,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
       isChangePassword: false,
     });
 
-    const allFields: UserInfoAllFields = [
+    const allFields: UserInfoAllFields[] = [
       "profileRowEmail",
       "profileRowLogin",
       "profileRowName",
@@ -155,9 +165,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   render() {
     return `
           <div class="profile">
-              <aside class="profile__back">
-                  <a href="#" page="chat"><img src="./icons/buttonArrow.svg" alt="back"></a>
-              </aside>
+              {{{ aside }}}
           
               <main class="profile__information">
                   <div class="profile__avatar">

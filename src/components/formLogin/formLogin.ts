@@ -16,6 +16,8 @@ class FormLogin extends Block<
   FormLoginChildrenInterface
 > {
   init() {
+    const handleSignUp = this.handleSignUp.bind(this);
+
     const inputLogin = new Input({
       name: "login",
       type: "text",
@@ -48,6 +50,7 @@ class FormLogin extends Block<
       text: "Don't have an account?",
       type: "button",
       isLink: true,
+      onClick: handleSignUp,
     });
 
     this.children = {
@@ -57,6 +60,10 @@ class FormLogin extends Block<
       loginButton,
       registerButton,
     };
+  }
+
+  handleSignUp() {
+    window.router.go("/registration");
   }
 
   render() {
@@ -73,7 +80,7 @@ class FormLogin extends Block<
             {{{ loginButton }}}
 
           <div class="login__center">
-              <a href="#" page="registration">{{{ registerButton }}}</a>
+              {{{ registerButton }}}
           </div>
         </div>
       </div>

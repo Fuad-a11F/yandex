@@ -8,7 +8,7 @@ import {
 } from "../../interface/modules/chat/chatInterface.ts";
 
 class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
-  constructor(props: ChatPropsInterface) {
+  constructor(props: ChatPropsInterface & ChatChildrenInterface) {
     super({ ...props });
   }
 

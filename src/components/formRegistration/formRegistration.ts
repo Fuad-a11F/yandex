@@ -19,6 +19,8 @@ class FormRegistration extends Block<
   FormRegistrationChildrenInterface
 > {
   init() {
+    const handleSignIn = this.handleSignIn.bind(this);
+
     const inputFirstName = new Input({
       name: "first_name",
       type: "text",
@@ -121,8 +123,9 @@ class FormRegistration extends Block<
 
     const loginButton = new Button({
       text: "Sign in",
-      type: "submit",
+      type: "button",
       isLink: true,
+      onClick: handleSignIn,
     });
 
     const registerButton = new Button({
@@ -144,6 +147,10 @@ class FormRegistration extends Block<
     };
   }
 
+  handleSignIn() {
+    window.router.go("/login");
+  }
+
   render() {
     return `
       <div class="registration">
@@ -163,7 +170,7 @@ class FormRegistration extends Block<
           {{{ registerButton }}}
   
           <div class="registration__center">
-              <a href="#" page="login">{{{ loginButton }}}</a>
+              {{{ loginButton }}}
           </div>
         </div>
     </div>
