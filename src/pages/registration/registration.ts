@@ -8,7 +8,7 @@ import {
   RegistrationPropsInterface,
 } from "../../interface/modules/registration/registrationInterface.ts";
 import AuthApi from "../../api/authApi.ts";
-import { signUIn } from "../../services/auth.ts";
+import { signUn } from "../../services/auth.ts";
 
 export class Registration extends Block<
   RegistrationPropsInterface,
@@ -48,7 +48,7 @@ export class Registration extends Block<
 
     if (error.isError) return;
 
-    await signUIn(data);
+    await signUn(data);
   }
 
   render() {

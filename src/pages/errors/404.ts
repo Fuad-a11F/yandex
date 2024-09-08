@@ -18,7 +18,7 @@ class Page404 extends Block {
   }
 
   handleChatNavigate() {
-    window.router.go("/chat");
+    window.router.go("/messenger");
   }
 
   render() {

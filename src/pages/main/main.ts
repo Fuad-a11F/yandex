@@ -8,22 +8,22 @@ class Main extends Block {
     const signInButton = new Button({
       text: "Sign in",
       isLink: true,
-      onClick: () => handleNavigate("/login"),
+      onClick: () => handleNavigate("/sign-in"),
     });
     const signUpButton = new Button({
       text: "Sign Up",
       isLink: true,
-      onClick: () => handleNavigate("/registration"),
+      onClick: () => handleNavigate("/sign-up"),
     });
     const chatButton = new Button({
       text: "Chat",
       isLink: true,
-      onClick: () => handleNavigate("/chat"),
+      onClick: () => handleNavigate("/messenger"),
     });
     const profileButton = new Button({
       text: "Profile",
       isLink: true,
-      onClick: () => handleNavigate("/profile"),
+      onClick: () => handleNavigate("/settings"),
     });
     const page404Button = new Button({
       text: "404 page",

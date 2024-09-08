@@ -148,7 +148,7 @@ class FormRegistration extends Block<
   }
 
   handleSignIn() {
-    window.router.go("/login");
+    window.router.go("/sign-in");
   }
 
   render() {

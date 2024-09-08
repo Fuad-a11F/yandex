@@ -26,7 +26,7 @@ class ChatSearch extends Block<
   }
 
   handleProfileNavigate() {
-    window.router.go("/profile");
+    window.router.go("/settings");
   }
 
   render() {

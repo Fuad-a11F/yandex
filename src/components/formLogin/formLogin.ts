@@ -63,7 +63,7 @@ class FormLogin extends Block<
   }
 
   handleSignUp() {
-    window.router.go("/registration");
+    window.router.go("/sign-up");
   }
 
   render() {

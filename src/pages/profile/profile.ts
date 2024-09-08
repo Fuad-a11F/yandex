@@ -66,7 +66,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   }
 
   navigateBack() {
-    window.router.go("/chat");
+    window.router.go("/messenger");
   }
 
   changeDataHandler() {

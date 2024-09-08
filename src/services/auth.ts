@@ -8,7 +8,7 @@ export const signIn = async (data: LoginInterface) => {
   await authApi.signIn(data);
 };
 
-export const signUIn = async (data: RegistrationInterface) => {
+export const signUn = async (data: RegistrationInterface) => {
   await authApi.signUp(data);
 };
 

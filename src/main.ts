@@ -29,10 +29,10 @@ Handlebars.registerHelper(
 
 router
   .use("/", Pages.Main)
-  .use("/login", Pages.Login)
-  .use("/registration", Pages.Registration)
-  .use("/chat", Pages.Chat)
+  .use("/sign-in", Pages.Login)
+  .use("/sign-up", Pages.Registration)
+  .use("/messenger", Pages.Chat)
   .use("/server-error", Pages.Page500)
-  .use("/profile", Pages.Profile)
+  .use("/settings", Pages.Profile)
   .use("*", Pages.Page404)
   .start();
