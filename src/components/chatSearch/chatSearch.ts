@@ -16,6 +16,7 @@ class ChatSearch extends Block<
   init() {
     const handleProfileNavigate = this.handleProfileNavigate.bind(this);
     const addChatButtonHandler = this.addChatButtonHandler.bind(this);
+    const addChatCloseButtonHandler = this.addChatCloseButtonHandler.bind(this);
 
     const inputSearch = new InputSearch({});
     const addChatButton = new AddChatButton({
@@ -25,7 +26,9 @@ class ChatSearch extends Block<
       handleProfileNavigate,
     });
     const addChatModal = new Modal({
-      ModalBody: new AddChatModal({}),
+      ModalBody: new AddChatModal({
+        addChatCloseButton: addChatCloseButtonHandler,
+      }),
     });
 
     this.children = {
@@ -45,17 +48,23 @@ class ChatSearch extends Block<
     this.children.addChatModal.setProps({ isVisible: true });
   }
 
+  addChatCloseButtonHandler() {
+    this.children.addChatModal.setProps({ isVisible: false });
+  }
+
   render() {
     return `
     <div>
       <div class="chatSearch">
-          {{{ addChatButton }}}
-      
-          <div class="chatSearch__profile">
-              {{{ profileButton }}}
-           
-              <img src="./icons/arrow.svg" alt="arrow">
-          </div>
+          <div class="chatSearch__row">
+            {{{ addChatButton }}}
+        
+            <div class="chatSearch__profile">
+                {{{ profileButton }}}
+             
+                <img src="./icons/arrow.svg" alt="arrow">
+            </div>
+         </div>
       
           <div class="chatSearch__search">
               {{{ inputSearch }}}

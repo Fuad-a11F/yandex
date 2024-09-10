@@ -1,38 +1,48 @@
 import Block from "../../core/block.ts";
+import { connect } from "../../shared/connect.ts";
 
 class ChatItem extends Block {
   constructor(props: any) {
-    super({ ...props });
+    super({ ...props, events: { click: () => props.setActiveChat(props) } });
+
+    this.setProps({ isActive: props.selectedChat?.id === props.id });
   }
 
   render() {
     return `
       <div class="chatItem {{#if isActive}}chatItem__active{{/if}}">
-                  <div class="chatItem__image">
-                      <img src="{{avatar}}" alt="avatar">
-                  </div>
-              
-                  <div class="chatItem__info">
-                      <div class="chatItem__row">
-                          <div class="chatItem__name">{{name}}</div>
-                          <div class="chatItem__time">{{time}}</div>
-                      </div>
-              
-                      {{#if isYourMessage}}
-                          <div class="chatItem__message"><span>Вы: </span>{{lastMessage}}</div>
-                      {{else}}
-                          <div class="chatItem__message">{{lastMessage}}</div>
-                      {{/if}}
-                  </div>
-              
-                  {{#if countNewMessages}}
-                      <div class="chatItem__new-message">
-                          {{countNewMessages}}
-                      </div>
-                  {{/if}}
+          {{#if avatar}}
+            <div class="chatItem__image">
+                <img src="{{avatar}}" alt="avatar">
+            </div>
+          {{else}}
+              <div class="chatItem__image">
+                <img src="./vite.svg" alt="avatar">
               </div>
+          {{/if}}
+      
+          <div class="chatItem__info">
+              <div class="chatItem__row">
+                  <div class="chatItem__name">{{title}}</div>
+                  <div class="chatItem__time">{{time}}</div>
+              </div>
+      
+         
+              {{#if lastMessage}}
+                 <div class="chatItem__message">{{lastMessage}}</div>
+              {{else}}
+                 <div class="chatItem__message">Пусто</div>
+              {{/if}}
+          </div>
+      
+          {{#if unread_count}}
+              <div class="chatItem__new-message">
+                  {{unread_count}}
+              </div>
+          {{/if}}
+      </div>
       `;
   }
 }
 
-export default ChatItem;
+export default connect(({ selectedChat }) => ({ selectedChat }))(ChatItem);

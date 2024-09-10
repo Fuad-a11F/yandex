@@ -1,10 +1,11 @@
 import EventBus from "./eventBus";
+import { a } from "vite/dist/node/types.d-aGj9QkWt";
 
 export enum StoreEvents {
   Updated = "Updated",
 }
 
-export class Store<State extends Record<string, unknown>> extends EventBus {
+export class Store<State extends Record<string, any>> extends EventBus {
   static __instance: Store<object> | null = null;
 
   private state: State;
@@ -25,7 +26,7 @@ export class Store<State extends Record<string, unknown>> extends EventBus {
     return this.state;
   }
 
-  public set(nextState: Partial<State>) {
+  public set(nextState: Record<string, any>) {
     const prevState = { ...this.state };
 
     this.state = { ...this.state, ...nextState };

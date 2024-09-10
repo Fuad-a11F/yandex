@@ -3,8 +3,14 @@
 .chatSearch {
   padding: 0 10px;
 
-  &__profile {
+  &__row {
     margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__profile {
     display: flex;
     justify-content: flex-end;
     gap: 8px;
@@ -23,4 +29,33 @@
   &__search {
     margin-bottom: 14px;
   }
+}
+
+.modal {
+  &__actionChat {
+    h3 {
+      text-align: center;
+      margin-bottom: 55px;
+      font-weight: 500;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+}
+
+.addChatButton {
+  border: none;
+  outline: none;
+  font-size: 18px;
+  background: $blue;
+  color: $white;
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  padding-bottom: 3px;
+  cursor: pointer;
 }

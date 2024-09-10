@@ -9,16 +9,24 @@ import {
 const chatApi = new ChatApi();
 
 export const getAllChats = async (data: ChatsRequestInterface) => {
-  const response = await chatApi.getAllChats(data);
-  console.log(response);
+  try {
+    const response = await chatApi.getAllChats(data);
+
+    if (!("reason" in response)) {
+      window.store.set({ chats: response });
+    }
+  } catch (e) {
+    console.error(e);
+  }
 };
 
-export const addNewChar = async (data: AddNewChatRequestInterface) => {
+export const addNewChat = async (data: AddNewChatRequestInterface) => {
   await chatApi.addNewChat(data);
 };
 
 export const addUserToChat = async (data: AddUserToChatRequestInterface) => {
-  await chatApi.addUserToChat(data);
+  const response = await chatApi.addUserToChat(data);
+  console.log(response);
 };
 
 export const deleteUserFromChat = async (

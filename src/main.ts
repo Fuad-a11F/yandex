@@ -4,6 +4,8 @@ import * as Pages from "./pages";
 import Router from "./core/router.ts";
 import { Store } from "./core/store.ts";
 import { StoreDefaultValueInterface } from "./interface/storeInterface.ts";
+import { getUser } from "./services/auth.ts";
+import { getAllChats } from "./services/chat.ts";
 
 declare global {
   interface Window {
@@ -19,6 +21,7 @@ window.store = new Store<StoreDefaultValueInterface>({
   user: null,
   errorAuth: null,
   isLoadingAuth: false,
+
   chats: [],
   selectedChat: null,
 });
@@ -36,6 +39,17 @@ Handlebars.registerHelper(
     return options.inverse(this);
   },
 );
+
+document.addEventListener("DOMContentLoaded", async () => {
+  let user = null;
+  try {
+    user = await getUser();
+  } catch (error) {
+    window.router.go("/sign-in");
+    return;
+  }
+  window.store.set({ user });
+});
 
 router
   .use("/", Pages.Main)

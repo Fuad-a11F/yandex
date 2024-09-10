@@ -6,7 +6,7 @@ class AddChatButton extends Block {
   }
 
   render() {
-    return `<button>+</button>`;
+    return `<button class="addChatButton">+</button>`;
   }
 }
 

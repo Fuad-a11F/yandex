@@ -1,12 +1,13 @@
 import Block from "../../core/block.ts";
 import { ChatHeader, ChatSearch, MessageForm } from "../../components";
-import { chats, messages } from "../../mockData.ts";
+import { messages } from "../../mockData.ts";
 import ChatItem from "../../components/chatItem/chatItem.ts";
 import {
   ChatChildrenInterface,
   ChatPropsInterface,
 } from "../../interface/modules/chat/chatInterface.ts";
 import { getAllChats } from "../../services/chat.ts";
+import { connect } from "../../shared/connect.ts";
 
 class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
   constructor(props: ChatPropsInterface & ChatChildrenInterface) {
@@ -17,6 +18,27 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
     super.componentDidMount();
 
     await getAllChats({});
+  }
+
+  componentDidUpdate(
+    oldProps: ChatPropsInterface,
+    newProps: ChatPropsInterface,
+  ): boolean {
+    const setActiveChat = this.setActiveChat.bind(this);
+
+    this.children = {
+      ...this.children,
+      chats:
+        this.props.chats?.map(
+          (item) => new ChatItem({ ...item, setActiveChat }),
+        ) || [],
+    };
+
+    return super.componentDidUpdate(oldProps, newProps);
+  }
+
+  setActiveChat(data) {
+    window.store.set({ selectedChat: data });
   }
 
   init() {
@@ -34,7 +56,6 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
       chatSearch,
       chatHeader,
       messageForm,
-      chats: chats.map((item) => new ChatItem({ ...item })),
     };
   }
 
@@ -49,11 +70,7 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
             {{/each}}
         </aside>
         
-        {{#if isEmpty}}
-            <div class="chat__messages_empty">
-                Select a chat to send a message
-            </div>
-        {{else}}
+        {{#if selectedChat}}
             <div class="chat__messages">
                 <div>
                     {{{chatHeader}}}
@@ -76,10 +93,16 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
                     {{{ messageForm }}}
                 </div>
             </div>
+        {{else}}
+             <div class="chat__messages_empty">
+                Select a chat to send a message
+             </div>
         {{/if}}
     </main>
         `;
   }
 }
 
-export default Chat;
+export default connect(({ chats, selectedChat }) => ({ chats, selectedChat }))(
+  Chat,
+);

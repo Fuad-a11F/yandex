@@ -12,6 +12,7 @@ import {
   UserInfoChildrenInterface,
   UserInfoPropsInterface,
 } from "../../../interface/modules/profile/profilePropsInterface.ts";
+import { connect } from "../../../shared/connect.ts";
 
 class UserInfo extends Block<
   UserInfoPropsInterface,
@@ -36,7 +37,10 @@ class UserInfo extends Block<
     });
   }
 
-  init() {
+  componentDidUpdate(
+    oldProps: UserInfoPropsInterface,
+    newProps: UserInfoPropsInterface,
+  ): boolean {
     const buttonSave = new Button({ text: "Save" });
 
     const profileRowOldPassword = new ProfileRow({
@@ -114,7 +118,7 @@ class UserInfo extends Block<
         isProfileRow: true,
         name: "email",
         id: "email",
-        value: "pochta@yandex.ru",
+        value: this.props.user.email,
         onBlur: (value: string) =>
           validationFunctionForField(
             emailValidation,
@@ -228,7 +232,11 @@ class UserInfo extends Block<
       profileRowName,
       profileRowLastName,
     };
+
+    return super.componentDidUpdate(oldProps, newProps);
   }
+
+  init() {}
 
   render() {
     return `
@@ -268,4 +276,4 @@ class UserInfo extends Block<
   }
 }
 
-export default UserInfo;
+export default connect(({ user }) => ({ user }))(UserInfo);

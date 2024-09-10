@@ -17,9 +17,9 @@ import {
   ProfileChangePasswordInterface,
   ProfileMainInterface,
 } from "../../interface/profile/profileInterface.ts";
-import AuthApi from "../../api/authApi.ts";
 import Aside from "./components/aside.ts";
 import { logout } from "../../services/auth.ts";
+import { connect } from "../../shared/connect.ts";
 
 class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   init() {
@@ -171,7 +171,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
                   </div>
           
                   <div class="profile__name">
-                      Иван
+                      {{ user.first_name }}
                   </div>
           
                    {{{ userInfo }}}
@@ -196,4 +196,4 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   }
 }
 
-export default Profile;
+export default connect(({ user }) => ({ user }))(Profile);

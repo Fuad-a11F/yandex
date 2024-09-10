@@ -4,6 +4,10 @@ import { RegistrationInterface } from "../interface/auth/registrationInterface.t
 
 const authApi = new AuthApi();
 
+export const getUser = async () => {
+  return await authApi.me();
+};
+
 export const signIn = async (data: LoginInterface) => {
   window.store.set({ isLoadingAuth: true });
 
@@ -13,6 +17,9 @@ export const signIn = async (data: LoginInterface) => {
       window.store.set({ errorAuth: response.reason.toString() });
     } else {
       localStorage.setItem("auth", "true");
+      const user = await getUser();
+
+      window.store.set({ user });
       window.router.go("/messenger");
     }
   } catch (e) {
@@ -22,7 +29,7 @@ export const signIn = async (data: LoginInterface) => {
   }
 };
 
-export const signUn = async (data: RegistrationInterface) => {
+export const signUp = async (data: RegistrationInterface) => {
   window.store.set({ isLoadingAuth: true });
 
   try {
@@ -31,6 +38,9 @@ export const signUn = async (data: RegistrationInterface) => {
       window.store.set({ errorAuth: response.reason.toString() });
     } else {
       localStorage.setItem("auth", "true");
+      const user = await getUser();
+
+      window.store.set({ user });
       window.router.go("/messenger");
     }
   } catch (e) {
@@ -38,10 +48,6 @@ export const signUn = async (data: RegistrationInterface) => {
   } finally {
     window.store.set({ isLoadingAuth: false });
   }
-};
-
-export const getMe = async () => {
-  await authApi.me();
 };
 
 export const logout = async () => {

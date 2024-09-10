@@ -1,9 +1,9 @@
 import Block from "../../../../core/block.ts";
 import FormAction from "../../../chatHeader/components/formAction.ts";
 import { Input } from "../../../input";
-import { validationFunctionForField } from "../../../../shared/validation/validationFunction.ts";
-import { loginValidation } from "../../../../shared/validation/validation.ts";
 import { Button } from "../../../button";
+import { addNewChat, getAllChats } from "../../../../services/chat.ts";
+import { AddNewChatRequestInterface } from "../../../../interface/api/chatInterface.ts";
 
 class AddChatModal extends Block {
   init() {
@@ -13,7 +13,7 @@ class AddChatModal extends Block {
       name: "title",
       placeholder: "Title",
     });
-    const addButton = new Button({ text: "Add" });
+    const addButton = new Button({ text: "Add", type: "submit" });
 
     const formAction = new FormAction({
       input: titleInput,
@@ -28,13 +28,15 @@ class AddChatModal extends Block {
     };
   }
 
-  formSubmit(data) {
-    console.log();
+  async formSubmit(data: AddNewChatRequestInterface) {
+    await addNewChat(data);
+    await getAllChats({});
+    this.props.addChatCloseButton();
   }
 
   render() {
     return `
-        <div>
+        <div class="modal__actionChat">
              <h3>Add chat</h3>
     
             {{{ formAction }}}

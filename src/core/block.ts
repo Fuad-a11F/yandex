@@ -196,7 +196,7 @@ class Block<Props = object, Children extends ChildrenComponent = {}> {
 
   componentDidUpdate(oldProps: Props, newProps: Props) {
     console.log(oldProps, newProps);
-    return true;
+    return false;
   }
 
   setProps = (nextProps: Props) => {
