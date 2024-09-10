@@ -6,10 +6,17 @@ import {
   ChatChildrenInterface,
   ChatPropsInterface,
 } from "../../interface/modules/chat/chatInterface.ts";
+import { getAllChats } from "../../services/chat.ts";
 
 class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
   constructor(props: ChatPropsInterface & ChatChildrenInterface) {
     super({ ...props });
+  }
+
+  async componentDidMount() {
+    super.componentDidMount();
+
+    await getAllChats({});
   }
 
   init() {

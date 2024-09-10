@@ -13,7 +13,7 @@ const chatApi = new HTTPTransport("chats");
 
 export default class ChatApi {
   getAllChats(data: ChatsRequestInterface): Promise<ChatsResponseInterface[]> {
-    return chatApi.get<ChatsResponseInterface[]>("", { data });
+    return chatApi.get<ChatsResponseInterface[]>("");
   }
 
   addNewChat(

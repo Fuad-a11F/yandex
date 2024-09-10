@@ -9,7 +9,8 @@ import {
 const chatApi = new ChatApi();
 
 export const getAllChats = async (data: ChatsRequestInterface) => {
-  await chatApi.getAllChats(data);
+  const response = await chatApi.getAllChats(data);
+  console.log(response);
 };
 
 export const addNewChar = async (data: AddNewChatRequestInterface) => {

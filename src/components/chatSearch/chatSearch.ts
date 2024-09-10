@@ -5,6 +5,7 @@ import {
   ChatSearchPropsInterface,
 } from "../../interface/components/chatSearchPropsInterface.ts";
 import ProfileButton from "./components/profileButton/profileButton.ts";
+import AddChatButton from "./components/addChatButton/addChatButton.ts";
 
 class ChatSearch extends Block<
   ChatSearchPropsInterface,
@@ -14,6 +15,7 @@ class ChatSearch extends Block<
     const handleProfileNavigate = this.handleProfileNavigate.bind(this);
 
     const inputSearch = new InputSearch({});
+    const addChatButton = new AddChatButton({});
     const profileButton = new ProfileButton({
       handleProfileNavigate,
     });
@@ -22,6 +24,7 @@ class ChatSearch extends Block<
       ...this.children,
       inputSearch,
       profileButton,
+      addChatButton,
     };
   }
 
@@ -32,6 +35,8 @@ class ChatSearch extends Block<
   render() {
     return `
     <div class="chatSearch">
+        {{{ addChatButton }}}
+    
         <div class="chatSearch__profile">
             {{{ profileButton }}}
          
