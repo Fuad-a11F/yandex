@@ -1,7 +1,6 @@
 import { LoginInterface } from "../interface/auth/loginInterface.ts";
 import AuthApi from "../api/authApi.ts";
 import { RegistrationInterface } from "../interface/auth/registrationInterface.ts";
-import { c } from "vite/dist/node/types.d-aGj9QkWt";
 
 const authApi = new AuthApi();
 
