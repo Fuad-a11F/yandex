@@ -10,6 +10,7 @@ import {
   FormLoginChildrenInterface,
   FormLoginPropsInterface,
 } from "../../interface/components/formLoginInterface.ts";
+import { connect } from "../../shared/connect.ts";
 
 class FormLogin extends Block<
   FormLoginPropsInterface,
@@ -71,9 +72,17 @@ class FormLogin extends Block<
       <div class="login">
         <div>
             <h1 class="login__title">Login</h1>
+            
+            {{#if isLoadingAuth}}
+                <div>76</div>
+            {{/if}}
     
             {{{ inputLogin }}}
             {{{ inputPassword }}}
+            
+            {{#if errorAuth}}
+                <p class="login__error">{{errorAuth}}</p>
+            {{/if}}
         </div>
     
         <div>
@@ -88,4 +97,7 @@ class FormLogin extends Block<
   }
 }
 
-export default FormLogin;
+export default connect(({ isLoadingAuth, errorAuth }) => ({
+  isLoadingAuth,
+  errorAuth,
+}))(FormLogin);

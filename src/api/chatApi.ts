@@ -5,17 +5,15 @@ import {
   AddUserToChatRequestInterface,
   ApiError,
   DeleteUserToChatRequestInterface,
-  GetAllChatsRequestInterface,
-  GetAllChatsResponseInterface,
+  ChatsRequestInterface,
+  ChatsResponseInterface,
 } from "../interface/api/chatInterface.ts";
 
 const chatApi = new HTTPTransport("chats");
 
 export default class ChatApi {
-  getAllChats(
-    data: GetAllChatsRequestInterface,
-  ): Promise<GetAllChatsResponseInterface[]> {
-    return chatApi.get<GetAllChatsResponseInterface[]>("", { data });
+  getAllChats(data: ChatsRequestInterface): Promise<ChatsResponseInterface[]> {
+    return chatApi.get<ChatsResponseInterface[]>("", { data });
   }
 
   addNewChat(

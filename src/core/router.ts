@@ -4,10 +4,11 @@ import Block from "./block.ts";
 class Router {
   static __instance: Router | null = null;
 
-  routes: Route[] = [];
-  history: History = window.history;
   _currentRoute: Route | null = null;
   _rootQuery: string = "";
+
+  routes: Route[] = [];
+  history: History = window.history;
 
   constructor(rootQuery: string) {
     if (Router.__instance) {
@@ -49,7 +50,7 @@ class Router {
     this.history.forward();
   }
 
-  getRoute(pathname: string) {
+  private getRoute(pathname: string) {
     const route = this.routes.find((route) => route.match(pathname));
     if (!route) {
       return this.routes.find((route) => route.match("*"));

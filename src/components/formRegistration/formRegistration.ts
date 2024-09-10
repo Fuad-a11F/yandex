@@ -13,6 +13,7 @@ import {
   FormRegistrationChildrenInterface,
   FormRegistrationPropsInterface,
 } from "../../interface/components/formRegistrationInterface.ts";
+import { connect } from "../../shared/connect.ts";
 
 class FormRegistration extends Block<
   FormRegistrationPropsInterface,
@@ -157,6 +158,10 @@ class FormRegistration extends Block<
         <div>
             <h1 class="registration__title">Registration</h1>
     
+            {{#if isLoadingAuth}}
+                <div>76</div>
+            {{/if}}
+            
             {{{ inputFirstName }}}
             {{{ inputSecondName }}}
             {{{ inputLogin }}}
@@ -164,6 +169,10 @@ class FormRegistration extends Block<
             {{{ inputPhone }}}
             {{{ inputPassword }}}
             {{{ inputPasswordRepeat }}}
+            
+            {{#if errorAuth}}
+                <p class="registration__error">{{errorAuth}}</p>
+            {{/if}}
         </div>
     
         <div>
@@ -178,4 +187,7 @@ class FormRegistration extends Block<
   }
 }
 
-export default FormRegistration;
+export default connect(({ isLoadingAuth, errorAuth }) => ({
+  isLoadingAuth,
+  errorAuth,
+}))(FormRegistration);

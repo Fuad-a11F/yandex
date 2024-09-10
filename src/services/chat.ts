@@ -3,12 +3,12 @@ import {
   AddNewChatRequestInterface,
   AddUserToChatRequestInterface,
   DeleteUserToChatRequestInterface,
-  GetAllChatsRequestInterface,
+  ChatsRequestInterface,
 } from "../interface/api/chatInterface.ts";
 
 const chatApi = new ChatApi();
 
-export const getAllChats = async (data: GetAllChatsRequestInterface) => {
+export const getAllChats = async (data: ChatsRequestInterface) => {
   await chatApi.getAllChats(data);
 };
 

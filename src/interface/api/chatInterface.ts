@@ -9,13 +9,13 @@ export interface AddNewChatResponseInterface {
   id: number;
 }
 
-export interface GetAllChatsRequestInterface {
+export interface ChatsRequestInterface {
   offset?: number;
   limit?: number;
   title?: string;
 }
 
-export interface GetAllChatsResponseInterface {
+export interface ChatsResponseInterface {
   id: number;
   title: string;
   avatar: string;

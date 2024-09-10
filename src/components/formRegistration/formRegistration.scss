@@ -1,3 +1,5 @@
+@import "../../assets/styles/colors";
+
 .registration {
   display: flex;
   justify-content: space-between;
@@ -9,6 +11,12 @@
     margin: 20px 0;
     text-align: center;
     font-size: 20px;
+  }
+
+  &__error {
+    color: $error;
+    font-size: 12px;
+    margin-top: -8px;
   }
 
   &__center {

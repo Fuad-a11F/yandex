@@ -2,16 +2,26 @@ import Handlebars, { Template } from "handlebars";
 import * as Components from "./components";
 import * as Pages from "./pages";
 import Router from "./core/router.ts";
+import { Store } from "./core/store.ts";
+import { StoreDefaultValueInterface } from "./interface/storeInterface.ts";
 
 declare global {
   interface Window {
-    // store: Store<AppState>;
+    store: Store<StoreDefaultValueInterface>;
     router: Router;
   }
 }
 
 const router = new Router("#app");
 window.router = router;
+
+window.store = new Store<StoreDefaultValueInterface>({
+  user: null,
+  errorAuth: null,
+  isLoadingAuth: false,
+  chats: [],
+  selectedChat: null,
+});
 
 Object.entries(Components).forEach(([name, component]) => {
   Handlebars.registerPartial(name, component as unknown as Template);
