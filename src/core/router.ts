@@ -30,8 +30,10 @@ class Router {
   }
 
   start() {
+    const self = this;
+
     window.onpopstate = function (event: PopStateEvent) {
-      this.onRoute((event.currentTarget as Window).location.pathname);
+      self.onRoute((event.currentTarget as Window).location.pathname);
     }.bind(this);
 
     this.onRoute(window.location.pathname);
@@ -66,11 +68,10 @@ class Router {
     }
 
     if (this._currentRoute && this._currentRoute !== route) {
-      this._currentRoute.leave();
+      this._currentRoute._block?.getContent()?.remove();
     }
 
     this._currentRoute = route;
-    // route.render(route, pathname);
     route.render();
   }
 }

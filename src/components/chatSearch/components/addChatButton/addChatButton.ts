@@ -1,7 +1,8 @@
 import Block from "../../../../core/block.ts";
+import { AddChatButtonPropsInterface } from "../../../../interface/components/chatSearchPropsInterface.ts";
 
-class AddChatButton extends Block {
-  constructor(props) {
+class AddChatButton extends Block<AddChatButtonPropsInterface> {
+  constructor(props: AddChatButtonPropsInterface) {
     super({ ...props, events: { click: props.addChatButton } });
   }
 

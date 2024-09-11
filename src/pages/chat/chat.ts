@@ -8,6 +8,7 @@ import {
 } from "../../interface/modules/chat/chatInterface.ts";
 import { getAllChats } from "../../services/chat.ts";
 import { connect } from "../../shared/connect.ts";
+import { getChatsData } from "../../shared/selectors/selectors.ts";
 
 class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
   constructor(props: ChatPropsInterface & ChatChildrenInterface) {
@@ -37,7 +38,7 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
     return super.componentDidUpdate(oldProps, newProps);
   }
 
-  setActiveChat(data) {
+  setActiveChat(data: ChatPropsInterface) {
     window.store.set({ selectedChat: data });
   }
 
@@ -103,6 +104,4 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
   }
 }
 
-export default connect(({ chats, selectedChat }) => ({ chats, selectedChat }))(
-  Chat,
-);
+export default connect(getChatsData)(Chat);

@@ -24,24 +24,13 @@ class Route {
     }
   }
 
-  leave() {
-    if (this._block) {
-      this._block.hide();
-    }
-  }
-
   match(pathname: string) {
     return pathname === this._pathname;
   }
 
   render() {
-    if (!this._block) {
-      this._block = new this._blockClass({});
-      this.renderDom(this._props.rootQuery, this._block);
-      return;
-    }
-
-    this._block.show();
+    this._block = new this._blockClass({});
+    this.renderDom(this._props.rootQuery, this._block);
   }
 
   private renderDom(query: string, block: Block<object>) {

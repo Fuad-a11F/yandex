@@ -13,10 +13,7 @@ import {
   UserInfoMainField,
   UserInfoPasswordField,
 } from "../../interface/modules/profile/profilePropsInterface.ts";
-import {
-  ProfileChangePasswordInterface,
-  ProfileMainInterface,
-} from "../../interface/profile/profileInterface.ts";
+import { ProfileChangePasswordInterface } from "../../interface/profile/profileInterface.ts";
 import Aside from "./components/aside.ts";
 import { logout } from "../../services/auth.ts";
 import { connect } from "../../shared/connect.ts";
@@ -25,6 +22,7 @@ import {
   ChangePasswordRequestInterface,
   ChangeProfileRequestInterface,
 } from "../../interface/api/userInterface.ts";
+import { getUser } from "../../shared/selectors/selectors.ts";
 
 class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   init() {
@@ -32,7 +30,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
     const changePasswordHandler = this.changePasswordHandler.bind(this);
     const logoutHandler = this.logoutHandler.bind(this);
     const navigateBack = this.navigateBack.bind(this);
-    const uploadAvatar = new UploadAvatar({});
+    const uploadAvatar = new (connect(getUser)(UploadAvatar))({});
 
     const aside = new Aside({
       navigateBack,
@@ -57,7 +55,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
     if (this.props.user) {
       const formSubmit = this.formSubmit.bind(this);
 
-      const userInfo = new UserInfo({
+      const userInfo = new (connect(getUser)(UserInfo))({
         ...this.props,
         formSubmit,
       });
@@ -84,7 +82,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   ): boolean {
     const formSubmit = this.formSubmit.bind(this);
 
-    const userInfo = new UserInfo({
+    const userInfo = new (connect(getUser)(UserInfo))({
       ...this.props,
       formSubmit,
     });
@@ -102,7 +100,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
 
   changeDataHandler() {
     this.setProps({ isChangeData: true });
-    this.children.userInfo.setProps({ isChangeData: true });
+    this.children.userInfo!.setProps({ isChangeData: true });
     const mainFields: UserInfoMainField[] = [
       "profileRowEmail",
       "profileRowLogin",
@@ -113,7 +111,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
     ];
 
     mainFields.forEach((item) => {
-      const child = this.children.userInfo.children[item];
+      const child = this.children.userInfo!.children[item];
       if (child) {
         child.setProps({ isEditting: true });
       }
@@ -233,4 +231,4 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   }
 }
 
-export default connect(({ user }) => ({ user }))(Profile);
+export default connect(getUser)(Profile);

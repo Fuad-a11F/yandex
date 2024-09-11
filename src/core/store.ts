@@ -1,17 +1,17 @@
 import EventBus from "./eventBus";
-import { a, F } from "vite/dist/node/types.d-aGj9QkWt";
 
 export enum StoreEvents {
   Updated = "Updated",
 }
 
-export class Store<State extends Record<string, any>> extends EventBus {
+export class Store<State extends Record<string, any>> extends EventBus<string> {
   static __instance: Store<object> | null = null;
-
+  // @ts-ignore
   private state: State;
 
   constructor(defaultState: State) {
     if (Store.__instance) {
+      // @ts-ignore
       return Store.__instance;
     }
     super();
@@ -22,7 +22,7 @@ export class Store<State extends Record<string, any>> extends EventBus {
     Store.__instance = this;
   }
 
-  public off<F>(event, callback: F) {
+  public off<F>(event: string, callback: F) {
     super.off(event, callback);
   }
 

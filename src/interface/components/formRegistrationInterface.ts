@@ -1,7 +1,7 @@
 import { Button, Input } from "../../components";
 
 export interface FormRegistrationPropsInterface {
-  password: string;
+  password?: string;
 }
 
 export interface FormRegistrationChildrenInterface {

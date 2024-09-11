@@ -1,5 +1,6 @@
 import Block from "../../core/block.ts";
 import { connect } from "../../shared/connect.ts";
+import { ChatPropsInterface } from "../../interface/modules/chat/chatInterface.ts";
 
 class ChatItem extends Block {
   constructor(props: any) {
@@ -45,4 +46,8 @@ class ChatItem extends Block {
   }
 }
 
-export default connect(({ selectedChat }) => ({ selectedChat }))(ChatItem);
+export default connect(
+  ({ selectedChat }: { selectedChat: ChatPropsInterface }) => ({
+    selectedChat,
+  }),
+)(ChatItem);

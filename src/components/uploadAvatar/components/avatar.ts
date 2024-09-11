@@ -1,6 +1,5 @@
 import Block from "../../../core/block.ts";
 import { AvatarPropsInterface } from "../../../interface/components/uploadAvatarInterface.ts";
-import { connect } from "../../../shared/connect.ts";
 import { getResource } from "../../../services/resource.ts";
 
 class Avatar extends Block<AvatarPropsInterface> {
@@ -16,9 +15,8 @@ class Avatar extends Block<AvatarPropsInterface> {
 
   init() {
     if (this.props.user?.avatar) {
-      getResource(this.props.user.avatar).then((response: Blob) => {
-        const imageURL = URL.createObjectURL(response);
-
+      getResource(this.props.user.avatar).then((response) => {
+        const imageURL = URL.createObjectURL(response as Blob);
         this.setProps({ url: imageURL });
       });
     }
@@ -35,4 +33,4 @@ class Avatar extends Block<AvatarPropsInterface> {
   }
 }
 
-export default connect(({ user }) => ({ user }))(Avatar);
+export default Avatar;

@@ -15,5 +15,5 @@ export interface ChatChildrenInterface {
   chatSearch: ChatSearch;
   chatHeader: ChatHeader;
   messageForm: MessageForm;
-  chats: (typeof ChatItem)[];
+  chats: ChatItem[];
 }

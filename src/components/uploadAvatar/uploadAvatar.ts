@@ -5,18 +5,20 @@ import {
   UploadAvatarChildrenInterface,
   UploadAvatarPropsInterface,
 } from "../../interface/components/uploadAvatarInterface.ts";
-import { connect } from "../../shared/connect.ts";
 
 class UploadAvatar extends Block<
   UploadAvatarPropsInterface,
   UploadAvatarChildrenInterface
 > {
   init() {
+    const handleClick = this.handleClick.bind(this);
+
     this.children = {
       ...this.children,
       modal: new Modal({
         ModalBody: new AvatarModal({}),
       }),
+      avatar: new Avatar({ handleClick, user: this.props.user }),
     };
   }
 
@@ -28,9 +30,14 @@ class UploadAvatar extends Block<
 
     this.children = {
       ...this.children,
-      avatar: new Avatar({ handleClick }),
+      avatar: new Avatar({ handleClick, user: this.props.user }),
     };
+
     return super.componentDidUpdate(oldProps, newProps);
+  }
+
+  componentDidMount() {
+    super.componentDidMount();
   }
 
   handleClick() {
@@ -48,4 +55,4 @@ class UploadAvatar extends Block<
   }
 }
 
-export default connect(({ user }) => ({ user }))(UploadAvatar);
+export default UploadAvatar;

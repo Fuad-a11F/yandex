@@ -7,7 +7,6 @@ import {
   AvatarModalPropsInterface,
 } from "../../../interface/components/uploadAvatarInterface.ts";
 import { changeAvatar } from "../../../services/user.ts";
-import form from "../../authForm/components/form.ts";
 
 class AvatarModal extends Block<
   AvatarModalPropsInterface,

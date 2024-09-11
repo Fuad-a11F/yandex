@@ -6,7 +6,7 @@ class EventBus<E extends string> {
       this.listeners[event] = [];
     }
 
-    this.listeners[event]?.push(callback);
+    this.listeners[event]?.push(callback as Function);
   }
 
   off<F>(event: E, callback: F) {
@@ -18,7 +18,7 @@ class EventBus<E extends string> {
     );
   }
 
-  emit<F>(event: E, ...args: F) {
+  emit<F>(event: E, ...args: Array<F>) {
     if (!this.listeners[event]) {
       return;
     }

@@ -7,8 +7,9 @@ import {
   RegistrationChildrenInterface,
   RegistrationPropsInterface,
 } from "../../interface/modules/registration/registrationInterface.ts";
-import AuthApi from "../../api/authApi.ts";
 import { signUp } from "../../services/auth.ts";
+import { connect } from "../../shared/connect.ts";
+import { getAuthData } from "../../shared/selectors/selectors.ts";
 
 export class Registration extends Block<
   RegistrationPropsInterface,
@@ -18,7 +19,9 @@ export class Registration extends Block<
     const formSubmit = this.formSubmit.bind(this);
 
     const authForm = new AuthForm({
-      formBody: new FormRegistration({}),
+      formBody: new (connect(getAuthData)(FormRegistration))(
+        {},
+      ) as unknown as FormRegistration,
       formSubmit: formSubmit,
     });
 

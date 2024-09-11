@@ -13,7 +13,6 @@ import {
   FormRegistrationChildrenInterface,
   FormRegistrationPropsInterface,
 } from "../../interface/components/formRegistrationInterface.ts";
-import { connect } from "../../shared/connect.ts";
 
 class FormRegistration extends Block<
   FormRegistrationPropsInterface,
@@ -187,7 +186,4 @@ class FormRegistration extends Block<
   }
 }
 
-export default connect(({ isLoadingAuth, errorAuth }) => ({
-  isLoadingAuth,
-  errorAuth,
-}))(FormRegistration);
+export default FormRegistration;

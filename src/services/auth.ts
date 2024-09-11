@@ -13,8 +13,9 @@ export const signIn = async (data: LoginInterface) => {
 
   try {
     const response = await authApi.signIn(data);
+
     if (response) {
-      window.store.set({ errorAuth: response.reason.toString() });
+      window.store.set({ errorAuth: response?.reason?.toString() });
     } else {
       localStorage.setItem("auth", "true");
       const user = await getUser();
@@ -34,7 +35,8 @@ export const signUp = async (data: RegistrationInterface) => {
 
   try {
     const response = await authApi.signUp(data);
-    if (response && !("reason" in response)) {
+
+    if (response) {
       window.store.set({ errorAuth: response.reason.toString() });
     } else {
       localStorage.setItem("auth", "true");
@@ -56,7 +58,7 @@ export const logout = async () => {
   try {
     const response = await authApi.logout();
 
-    if (response && !("reason" in response)) {
+    if (response) {
       window.store.set({ errorAuth: response.reason.toString() });
     } else {
       localStorage.removeItem("auth");

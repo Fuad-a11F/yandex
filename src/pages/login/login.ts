@@ -7,15 +7,18 @@ import {
   LoginChildrenInterface,
   LoginPropsInterface,
 } from "../../interface/modules/login/loginInterface.ts";
-import AuthApi from "../../api/authApi.ts";
 import { signIn } from "../../services/auth.ts";
+import { connect } from "../../shared/connect.ts";
+import { getAuthData } from "../../shared/selectors/selectors.ts";
 
 class Login extends Block<LoginPropsInterface, LoginChildrenInterface> {
   init() {
     const formSubmit = this.formSubmit.bind(this);
 
     const authForm = new AuthForm({
-      formBody: new FormLogin({}),
+      formBody: new (connect(getAuthData)(FormLogin))(
+        {},
+      ) as unknown as FormLogin,
       formSubmit,
     });
 
@@ -26,7 +29,6 @@ class Login extends Block<LoginPropsInterface, LoginChildrenInterface> {
   }
 
   async formSubmit(data: LoginInterface) {
-    console.log(data);
     const error = { isError: false };
 
     validationFunction(

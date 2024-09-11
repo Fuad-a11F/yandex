@@ -13,6 +13,7 @@ const chatApi = new HTTPTransport("chats");
 
 export default class ChatApi {
   getAllChats(data: ChatsRequestInterface): Promise<ChatsResponseInterface[]> {
+    console.log(data);
     return chatApi.get<ChatsResponseInterface[]>("");
   }
 
@@ -23,12 +24,12 @@ export default class ChatApi {
   }
 
   addUserToChat(data: AddUserToChatRequestInterface): Promise<void | ApiError> {
-    return chatApi.put("users", { data });
+    return chatApi.put<ApiError>("users", { data });
   }
 
   deleteUserFromChat(
     data: DeleteUserToChatRequestInterface,
   ): Promise<void | ApiError> {
-    return chatApi.delete("users", { data });
+    return chatApi.delete<ApiError>("users", { data });
   }
 }

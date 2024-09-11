@@ -4,10 +4,12 @@ import AvatarForm from "../../components/uploadAvatar/components/avatarForm.ts";
 import UploadFileInput from "../../components/uploadAvatar/components/uploadFileInput.ts";
 import { UserDtoInterface } from "../api/authApiInterface.ts";
 
-export interface UploadAvatarPropsInterface {}
+export interface UploadAvatarPropsInterface {
+  user?: UserDtoInterface;
+}
 
 export interface UploadAvatarChildrenInterface {
-  avatar?: typeof Avatar;
+  avatar?: Avatar;
   modal?: Modal;
 }
 

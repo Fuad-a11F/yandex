@@ -1,6 +1,5 @@
 import UserApi from "../api/userApi.ts";
 import {
-  ChangeAvatarRequestInterface,
   ChangePasswordRequestInterface,
   ChangeProfileRequestInterface,
   SearchUserRequestInterface,

@@ -4,8 +4,15 @@ import { Input } from "../../../input";
 import { Button } from "../../../button";
 import { addNewChat, getAllChats } from "../../../../services/chat.ts";
 import { AddNewChatRequestInterface } from "../../../../interface/api/chatInterface.ts";
+import {
+  AddChatModalChildrenInterface,
+  AddChatModalPropsInterface,
+} from "../../../../interface/components/chatSearchPropsInterface.ts";
 
-class AddChatModal extends Block {
+class AddChatModal extends Block<
+  AddChatModalPropsInterface,
+  AddChatModalChildrenInterface
+> {
   init() {
     const formSubmit = this.formSubmit.bind(this);
 

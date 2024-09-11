@@ -1,7 +1,7 @@
 import { Form } from "../../components/authForm";
-import { FormLogin, FormRegistration } from "../../components";
 import { LoginInterface } from "../auth/loginInterface.ts";
 import { RegistrationInterface } from "../auth/registrationInterface.ts";
+import { FormLogin, FormRegistration } from "../../components";
 
 export interface AuthFormPropsInterface {
   formSubmit: (data: RegistrationInterface & LoginInterface) => void;

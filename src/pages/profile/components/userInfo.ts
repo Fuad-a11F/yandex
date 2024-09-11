@@ -12,7 +12,6 @@ import {
   UserInfoChildrenInterface,
   UserInfoPropsInterface,
 } from "../../../interface/modules/profile/profilePropsInterface.ts";
-import { connect } from "../../../shared/connect.ts";
 
 class UserInfo extends Block<
   UserInfoPropsInterface,
@@ -271,4 +270,4 @@ class UserInfo extends Block<
   }
 }
 
-export default connect(({ user }) => ({ user }))(UserInfo);
+export default UserInfo;

@@ -2,7 +2,7 @@ import { StoreEvents } from "../core/store";
 import Block from "../core/block.ts";
 import isEqual from "./isEqual";
 
-export function connect<T>(mapStateToProps) {
+export function connect<T>(mapStateToProps: Function) {
   return function (Component: typeof Block<object>) {
     return class extends Component {
       private onChangeStoreCallback: () => void;
@@ -26,10 +26,10 @@ export function connect<T>(mapStateToProps) {
         store.on(StoreEvents.Updated, this.onChangeStoreCallback);
       }
 
-      componentWillUnmount() {
-        super.componentWillUnmount();
-        window.store.off(StoreEvents.Updated, this.onChangeStoreCallback);
-      }
+      // componentWillUnmount() {
+      //   super.componentWillUnmount();
+      //   window.store.off(StoreEvents.Updated, this.onChangeStoreCallback);
+      // }
     };
   };
 }

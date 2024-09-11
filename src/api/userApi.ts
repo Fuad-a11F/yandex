@@ -1,7 +1,6 @@
 import HTTPTransport from "./api.ts";
 import {
   ApiError,
-  ChangeAvatarRequestInterface,
   ChangePasswordRequestInterface,
   ChangeProfileRequestInterface,
   SearchUserRequestInterface,

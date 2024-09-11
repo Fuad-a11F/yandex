@@ -34,19 +34,25 @@ class HTTPTransport {
     });
   }
 
-  put = (url: string, options: ApiOptionInterface = {}) => {
+  put<TResponse>(
+    url: string,
+    options: ApiOptionInterface = {},
+  ): Promise<TResponse> {
     return this.request(`${this.apiBaseUrl}/${url}`, {
       ...options,
       method: METHODS.PUT,
     });
-  };
+  }
 
-  delete = (url: string, options: ApiOptionInterface = {}) => {
+  delete<TResponse>(
+    url: string,
+    options: ApiOptionInterface = {},
+  ): Promise<TResponse> {
     return this.request(`${this.apiBaseUrl}/${url}`, {
       ...options,
       method: METHODS.DELETE,
     });
-  };
+  }
 
   async request<TResponse>(
     url: string,
@@ -58,7 +64,7 @@ class HTTPTransport {
       method: method || METHODS.GET,
       credentials: "include",
       mode: "cors",
-      headers: { "Content-Type": "application/json" },
+      headers: headers || { "Content-Type": "application/json" },
       body:
         data instanceof FormData
           ? data
@@ -70,9 +76,19 @@ class HTTPTransport {
     const isJson = response.headers
       .get("content-type")
       ?.includes("application/json");
-    const resultData = (await isJson) ? response.json() : response?.blob();
 
-    return resultData as unknown as TResponse;
+    if (
+      data instanceof FormData ||
+      response.headers.get("content-type")?.includes("image")
+    ) {
+      const resultData = response.blob();
+
+      return resultData as unknown as TResponse;
+    } else {
+      const resultData = (await isJson) ? response.json() : undefined;
+
+      return resultData as unknown as TResponse;
+    }
   }
 }
 

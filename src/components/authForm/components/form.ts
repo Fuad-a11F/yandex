@@ -11,10 +11,14 @@ class Form extends Block<FormPropsInterface, FormChildrenInterface> {
       events: {
         submit: (e: SubmitEvent) => {
           e.preventDefault();
-          const formData = new FormData(document.querySelector("#signInForm"));
-          const formObject = Object.fromEntries(formData.entries());
+          const form = document.querySelector("#signInForm");
 
-          props.formSubmit(formObject);
+          if (form) {
+            const formData = new FormData(form as HTMLFormElement);
+            const formObject = Object.fromEntries(formData.entries());
+
+            props.formSubmit(formObject);
+          }
         },
       },
     });
