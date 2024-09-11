@@ -5,7 +5,6 @@ import Router from "./core/router.ts";
 import { Store } from "./core/store.ts";
 import { StoreDefaultValueInterface } from "./interface/storeInterface.ts";
 import { getUser } from "./services/auth.ts";
-import { getAllChats } from "./services/chat.ts";
 
 declare global {
   interface Window {

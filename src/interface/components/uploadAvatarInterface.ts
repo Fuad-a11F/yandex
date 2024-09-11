@@ -7,7 +7,7 @@ import { UserDtoInterface } from "../api/authApiInterface.ts";
 export interface UploadAvatarPropsInterface {}
 
 export interface UploadAvatarChildrenInterface {
-  avatar?: Avatar;
+  avatar?: typeof Avatar;
   modal?: Modal;
 }
 

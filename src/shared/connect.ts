@@ -2,12 +2,12 @@ import { StoreEvents } from "../core/store";
 import Block from "../core/block.ts";
 import isEqual from "./isEqual";
 
-export function connect(mapStateToProps) {
+export function connect<T>(mapStateToProps) {
   return function (Component: typeof Block<object>) {
     return class extends Component {
       private onChangeStoreCallback: () => void;
 
-      constructor(props) {
+      constructor(props: T) {
         const store = window.store;
         let state = mapStateToProps(store.getState());
 

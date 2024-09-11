@@ -1,5 +1,5 @@
 import EventBus from "./eventBus";
-import { a } from "vite/dist/node/types.d-aGj9QkWt";
+import { a, F } from "vite/dist/node/types.d-aGj9QkWt";
 
 export enum StoreEvents {
   Updated = "Updated",
@@ -20,6 +20,10 @@ export class Store<State extends Record<string, any>> extends EventBus {
     this.set(defaultState);
 
     Store.__instance = this;
+  }
+
+  public off<F>(event, callback: F) {
+    super.off(event, callback);
   }
 
   public getState(): State {

@@ -11,15 +11,16 @@ import { UserDtoInterface } from "../../api/authApiInterface.ts";
 export interface ProfilePropsInterface {
   isChangePassword?: boolean;
   isChangeData?: boolean;
+  user?: UserDtoInterface;
 }
 
 export interface ProfileChildrenInterface {
-  uploadAvatar: UploadAvatar;
-  userInfo: UserInfo;
-  buttonChangeData: Button;
-  buttonChangePassword: Button;
-  buttonLogout: Button;
-  aside: Aside;
+  uploadAvatar?: UploadAvatar;
+  userInfo?: UserInfo;
+  buttonChangeData?: Button;
+  buttonChangePassword?: Button;
+  buttonLogout?: Button;
+  aside?: Aside;
 }
 
 export interface UserInfoPropsInterface {
