@@ -6,6 +6,8 @@ import {
   AvatarModalChildrenInterface,
   AvatarModalPropsInterface,
 } from "../../../interface/components/uploadAvatarInterface.ts";
+import { changeAvatar } from "../../../services/user.ts";
+import form from "../../authForm/components/form.ts";
 
 class AvatarModal extends Block<
   AvatarModalPropsInterface,
@@ -39,7 +41,7 @@ class AvatarModal extends Block<
     });
   }
 
-  formSubmit(data: { avatar: File }) {
+  async formSubmit(data: { avatar: File }) {
     if (!data.avatar.name) {
       this.setProps({ isError: true });
       return;
@@ -47,7 +49,11 @@ class AvatarModal extends Block<
 
     this.setProps({ isError: false });
 
-    console.log(data);
+    const formData = new FormData();
+
+    formData.append("avatar", data.avatar);
+
+    await changeAvatar(formData);
   }
 
   render() {

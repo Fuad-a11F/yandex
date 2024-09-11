@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import Handlebars from "handlebars";
 import EventBus from "./eventBus.ts";
 import { ChildrenComponent } from "../interface/core/blockInterface.ts";
+import isEqual from "../shared/isEqual.ts";
 
 class Block<Props = object, Children extends ChildrenComponent = {}> {
   static EVENTS = {
@@ -194,9 +195,47 @@ class Block<Props = object, Children extends ChildrenComponent = {}> {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
+  deepEqual(obj1, obj2) {
+    // Проверка на равенство ссылок (если оба объекта одинаковы)
+    if (obj1 === obj2) return true;
+
+    // Если один из них не объект или они разные типы, объекты не равны
+    if (
+      typeof obj1 !== "object" ||
+      typeof obj2 !== "object" ||
+      obj1 === null ||
+      obj2 === null
+    ) {
+      return false;
+    }
+
+    // Получаем массивы ключей обоих объектов
+    let keys1 = Object.keys(obj1);
+    let keys2 = Object.keys(obj2);
+
+    // Сравниваем длину ключей, если разная — объекты точно не равны
+    if (keys1.length !== keys2.length) {
+      return false;
+    }
+
+    // Сравниваем каждое поле и его значение
+    for (let key of keys1) {
+      // Если во втором объекте нет такого же ключа, объекты не равны
+      if (!keys2.includes(key)) {
+        return false;
+      }
+
+      // Если значения по этому ключу не равны (сравниваем рекурсивно)
+      if (!this.deepEqual(obj1[key], obj2[key])) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   componentDidUpdate(oldProps: Props, newProps: Props) {
-    console.log(oldProps, newProps);
-    return false;
+    return !this.deepEqual(oldProps, newProps);
   }
 
   setProps = (nextProps: Props) => {

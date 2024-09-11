@@ -20,21 +20,20 @@ import {
 import Aside from "./components/aside.ts";
 import { logout } from "../../services/auth.ts";
 import { connect } from "../../shared/connect.ts";
+import { changePassword, changeProfile } from "../../services/user.ts";
+import {
+  ChangePasswordRequestInterface,
+  ChangeProfileRequestInterface,
+} from "../../interface/api/userInterface.ts";
 
 class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   init() {
     const changeDataHandler = this.changeDataHandler.bind(this);
     const changePasswordHandler = this.changePasswordHandler.bind(this);
-    const formSubmit = this.formSubmit.bind(this);
     const logoutHandler = this.logoutHandler.bind(this);
     const navigateBack = this.navigateBack.bind(this);
-
     const uploadAvatar = new UploadAvatar({});
 
-    const userInfo = new UserInfo({
-      ...this.props,
-      formSubmit,
-    });
     const aside = new Aside({
       navigateBack,
     });
@@ -55,14 +54,46 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
       onClick: logoutHandler,
     });
 
+    if (this.props.user) {
+      const formSubmit = this.formSubmit.bind(this);
+
+      const userInfo = new UserInfo({
+        ...this.props,
+        formSubmit,
+      });
+
+      this.children = {
+        ...this.children,
+        userInfo,
+      };
+    }
+
     this.children = {
-      uploadAvatar,
-      userInfo,
+      ...this.children,
       buttonChangeData,
       buttonChangePassword,
+      uploadAvatar,
       buttonLogout,
       aside,
     };
+  }
+
+  componentDidUpdate(
+    oldProps: ProfilePropsInterface,
+    newProps: ProfilePropsInterface,
+  ): boolean {
+    const formSubmit = this.formSubmit.bind(this);
+
+    const userInfo = new UserInfo({
+      ...this.props,
+      formSubmit,
+    });
+
+    this.children = {
+      ...this.children,
+      userInfo,
+    };
+    return super.componentDidUpdate(oldProps, newProps);
   }
 
   navigateBack() {
@@ -110,7 +141,9 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
     await logout();
   }
 
-  formSubmit(data: ProfileChangePasswordInterface | ProfileMainInterface) {
+  async formSubmit(
+    data: ProfileChangePasswordInterface | ChangeProfileRequestInterface,
+  ) {
     const error = { isError: false };
     if (this.props.isChangePassword) {
       validationFunction(
@@ -123,7 +156,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
       );
     } else if (this.props.isChangeData) {
       validationFunction(
-        getUserInfoDataValidateFields(data as ProfileMainInterface),
+        getUserInfoDataValidateFields(data as ChangeProfileRequestInterface),
         this.children.userInfo?.children || {},
         error,
         "children.input",
@@ -131,12 +164,6 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
     }
 
     if (error.isError) return;
-
-    this.setProps({ isChangePassword: false, isChangeData: false });
-    this.children.userInfo?.setProps({
-      isChangeData: false,
-      isChangePassword: false,
-    });
 
     const allFields: UserInfoAllFields[] = [
       "profileRowEmail",
@@ -157,7 +184,17 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
       }
     });
 
-    console.log(data);
+    if (this.props.isChangePassword) {
+      await changePassword(data as ChangePasswordRequestInterface);
+    } else if (this.props.isChangeData) {
+      await changeProfile(data as ChangeProfileRequestInterface);
+    }
+
+    this.setProps({ isChangePassword: false, isChangeData: false });
+    this.children.userInfo?.setProps({
+      isChangeData: false,
+      isChangePassword: false,
+    });
   }
 
   render() {

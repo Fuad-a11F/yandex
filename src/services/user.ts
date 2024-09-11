@@ -9,10 +9,14 @@ import {
 const userApi = new UserApi();
 
 export const changeProfile = async (data: ChangeProfileRequestInterface) => {
-  await userApi.changeProfile(data);
+  const response = await userApi.changeProfile(data);
+
+  if (!("reason" in response)) {
+    window.store.set({ user: response });
+  }
 };
 
-export const changeAvatar = async (data: ChangeAvatarRequestInterface) => {
+export const changeAvatar = async (data: FormData) => {
   await userApi.changeAvatar(data);
 };
 

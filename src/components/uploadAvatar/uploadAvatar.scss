@@ -10,6 +10,17 @@
   align-items: center;
   position: relative;
 
+  img {
+    min-height: 30px;
+    width: 30px;
+  }
+
+  img.uploadAvatar__avatar {
+    min-height: 130px;
+    width: 130px;
+    border-radius: 50%;
+  }
+
   &__modal {
     h3 {
       text-align: center;

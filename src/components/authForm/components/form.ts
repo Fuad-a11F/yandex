@@ -11,7 +11,7 @@ class Form extends Block<FormPropsInterface, FormChildrenInterface> {
       events: {
         submit: (e: SubmitEvent) => {
           e.preventDefault();
-          const formData = new FormData(document.querySelector("form")!);
+          const formData = new FormData(document.querySelector("#signInForm"));
           const formObject = Object.fromEntries(formData.entries());
 
           props.formSubmit(formObject);
@@ -21,7 +21,7 @@ class Form extends Block<FormPropsInterface, FormChildrenInterface> {
   }
 
   render() {
-    return `<form>{{{ formBody }}}</form>`;
+    return `<form id="signInForm">{{{ formBody }}}</form>`;
   }
 }
 

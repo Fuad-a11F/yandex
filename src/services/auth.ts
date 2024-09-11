@@ -13,7 +13,7 @@ export const signIn = async (data: LoginInterface) => {
 
   try {
     const response = await authApi.signIn(data);
-    if (response && !("reason" in response)) {
+    if (response) {
       window.store.set({ errorAuth: response.reason.toString() });
     } else {
       localStorage.setItem("auth", "true");

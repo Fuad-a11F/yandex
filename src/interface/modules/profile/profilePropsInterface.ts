@@ -6,6 +6,7 @@ import {
 } from "../../profile/profileInterface.ts";
 import Aside from "../../../pages/profile/components/aside.ts";
 import BackButton from "../../../pages/profile/components/backButton.ts";
+import { UserDtoInterface } from "../../api/authApiInterface.ts";
 
 export interface ProfilePropsInterface {
   isChangePassword?: boolean;
@@ -29,6 +30,7 @@ export interface UserInfoPropsInterface {
   isChangeData?: boolean;
   isChangePassword?: boolean;
   events?: { submit: (e: SubmitEvent) => void };
+  user?: UserDtoInterface;
 }
 
 export interface UserInfoChildrenInterface {

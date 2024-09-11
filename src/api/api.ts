@@ -52,20 +52,25 @@ class HTTPTransport {
     url: string,
     options: ApiOptionInterface = {},
   ): Promise<TResponse> {
-    const { method, data } = options;
+    const { method, data, headers } = options;
 
     const response = await fetch(url, {
       method: method || METHODS.GET,
       credentials: "include",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
-      body: data ? JSON.stringify(data) : undefined,
+      body:
+        data instanceof FormData
+          ? data
+          : data
+            ? JSON.stringify(data)
+            : undefined,
     });
 
     const isJson = response.headers
       .get("content-type")
       ?.includes("application/json");
-    const resultData = (await isJson) ? response.json() : null;
+    const resultData = (await isJson) ? response.json() : response?.blob();
 
     return resultData as unknown as TResponse;
   }

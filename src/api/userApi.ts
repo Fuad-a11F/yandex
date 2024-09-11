@@ -20,12 +20,13 @@ export default class UserApi {
   }
 
   async changeAvatar(
-    data: ChangeAvatarRequestInterface,
+    data: FormData,
   ): Promise<SearchUserResponseInterface | ApiError> {
     return userApi.put<SearchUserResponseInterface | ApiError>(
       "profile/avatar",
       {
         data,
+        headers: {},
       },
     );
   }

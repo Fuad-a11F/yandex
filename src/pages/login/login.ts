@@ -26,6 +26,7 @@ class Login extends Block<LoginPropsInterface, LoginChildrenInterface> {
   }
 
   async formSubmit(data: LoginInterface) {
+    console.log(data);
     const error = { isError: false };
 
     validationFunction(

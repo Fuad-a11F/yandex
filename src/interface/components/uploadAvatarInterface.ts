@@ -2,17 +2,20 @@ import { Avatar } from "../../components/uploadAvatar";
 import { Button, Modal } from "../../components";
 import AvatarForm from "../../components/uploadAvatar/components/avatarForm.ts";
 import UploadFileInput from "../../components/uploadAvatar/components/uploadFileInput.ts";
+import { UserDtoInterface } from "../api/authApiInterface.ts";
 
 export interface UploadAvatarPropsInterface {}
 
 export interface UploadAvatarChildrenInterface {
-  avatar: Avatar;
-  modal: Modal;
+  avatar?: Avatar;
+  modal?: Modal;
 }
 
 export interface AvatarPropsInterface {
-  handleClick: () => void;
-  events?: { click: (e: MouseEvent) => void };
+  handleClick?: () => void;
+  events?: { click?: (e: MouseEvent) => void };
+  url?: string;
+  user?: UserDtoInterface;
 }
 
 export interface UploadFileInputPropsInterface {

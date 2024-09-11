@@ -37,20 +37,17 @@ class UserInfo extends Block<
     });
   }
 
-  componentDidUpdate(
-    oldProps: UserInfoPropsInterface,
-    newProps: UserInfoPropsInterface,
-  ): boolean {
+  init() {
     const buttonSave = new Button({ text: "Save" });
 
     const profileRowOldPassword = new ProfileRow({
       label: "Old password",
-      value: "test2001",
+      value: "",
       input: new Input({
         isProfileRow: true,
         name: "oldPassword",
         id: "oldPassword",
-        value: "test2001",
+        value: "",
         type: "password",
         onBlur: (value: string) =>
           validationFunctionForField(
@@ -64,13 +61,13 @@ class UserInfo extends Block<
 
     const profileRowNewPassword = new ProfileRow({
       label: "New password",
-      value: "text2001New",
+      value: "",
       input: new Input({
         isProfileRow: true,
         name: "newPassword",
         id: "newPassword",
         type: "password",
-        value: "text2001New",
+        value: "",
         onBlur: (value: string) => {
           validationFunctionForField(
             passwordValidation,
@@ -87,12 +84,12 @@ class UserInfo extends Block<
 
     const profileRowNewRePassword = new ProfileRow({
       label: "Repeat new password",
-      value: "text2001New",
+      value: "",
       input: new Input({
         isProfileRow: true,
         name: "rePassword",
         id: "rePassword",
-        value: "text2001New",
+        value: "",
         type: "password",
         onBlur: (value: string) => {
           validationFunctionForField(
@@ -113,12 +110,12 @@ class UserInfo extends Block<
 
     const profileRowEmail = new ProfileRow({
       label: "Email",
-      value: "pochta@yandex.ru",
+      value: this.props.user?.email,
       input: new Input({
         isProfileRow: true,
         name: "email",
         id: "email",
-        value: this.props.user.email,
+        value: this.props.user?.email,
         onBlur: (value: string) =>
           validationFunctionForField(
             emailValidation,
@@ -129,14 +126,16 @@ class UserInfo extends Block<
       }),
     });
 
+    // console.log(this.props.user);
+
     const profileRowLogin = new ProfileRow({
       label: "Login",
-      value: "ivanivanov",
+      value: this.props.user?.login,
       input: new Input({
         isProfileRow: true,
         name: "login",
         id: "login",
-        value: "ivanivanov",
+        value: this.props.user?.login,
         onBlur: (value: string) =>
           validationFunctionForField(
             loginValidation,
@@ -149,12 +148,12 @@ class UserInfo extends Block<
 
     const profileRowName = new ProfileRow({
       label: "Name",
-      value: "Иван",
+      value: this.props.user?.first_name,
       input: new Input({
         isProfileRow: true,
         name: "first_name",
         id: "first_name",
-        value: "Иван",
+        value: this.props.user?.first_name,
         onBlur: (value: string) =>
           validationFunctionForField(
             namesValidation,
@@ -167,12 +166,12 @@ class UserInfo extends Block<
 
     const profileRowLastName = new ProfileRow({
       label: "Last name",
-      value: "Иванов",
+      value: this.props.user?.second_name,
       input: new Input({
         isProfileRow: true,
         name: "second_name",
         id: "second_name",
-        value: "Иванов",
+        value: this.props.user?.second_name,
         onBlur: (value: string) =>
           validationFunctionForField(
             namesValidation,
@@ -185,12 +184,12 @@ class UserInfo extends Block<
 
     const profileRowDisplayName = new ProfileRow({
       label: "Name in chat",
-      value: "Иван",
+      value: this.props.user?.display_name,
       input: new Input({
         isProfileRow: true,
         name: "display_name",
         id: "display_name",
-        value: "Иван",
+        value: this.props.user?.display_name,
         onBlur: (value: string) =>
           validationFunctionForField(
             loginValidation,
@@ -203,12 +202,12 @@ class UserInfo extends Block<
 
     const profileRowPhone = new ProfileRow({
       label: "Phone",
-      value: "+7 (909) 967 30 30",
+      value: this.props.user?.phone,
       input: new Input({
         isProfileRow: true,
         name: "phone",
         id: "phone",
-        value: "+7 (909) 967 30 30",
+        value: this.props.user?.phone,
         onBlur: (value: string) =>
           validationFunctionForField(
             phoneValidation,
@@ -232,11 +231,7 @@ class UserInfo extends Block<
       profileRowName,
       profileRowLastName,
     };
-
-    return super.componentDidUpdate(oldProps, newProps);
   }
-
-  init() {}
 
   render() {
     return `
