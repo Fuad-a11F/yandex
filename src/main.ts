@@ -10,6 +10,7 @@ declare global {
   interface Window {
     store: Store<StoreDefaultValueInterface>;
     router: Router;
+    socket: WebSocket;
   }
 }
 
@@ -22,6 +23,7 @@ window.store = new Store<StoreDefaultValueInterface>({
   isLoadingAuth: false,
 
   chats: [],
+  messages: [],
   selectedChat: null,
 });
 
@@ -36,6 +38,43 @@ Handlebars.registerHelper(
       return options.fn(this);
     }
     return options.inverse(this);
+  },
+);
+
+Handlebars.registerHelper("correctFormatDate", function (date: string) {
+  if (!date) return;
+
+  return date.split("T")[0];
+});
+
+Handlebars.registerHelper(
+  "ifCheckMessageAuthor",
+  function (this: unknown, messageItem: any, options) {
+    const user = window.store.getState().user;
+
+    console.log(messageItem);
+
+    if (messageItem.user_id === user?.id) {
+      return options.fn(this);
+    }
+
+    return options.inverse(this);
+  },
+);
+
+Handlebars.registerHelper(
+  "ifDateIsUnique",
+  function (this: unknown, v1: any, v2: any, options) {
+    for (let i = 0; i < v1.length; i++) {
+      if (v1[i].id === v2.id) {
+        if (!i) return options.fn(this);
+
+        if (v1[i - 1].time.split("T")[0] !== v2.time.split("T")[0])
+          return options.fn(this);
+
+        return options.inverse(this);
+      }
+    }
   },
 );
 

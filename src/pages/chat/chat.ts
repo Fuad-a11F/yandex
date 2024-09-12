@@ -9,6 +9,8 @@ import {
 import { getAllChats } from "../../services/chat.ts";
 import { connect } from "../../shared/connect.ts";
 import { getChatsData } from "../../shared/selectors/selectors.ts";
+import WebSocketTransport from "../../api/websocket.ts";
+import MessageZone from "./components/messageZone.ts";
 
 class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
   constructor(props: ChatPropsInterface & ChatChildrenInterface) {
@@ -25,6 +27,21 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
     oldProps: ChatPropsInterface,
     newProps: ChatPropsInterface,
   ): boolean {
+    if (this.props.selectedChat !== oldProps.selectedChat) {
+      WebSocketTransport(this.props.selectedChat.id, this.props.user);
+
+      return;
+    }
+
+    if (this.props.messages !== oldProps.messages) {
+      this.children?.messageZone?.setProps({
+        ...this.props,
+        messages: this.props.messages,
+      });
+
+      return;
+    }
+
     const setActiveChat = this.setActiveChat.bind(this);
 
     this.children = {
@@ -46,6 +63,7 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
     const chatSearch = new ChatSearch({});
     const chatHeader = new ChatHeader({});
     const messageForm = new MessageForm({});
+    const messageZone = new (connect(getChatsData)(MessageZone))({});
 
     this.setProps({
       ...this.props,
@@ -57,6 +75,7 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
       chatSearch,
       chatHeader,
       messageForm,
+      messageZone,
     };
   }
 
@@ -77,18 +96,7 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
                     {{{chatHeader}}}
                 </div>
     
-                <div class="chat__messages_zone">
-                    {{#each messages as |message|}}
-                        <div class="chat__date">{{message.date}}</div>
-    
-                        <div class="chat__messages_wrapper">
-                            {{#each message.messages as |messageItem|}}
-                                <div class="chat__message_{{#if messageItem.ownMessage}}own{{/if}}{{#if messageItem.guestMessage}}guest{{/if}}">{{messageItem.text}}</div>
-                            {{/each}}
-                        </div>
-                    {{/each}}
-                </div>
-    
+                {{{ messageZone }}}
     
                 <div>
                     {{{ messageForm }}}

@@ -11,6 +11,7 @@ export const getAuthData = ({
 }: {
   isLoadingAuth: boolean;
   errorAuth: string;
+  user: string;
 }) => ({
   isLoadingAuth,
   errorAuth,
@@ -19,10 +20,16 @@ export const getAuthData = ({
 export const getChatsData = ({
   chats,
   selectedChat,
+  user,
+  messages,
 }: {
   chats: ChatPropsInterface[];
   selectedChat: ChatPropsInterface;
+  user: UserDtoInterface;
+  messages: any;
 }) => ({
   chats,
   selectedChat,
+  user,
+  messages,
 });

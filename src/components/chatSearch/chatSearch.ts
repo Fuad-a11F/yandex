@@ -1,18 +1,12 @@
 import Block from "../../core/block.ts";
 import { InputSearch } from "./index.ts";
-import {
-  ChatSearchChildrenInterface,
-  ChatSearchPropsInterface,
-} from "../../interface/components/chatSearchPropsInterface.ts";
+import { ChatSearchChildrenInterface } from "../../interface/components/chatSearchPropsInterface.ts";
 import ProfileButton from "./components/profileButton/profileButton.ts";
 import AddChatButton from "./components/addChatButton/addChatButton.ts";
 import { Modal } from "../modal";
 import AddChatModal from "./components/addChatButton/addChatModal.ts";
 
-class ChatSearch extends Block<
-  ChatSearchPropsInterface,
-  ChatSearchChildrenInterface
-> {
+class ChatSearch extends Block<unknown, ChatSearchChildrenInterface> {
   init() {
     const handleProfileNavigate = this.handleProfileNavigate.bind(this);
     const addChatButtonHandler = this.addChatButtonHandler.bind(this);

@@ -61,7 +61,18 @@ class MessageForm extends Block<
   formSubmit(data: MessageInterface) {
     if (data.message === "") return;
 
-    console.log(data);
+    window.socket.send(
+      JSON.stringify({
+        content: data.message,
+        type: "message",
+      }),
+    );
+
+    const form: HTMLFormElement = document.querySelector("#chat");
+
+    if (form) {
+      form.reset();
+    }
   }
 
   render() {
@@ -74,7 +85,7 @@ class MessageForm extends Block<
   
           {{{ messageInput }}} 
   
-          <div class="messageForm__send">
+          <div id="send-message" class="messageForm__send">
               <button>
                   <img src="./icons/buttonArrow.svg" alt="send message" width="32" height="32">
               </button>

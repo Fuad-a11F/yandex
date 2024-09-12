@@ -36,7 +36,7 @@ export const signUp = async (data: RegistrationInterface) => {
   try {
     const response = await authApi.signUp(data);
 
-    if (response) {
+    if ("reason" in response) {
       window.store.set({ errorAuth: response.reason.toString() });
     } else {
       localStorage.setItem("auth", "true");

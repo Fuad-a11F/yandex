@@ -2,8 +2,8 @@ import ChatApi from "../api/chatApi.ts";
 import {
   AddNewChatRequestInterface,
   AddUserToChatRequestInterface,
-  DeleteUserToChatRequestInterface,
   ChatsRequestInterface,
+  DeleteUserToChatRequestInterface,
 } from "../interface/api/chatInterface.ts";
 
 const chatApi = new ChatApi();
@@ -18,6 +18,10 @@ export const getAllChats = async (data: ChatsRequestInterface) => {
   } catch (e) {
     console.error(e);
   }
+};
+
+export const getChatToken = async (id: number) => {
+  return await chatApi.getChatToken(id);
 };
 
 export const addNewChat = async (data: AddNewChatRequestInterface) => {

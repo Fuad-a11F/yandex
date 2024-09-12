@@ -23,6 +23,10 @@ export default class ChatApi {
     return chatApi.post<AddNewChatResponseInterface | ApiError>("", { data });
   }
 
+  getChatToken(id: number): Promise<{ token: string } | ApiError> {
+    return chatApi.post<{ token: string } | ApiError>(`token/${id}`, {});
+  }
+
   addUserToChat(data: AddUserToChatRequestInterface): Promise<void | ApiError> {
     return chatApi.put<ApiError>("users", { data });
   }

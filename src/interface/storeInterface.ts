@@ -7,5 +7,6 @@ export interface StoreDefaultValueInterface {
   errorAuth: string | null;
 
   chats: ChatsResponseInterface[];
+  messages: any[];
   selectedChat: ChatsResponseInterface | null;
 }
