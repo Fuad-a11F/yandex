@@ -14,7 +14,7 @@ const chatApi = new HTTPTransport("chats");
 export default class ChatApi {
   getAllChats(data: ChatsRequestInterface): Promise<ChatsResponseInterface[]> {
     console.log(data);
-    return chatApi.get<ChatsResponseInterface[]>("");
+    return chatApi.get<ChatsResponseInterface[]>("", { data });
   }
 
   addNewChat(

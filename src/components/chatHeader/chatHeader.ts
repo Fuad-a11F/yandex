@@ -13,6 +13,8 @@ import {
   ChatHeaderChildrenInterface,
   ChatHeaderPropsInterface,
 } from "../../interface/components/chatHeaderPropsInterface.ts";
+import { connect } from "../../shared/connect.ts";
+import { getSelectedChatData } from "../../shared/selectors/selectors.ts";
 
 class ChatHeader extends Block<
   ChatHeaderPropsInterface,
@@ -21,6 +23,7 @@ class ChatHeader extends Block<
   init() {
     const onClose = this.onClose.bind(this);
     const onAddUser = this.onAddUser.bind(this);
+    const closeModal = this.closeModal.bind(this);
     const onRemoveUser = this.onRemoveUser.bind(this);
 
     const moreAction = new MoreAction({ onClose });
@@ -32,10 +35,14 @@ class ChatHeader extends Block<
     });
 
     const modalAddUser = new Modal({
-      ModalBody: new ModalAddUserModal({}),
+      ModalBody: new (connect(getSelectedChatData)(ModalAddUserModal))({
+        closeModal,
+      }),
     });
     const modalRemoveUser = new Modal({
-      ModalBody: new ModalRemoveUserModal({}),
+      ModalBody: new (connect(getSelectedChatData)(ModalRemoveUserModal))({
+        closeModal,
+      }),
     });
 
     this.children = {
@@ -65,8 +72,12 @@ class ChatHeader extends Block<
   onRemoveUser() {
     this.children.modalRemoveUser.setProps({ isVisible: true });
     this.children.dropdown.setProps({
-      isVisible: this.children.dropdown.props.isVisible,
+      isVisible: !this.children.dropdown.props.isVisible,
     });
+  }
+
+  closeModal(modal: "modalAddUser" | "modalRemoveUser") {
+    this.children[modal].setProps({ isVisible: false });
   }
 
   render() {
@@ -76,7 +87,7 @@ class ChatHeader extends Block<
             <div class="chatHeader__info">
                 <div class="chatHeader__avatar"><img src="vite.svg" alt="avatar"></div>
         
-                <p>Вадим</p>
+                <p>{{selectedChat.title}}</p>
             </div>
             
             <div class="chatHeader__addition">

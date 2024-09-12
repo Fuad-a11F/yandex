@@ -3,6 +3,7 @@ import {
   ChangePasswordRequestInterface,
   ChangeProfileRequestInterface,
   SearchUserRequestInterface,
+  SearchUserResponseInterface,
 } from "../interface/api/userInterface.ts";
 
 const userApi = new UserApi();
@@ -23,6 +24,12 @@ export const changePassword = async (data: ChangePasswordRequestInterface) => {
   await userApi.changePassword(data);
 };
 
-export const searchUser = async (data: SearchUserRequestInterface) => {
-  await userApi.searchUser(data);
+export const searchUser = async (
+  data: SearchUserRequestInterface,
+): Promise<SearchUserResponseInterface[] | undefined> => {
+  const response = await userApi.searchUser(data);
+
+  if (!("reason" in response)) {
+    return response;
+  }
 };

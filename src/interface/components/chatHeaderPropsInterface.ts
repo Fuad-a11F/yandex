@@ -26,16 +26,21 @@ export interface DropdownHeaderInterface {
   removeUser: RemoveUser;
 }
 
-export interface ModalUserModalPropsInterface {}
+export interface ModalUserModalPropsInterface {
+  selectedChat?: any;
+  closeModal: (field: "modalRemoveUser" | "modalAddUser") => void;
+}
 
 export interface ModalUserModalChildrenInterface {
   formAction: FormAction;
+  selectedChat?: any;
 }
 
 export interface FormActionPropsInterface {
-  formSubmit: Function;
-  formId: string;
+  formSubmit?: Function;
+  formId?: string;
   events?: { submit: (e: SubmitEvent) => void };
+  errorMessage?: string;
 }
 export interface FormActionChildrenInterface {
   input: Input;

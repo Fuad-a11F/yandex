@@ -60,17 +60,23 @@ class HTTPTransport {
   ): Promise<TResponse> {
     const { method, data, headers } = options;
 
+    if (METHODS.GET === method) {
+      url += `?offset=${data?.offset || 0}&limit=${data?.limit || 10}&title=${data?.title || ""}`;
+    }
+
     const response = await fetch(url, {
       method: method || METHODS.GET,
       credentials: "include",
       mode: "cors",
       headers: headers || { "Content-Type": "application/json" },
       body:
-        data instanceof FormData
-          ? data
-          : data
-            ? JSON.stringify(data)
-            : undefined,
+        method !== METHODS.GET
+          ? data instanceof FormData
+            ? data
+            : data
+              ? JSON.stringify(data)
+              : undefined
+          : undefined,
     });
 
     const isJson = response.headers

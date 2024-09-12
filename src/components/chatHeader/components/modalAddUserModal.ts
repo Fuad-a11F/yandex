@@ -9,6 +9,8 @@ import {
   ModalUserModalChildrenInterface,
   ModalUserModalPropsInterface,
 } from "../../../interface/components/chatHeaderPropsInterface.ts";
+import { addUserToChat } from "../../../services/chat.ts";
+import { searchUser } from "../../../services/user.ts";
 
 class ModalAddUserModal extends Block<
   ModalUserModalPropsInterface,
@@ -43,7 +45,7 @@ class ModalAddUserModal extends Block<
     };
   }
 
-  formSubmit(data: FormDataInterface) {
+  async formSubmit(data: FormDataInterface) {
     if (!loginValidation(data.login)) {
       this.children.formAction.children.input.setProps({
         isError: true,
@@ -57,15 +59,32 @@ class ModalAddUserModal extends Block<
       errorMessage: null,
     });
 
-    console.log(data);
+    const isCheckUser = await searchUser(data);
+
+    if (!isCheckUser) return;
+
+    if (isCheckUser.length === 0 || isCheckUser[0].login !== data.login) {
+      this.children.formAction.setProps({ errorMessage: "User not found" });
+
+      return;
+    }
+
+    await addUserToChat({
+      users: [isCheckUser[0].id],
+      chatId: this.props.selectedChat.id,
+    });
+
+    this.props.closeModal("modalAddUser");
   }
 
   render() {
-    return `<div class="modal__actionUser">
-            <h3>Add user</h3>
-    
-            {{{ formAction }}}
-        </div>`;
+    return `
+      <div class="modal__actionUser">
+        <h3>Add user</h3>
+
+        {{{ formAction }}}
+      </div>
+  `;
   }
 }
 

@@ -13,7 +13,9 @@ export const getAllChats = async (data: ChatsRequestInterface) => {
     const response = await chatApi.getAllChats(data);
 
     if (!("reason" in response)) {
-      window.store.set({ chats: response });
+      window.store.set({
+        chats: [...window.store.getState().chats, ...response],
+      });
     }
   } catch (e) {
     console.error(e);

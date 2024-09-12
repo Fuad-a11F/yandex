@@ -33,3 +33,11 @@ export const getChatsData = ({
   user,
   messages,
 });
+
+export const getSelectedChatData = ({
+  selectedChat,
+}: {
+  selectedChat: ChatPropsInterface;
+}) => ({
+  selectedChat,
+});

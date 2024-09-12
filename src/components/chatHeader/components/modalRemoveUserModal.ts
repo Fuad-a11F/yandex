@@ -9,6 +9,8 @@ import {
   ModalUserModalChildrenInterface,
   ModalUserModalPropsInterface,
 } from "../../../interface/components/chatHeaderPropsInterface.ts";
+import { searchUser } from "../../../services/user.ts";
+import { deleteUserFromChat } from "../../../services/chat.ts";
 
 class ModalRemoveUserModal extends Block<
   ModalUserModalPropsInterface,
@@ -43,7 +45,7 @@ class ModalRemoveUserModal extends Block<
     };
   }
 
-  formSubmit(data: FormDataInterface) {
+  async formSubmit(data: FormDataInterface) {
     if (!loginValidation(data.login)) {
       this.children.formAction.children.input.setProps({
         isError: true,
@@ -57,7 +59,22 @@ class ModalRemoveUserModal extends Block<
       errorMessage: null,
     });
 
-    console.log(data);
+    const isCheckUser = await searchUser(data);
+
+    if (!isCheckUser) return;
+
+    if (isCheckUser.length === 0 || isCheckUser[0].login !== data.login) {
+      this.children.formAction.setProps({ errorMessage: "User not found" });
+
+      return;
+    }
+
+    await deleteUserFromChat({
+      users: [isCheckUser[0].id],
+      chatId: this.props.selectedChat!.id,
+    });
+
+    this.props.closeModal("modalRemoveUser");
   }
 
   render() {

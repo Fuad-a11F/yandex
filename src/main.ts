@@ -5,6 +5,7 @@ import Router from "./core/router.ts";
 import { Store } from "./core/store.ts";
 import { StoreDefaultValueInterface } from "./interface/storeInterface.ts";
 import { getUser } from "./services/auth.ts";
+import { UserDtoInterface } from "./interface/api/authApiInterface.ts";
 
 declare global {
   interface Window {
@@ -41,6 +42,16 @@ Handlebars.registerHelper(
   },
 );
 
+Handlebars.registerHelper(
+  "ifNot",
+  function (this: unknown, v1: unknown, options) {
+    if (!v1) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  },
+);
+
 Handlebars.registerHelper("correctFormatDate", function (date: string) {
   if (!date) return;
 
@@ -52,9 +63,20 @@ Handlebars.registerHelper(
   function (this: unknown, messageItem: any, options) {
     const user = window.store.getState().user;
 
-    console.log(messageItem);
-
     if (messageItem.user_id === user?.id) {
+      return options.fn(this);
+    }
+
+    return options.inverse(this);
+  },
+);
+
+Handlebars.registerHelper(
+  "ifCheckMessageAuthorByLogin",
+  function (this: unknown, userForCheck: UserDtoInterface, options) {
+    const userCurrent = window.store.getState().user;
+
+    if (userForCheck.login === userCurrent?.login) {
       return options.fn(this);
     }
 

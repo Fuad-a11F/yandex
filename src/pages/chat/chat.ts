@@ -1,5 +1,5 @@
 import Block from "../../core/block.ts";
-import { ChatHeader, ChatSearch, MessageForm } from "../../components";
+import { Button, ChatHeader, ChatSearch, MessageForm } from "../../components";
 import { messages } from "../../mockData.ts";
 import ChatItem from "../../components/chatItem/chatItem.ts";
 import {
@@ -8,7 +8,10 @@ import {
 } from "../../interface/modules/chat/chatInterface.ts";
 import { getAllChats } from "../../services/chat.ts";
 import { connect } from "../../shared/connect.ts";
-import { getChatsData } from "../../shared/selectors/selectors.ts";
+import {
+  getChatsData,
+  getSelectedChatData,
+} from "../../shared/selectors/selectors.ts";
 import WebSocketTransport from "../../api/websocket.ts";
 import MessageZone from "./components/messageZone.ts";
 
@@ -61,9 +64,12 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
 
   init() {
     const chatSearch = new ChatSearch({});
-    const chatHeader = new ChatHeader({});
+    const chatHeader = new (connect(getSelectedChatData)(ChatHeader))({});
     const messageForm = new MessageForm({});
     const messageZone = new (connect(getChatsData)(MessageZone))({});
+    const getMoreChat = this.getMoreChat.bind(this);
+
+    const moreButton = new Button({ text: "More", onClick: getMoreChat });
 
     this.setProps({
       ...this.props,
@@ -76,7 +82,14 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
       chatHeader,
       messageForm,
       messageZone,
+      moreButton,
     };
+  }
+
+  async getMoreChat() {
+    await getAllChats({
+      offset: Math.ceil(this.props.chats?.length! / 10) * 10,
+    });
   }
 
   render() {
@@ -85,9 +98,19 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
         <aside class="chat__items">
             {{{ chatSearch }}}
     
-            {{#each chats as |chat|}}
-               {{{chat}}}
-            {{/each}}
+            <div class="chat__items_wrapper">
+              {{#ifNot chats.length}}
+                <span>Chats not found</span>
+              {{/ifNot}}
+              
+              {{#each chats as |chat|}}
+                 {{{chat}}}
+              {{/each}}
+            </div>
+            
+            <div class="chat__items_button-more">
+              {{{ moreButton }}}
+            </div>
         </aside>
         
         {{#if selectedChat}}

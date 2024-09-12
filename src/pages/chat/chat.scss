@@ -8,9 +8,25 @@
   &__items {
     background: $light_gray_3;
     border-right: 1px solid $light_gray_2;
-    padding: 27px 0;
+    padding: 0 0 27px 0;
     height: 100vh;
     overflow: auto;
+
+    &_button-more {
+      max-width: 100px;
+      margin: 20px auto 0 auto;
+    }
+
+    &_wrapper {
+      margin-top: 127px;
+
+      & > span {
+        display: block;
+        text-align: center;
+        margin-top: 130px;
+        color: $gray
+      }
+    }
 
     &::-webkit-scrollbar {
       width: 4px;
@@ -122,6 +138,12 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
+
+      span {
+        color: red;
+        font-size: 14px;
+        margin-top: -14px;
+      }
     }
   }
 }

@@ -39,6 +39,10 @@ class FormAction extends Block<
         <div>
             {{{ button }}}
         </div>
+        
+        {{#if errorMessage}}
+          <span class="not_found_user">{{errorMessage}}</span>
+        {{/if}}
     </form>
     `;
   }

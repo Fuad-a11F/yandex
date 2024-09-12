@@ -2,7 +2,9 @@ import { ChatHeader, ChatSearch, MessageForm } from "../../../components";
 import ChatItem from "../../../components/chatItem/chatItem.ts";
 import MessageZone from "../../../pages/chat/components/messageZone.ts";
 
-interface ChatsInterface {}
+interface ChatsInterface {
+  id: number;
+}
 
 interface MessagesInterface {}
 

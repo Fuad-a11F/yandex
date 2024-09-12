@@ -5,7 +5,6 @@ import { ChatPropsInterface } from "../../interface/modules/chat/chatInterface.t
 class ChatItem extends Block {
   constructor(props: any) {
     super({ ...props, events: { click: () => props.setActiveChat(props) } });
-
     this.setProps({ isActive: props.selectedChat?.id === props.id });
   }
 
@@ -29,8 +28,8 @@ class ChatItem extends Block {
               </div>
       
          
-              {{#if lastMessage}}
-                 <div class="chatItem__message">{{lastMessage}}</div>
+              {{#if last_message}}
+                 <div class="chatItem__message">{{#ifCheckMessageAuthorByLogin last_message.user}}<span>Вы: </span>{{/ifCheckMessageAuthorByLogin}}{{last_message.content}}</div>
               {{else}}
                  <div class="chatItem__message">Пусто</div>
               {{/if}}
