@@ -110,11 +110,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   let user = null;
   try {
     user = await getUser();
+
+    if (!user) return;
+
+    if ("reason" in user && user.reason === "Cookie is not valid") {
+      localStorage.removeItem("auth");
+      router
+        .clear()
+        .use("/", Pages.Main)
+        .use("/sign-in", Pages.Login)
+        .use("/sign-up", Pages.Registration)
+        .use("*", Pages.Page404)
+        .start();
+      window.router.go("/sign-in");
+    }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     window.router.go("/sign-in");
     return;
   }
+
   window.store.set({ user });
 });
 

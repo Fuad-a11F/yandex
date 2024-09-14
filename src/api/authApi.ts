@@ -24,7 +24,7 @@ export default class AuthApi {
     });
   }
 
-  async me(): Promise<UserResponseInterface> {
+  async me(): Promise<UserResponseInterface | void> {
     return authApi.get<UserResponseInterface>("user");
   }
 

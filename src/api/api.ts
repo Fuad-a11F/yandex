@@ -60,7 +60,7 @@ class HTTPTransport {
   ): Promise<TResponse> {
     const { method, data, headers } = options;
 
-    if (METHODS.GET === method) {
+    if (METHODS.GET === method && data) {
       url += `?offset=${data?.offset || 0}&limit=${data?.limit || 10}&title=${data?.title || ""}`;
     }
 
@@ -78,8 +78,6 @@ class HTTPTransport {
               : undefined
           : undefined,
     });
-
-    console.log(response.headers.get("content-type"));
 
     const isJson = response.headers
       .get("content-type")

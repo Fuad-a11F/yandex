@@ -17,7 +17,7 @@ interface RegistrationResponseSuccessInterface {
 }
 
 export interface ApiError {
-  reason: number;
+  reason: string;
 }
 
 export interface UserDtoInterface {

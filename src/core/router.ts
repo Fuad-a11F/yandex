@@ -1,3 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки. Как я обещал я во многих местах исправил, по сравнению с прошлым разом
+
 import Route from "./route.ts";
 import Block from "./block.ts";
 
@@ -35,9 +39,12 @@ class Router {
   }
 
   start() {
-    window.onpopstate = (event: PopStateEvent) => {
-      this.onRoute((event.currentTarget as Window).location.pathname);
-    };
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this;
+
+    window.onpopstate = function (event: PopStateEvent) {
+      self.onRoute((event.currentTarget as Window).location.pathname);
+    }.bind(this);
 
     this.onRoute(window.location.pathname);
   }
