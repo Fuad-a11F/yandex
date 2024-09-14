@@ -12,6 +12,8 @@ export const getAllChats = async (data: ChatsRequestInterface) => {
   try {
     const response = await chatApi.getAllChats(data);
 
+    if (!response) return;
+
     if (!("reason" in response)) {
       window.store.set({
         chats: [...response],

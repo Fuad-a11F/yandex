@@ -4,6 +4,10 @@ const resourceApi = new HTTPTransport("resources");
 
 export default class ResourceApi {
   async getResources(path: string) {
-    return await resourceApi.get(`/${path}`);
+    try {
+      return await resourceApi.get(`/${path}`);
+    } catch (e) {
+      console.error(e);
+    }
   }
 }

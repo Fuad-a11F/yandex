@@ -68,6 +68,8 @@ export const signUp = async (data: RegistrationInterface) => {
   try {
     const response = await authApi.signUp(data);
 
+    if (!response) return;
+
     if ("reason" in response) {
       window.store.set({ errorAuth: response.reason.toString() });
     } else {

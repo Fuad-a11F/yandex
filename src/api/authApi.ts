@@ -12,23 +12,39 @@ const authApi = new HTTPTransport("auth");
 export default class AuthApi {
   async signUp(
     data: RegistrationRequestInterface,
-  ): Promise<RegistrationResponseInterface> {
-    return authApi.post<RegistrationResponseInterface>("signup", {
-      data,
-    });
+  ): Promise<RegistrationResponseInterface | void> {
+    try {
+      return authApi.post<RegistrationResponseInterface>("signup", {
+        data,
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async signIn(data: LoginRequestInterface): Promise<void | ApiError> {
-    return authApi.post<ApiError>("signin", {
-      data,
-    });
+    try {
+      return authApi.post<ApiError>("signin", {
+        data,
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async me(): Promise<UserResponseInterface | void> {
-    return authApi.get<UserResponseInterface>("user");
+    try {
+      return authApi.get<UserResponseInterface>("user");
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async logout(): Promise<void | ApiError> {
-    return authApi.post<ApiError>("logout");
+    try {
+      return authApi.post<ApiError>("logout");
+    } catch (e) {
+      console.error(e);
+    }
   }
 }

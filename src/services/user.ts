@@ -12,6 +12,8 @@ export const changeProfile = async (data: ChangeProfileRequestInterface) => {
   try {
     const response = await userApi.changeProfile(data);
 
+    if (!response) return;
+
     if (!("reason" in response)) {
       window.store.set({ user: response });
     }
@@ -23,6 +25,8 @@ export const changeProfile = async (data: ChangeProfileRequestInterface) => {
 export const changeAvatar = async (data: FormData) => {
   try {
     const response = await userApi.changeAvatar(data);
+
+    if (!response) return;
 
     if (!("reason" in response)) {
       window.store.set({ user: response });
@@ -45,6 +49,8 @@ export const searchUser = async (
 ): Promise<SearchUserResponseInterface[] | undefined> => {
   try {
     const response = await userApi.searchUser(data);
+
+    if (!response) return;
 
     if (!("reason" in response)) {
       return response;

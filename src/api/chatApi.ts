@@ -12,28 +12,51 @@ import {
 const chatApi = new HTTPTransport("chats");
 
 export default class ChatApi {
-  getAllChats(data: ChatsRequestInterface): Promise<ChatsResponseInterface[]> {
-    console.log(data);
-    return chatApi.get<ChatsResponseInterface[]>("", { data });
+  getAllChats(
+    data: ChatsRequestInterface,
+  ): Promise<ChatsResponseInterface[]> | void {
+    try {
+      return chatApi.get<ChatsResponseInterface[]>("", { data });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   addNewChat(
     data: AddNewChatRequestInterface,
-  ): Promise<AddNewChatResponseInterface | ApiError> {
-    return chatApi.post<AddNewChatResponseInterface | ApiError>("", { data });
+  ): Promise<AddNewChatResponseInterface | ApiError> | void {
+    try {
+      return chatApi.post<AddNewChatResponseInterface | ApiError>("", { data });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
-  getChatToken(id: number): Promise<{ token: string } | ApiError> {
-    return chatApi.post<{ token: string } | ApiError>(`token/${id}`, {});
+  getChatToken(id: number): Promise<{ token: string } | ApiError> | void {
+    try {
+      return chatApi.post<{ token: string } | ApiError>(`token/${id}`, {});
+    } catch (e) {
+      console.error(e);
+    }
   }
 
-  addUserToChat(data: AddUserToChatRequestInterface): Promise<void | ApiError> {
-    return chatApi.put<ApiError>("users", { data });
+  addUserToChat(
+    data: AddUserToChatRequestInterface,
+  ): Promise<void | ApiError> | void {
+    try {
+      return chatApi.put<ApiError>("users", { data });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   deleteUserFromChat(
     data: DeleteUserToChatRequestInterface,
-  ): Promise<void | ApiError> {
-    return chatApi.delete<ApiError>("users", { data });
+  ): Promise<void | ApiError> | void {
+    try {
+      return chatApi.delete<ApiError>("users", { data });
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
