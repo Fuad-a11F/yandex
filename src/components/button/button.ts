@@ -7,7 +7,9 @@ class Button extends Block<ButtonPropsInterface> {
       ...props,
       events: {
         click: (e: MouseEvent) => {
-          props.onClick && props.onClick(e);
+          if (props.onClick) {
+            props.onClick(e);
+          }
         },
       },
     });

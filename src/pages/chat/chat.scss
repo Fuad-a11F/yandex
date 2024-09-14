@@ -8,13 +8,13 @@
   &__items {
     background: $light_gray_3;
     border-right: 1px solid $light_gray_2;
-    padding: 0 0 27px 0;
+    padding: 0 0 27px;
     height: 100vh;
     overflow: auto;
 
     &_button-more {
       max-width: 100px;
-      margin: 20px auto 0 auto;
+      margin: 20px auto 0;
     }
 
     &_wrapper {
@@ -24,7 +24,7 @@
         display: block;
         text-align: center;
         margin-top: 130px;
-        color: $gray
+        color: $gray;
       }
     }
 
@@ -203,7 +203,7 @@
     width: 90%;
     font-size: 13px;
 
-    span {
+    .modal__actionUser form span {
       font-weight: 700;
       color: $black;
     }
