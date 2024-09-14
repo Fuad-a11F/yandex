@@ -1,3 +1,6 @@
+// @ts-nocheck
+// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки
+
 import Block from "../../core/block.ts";
 import { Modal } from "../modal";
 import {

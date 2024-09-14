@@ -68,7 +68,7 @@ class MessageForm extends Block<
       }),
     );
 
-    const form: HTMLFormElement = document.querySelector("#chat");
+    const form: HTMLFormElement | null = document.querySelector("#chat");
 
     if (form) {
       form.reset();

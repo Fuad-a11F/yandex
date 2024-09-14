@@ -17,7 +17,11 @@ export const changeProfile = async (data: ChangeProfileRequestInterface) => {
 };
 
 export const changeAvatar = async (data: FormData) => {
-  await userApi.changeAvatar(data);
+  const response = await userApi.changeAvatar(data);
+
+  if (!("reason" in response)) {
+    window.store.set({ user: response });
+  }
 };
 
 export const changePassword = async (data: ChangePasswordRequestInterface) => {

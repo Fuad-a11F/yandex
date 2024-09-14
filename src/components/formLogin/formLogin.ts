@@ -71,11 +71,7 @@ class FormLogin extends Block<
       <div class="login">
         <div>
             <h1 class="login__title">Login</h1>
-            
-            {{#if isLoadingAuth}}
-                <div>76</div>
-            {{/if}}
-    
+        
             {{{ inputLogin }}}
             {{{ inputPassword }}}
             

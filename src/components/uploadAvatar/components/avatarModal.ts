@@ -53,6 +53,8 @@ class AvatarModal extends Block<
     formData.append("avatar", data.avatar);
 
     await changeAvatar(formData);
+
+    this.props.handleCloseModal && this.props.handleCloseModal();
   }
 
   render() {

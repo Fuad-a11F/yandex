@@ -1,7 +1,8 @@
 import Block from "../../../../core/block.ts";
+import { InputPropsInterface } from "../../../../interface/components/chatSearchPropsInterface.ts";
 
-class Input extends Block {
-  constructor(props) {
+class Input extends Block<InputPropsInterface> {
+  constructor(props: InputPropsInterface) {
     super({
       ...props,
       events: {

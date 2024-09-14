@@ -6,7 +6,9 @@ class Page404 extends Block {
     const handleChatNavigate = this.handleChatNavigate.bind(this);
 
     const backButton = new Button({
-      text: "Back to the chats",
+      text: localStorage.getItem("auth")
+        ? "Back to the chats"
+        : "Back to login",
       isLink: true,
       onClick: handleChatNavigate,
     });
@@ -18,7 +20,11 @@ class Page404 extends Block {
   }
 
   handleChatNavigate() {
-    window.router.go("/messenger");
+    if (localStorage.getItem("auth")) {
+      window.router.go("/messenger");
+    } else {
+      window.router.go("/sign-in");
+    }
   }
 
   render() {

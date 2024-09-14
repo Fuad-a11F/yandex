@@ -28,6 +28,7 @@ export interface UploadFileInputPropsInterface {
 export interface AvatarModalPropsInterface {
   fileName?: null | string;
   isError?: boolean;
+  handleCloseModal?: () => void;
 }
 
 export interface AvatarModalChildrenInterface {

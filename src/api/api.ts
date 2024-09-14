@@ -79,13 +79,16 @@ class HTTPTransport {
           : undefined,
     });
 
+    console.log(response.headers.get("content-type"));
+
     const isJson = response.headers
       .get("content-type")
       ?.includes("application/json");
 
     if (
-      data instanceof FormData ||
-      response.headers.get("content-type")?.includes("image")
+      (data instanceof FormData ||
+        response.headers.get("content-type")?.includes("image")) &&
+      !isJson
     ) {
       const resultData = response.blob();
 

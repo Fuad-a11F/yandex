@@ -111,12 +111,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   window.store.set({ user });
 });
 
-router
-  .use("/", Pages.Main)
-  .use("/sign-in", Pages.Login)
-  .use("/sign-up", Pages.Registration)
-  .use("/messenger", Pages.Chat)
-  .use("/server-error", Pages.Page500)
-  .use("/settings", Pages.Profile)
-  .use("*", Pages.Page404)
-  .start();
+if (localStorage.getItem("auth")) {
+  router
+    .use("/", Pages.Main)
+    .use("/messenger", Pages.Chat)
+    .use("/server-error", Pages.Page500)
+    .use("/settings", Pages.Profile)
+    .use("*", Pages.Page404)
+    .start();
+} else {
+  router
+    .use("/", Pages.Main)
+    .use("/sign-in", Pages.Login)
+    .use("/sign-up", Pages.Registration)
+    .use("*", Pages.Page404)
+    .start();
+}

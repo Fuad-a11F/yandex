@@ -29,3 +29,8 @@ export interface AddChatModalPropsInterface {
 export interface AddChatModalChildrenInterface {
   formAction: FormAction;
 }
+
+export interface InputPropsInterface {
+  searchChats: (value: string) => void;
+  events?: { blur?: Function };
+}

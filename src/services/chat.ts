@@ -14,7 +14,7 @@ export const getAllChats = async (data: ChatsRequestInterface) => {
 
     if (!("reason" in response)) {
       window.store.set({
-        chats: [...window.store.getState().chats, ...response],
+        chats: [...response],
       });
     }
   } catch (e) {

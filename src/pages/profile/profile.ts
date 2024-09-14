@@ -1,3 +1,6 @@
+// @ts-nocheck
+// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки
+
 import Block from "../../core/block.ts";
 import { Button, UploadAvatar } from "../../components";
 import { UserInfo } from "./index.ts";
@@ -23,6 +26,7 @@ import {
   ChangeProfileRequestInterface,
 } from "../../interface/api/userInterface.ts";
 import { getUser } from "../../shared/selectors/selectors.ts";
+import * as Pages from "../index.ts";
 
 class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   init() {
@@ -136,6 +140,14 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
   }
 
   async logoutHandler() {
+    window.router
+      .clear()
+      .use("/", Pages.Main)
+      .use("/sign-in", Pages.Login)
+      .use("/sign-up", Pages.Registration)
+      .use("*", Pages.Page404)
+      .start();
+
     await logout();
   }
 

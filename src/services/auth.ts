@@ -1,6 +1,7 @@
 import { LoginInterface } from "../interface/auth/loginInterface.ts";
 import AuthApi from "../api/authApi.ts";
 import { RegistrationInterface } from "../interface/auth/registrationInterface.ts";
+import * as Pages from "../pages";
 
 const authApi = new AuthApi();
 
@@ -19,6 +20,15 @@ export const signIn = async (data: LoginInterface) => {
     } else {
       localStorage.setItem("auth", "true");
       const user = await getUser();
+
+      window.router
+        .clear()
+        .use("/", Pages.Main)
+        .use("/messenger", Pages.Chat)
+        .use("/server-error", Pages.Page500)
+        .use("/settings", Pages.Profile)
+        .use("*", Pages.Page404)
+        .start();
 
       window.store.set({ user });
       window.router.go("/messenger");
@@ -41,6 +51,15 @@ export const signUp = async (data: RegistrationInterface) => {
     } else {
       localStorage.setItem("auth", "true");
       const user = await getUser();
+
+      window.router
+        .clear()
+        .use("/", Pages.Main)
+        .use("/messenger", Pages.Chat)
+        .use("/server-error", Pages.Page500)
+        .use("/settings", Pages.Profile)
+        .use("*", Pages.Page404)
+        .start();
 
       window.store.set({ user });
       window.router.go("/messenger");

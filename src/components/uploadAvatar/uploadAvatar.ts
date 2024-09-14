@@ -12,11 +12,12 @@ class UploadAvatar extends Block<
 > {
   init() {
     const handleClick = this.handleClick.bind(this);
+    const handleCloseModal = this.handleCloseModal.bind(this);
 
     this.children = {
       ...this.children,
       modal: new Modal({
-        ModalBody: new AvatarModal({}),
+        ModalBody: new AvatarModal({ handleCloseModal }),
       }),
       avatar: new Avatar({ handleClick, user: this.props.user }),
     };
@@ -42,6 +43,9 @@ class UploadAvatar extends Block<
 
   handleClick() {
     this.children.modal?.setProps({ isVisible: true });
+  }
+  handleCloseModal() {
+    this.children.modal?.setProps({ isVisible: false });
   }
 
   render() {

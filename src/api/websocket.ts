@@ -1,12 +1,13 @@
 import { getChatToken } from "../services/chat.ts";
+import { UserDtoInterface } from "../interface/api/authApiInterface.ts";
 
-const WebSocketTransport = async (chatid, user) => {
-  const resp = await getChatToken(chatid);
+const webSocketTransport = async (chatId: number, user: UserDtoInterface) => {
+  const resp = await getChatToken(chatId);
 
   if (!("token" in resp)) return;
 
   const socket = new WebSocket(
-    `wss://ya-praktikum.tech/ws/chats/${user.id}/${chatid}/${resp.token}`,
+    `wss://ya-praktikum.tech/ws/chats/${user.id}/${chatId}/${resp.token}`,
   );
 
   window.socket = socket;
@@ -53,9 +54,9 @@ const WebSocketTransport = async (chatid, user) => {
     }
   });
 
-  socket.addEventListener("error", (event) => {
-    console.log("Ошибка", event.message);
+  socket.addEventListener("error", () => {
+    console.log("Ошибка");
   });
 };
 
-export default WebSocketTransport;
+export default webSocketTransport;

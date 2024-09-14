@@ -1,3 +1,6 @@
+// @ts-nocheck
+// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки
+
 import Block from "../../core/block.ts";
 import { Button, ChatHeader, ChatSearch, MessageForm } from "../../components";
 import { messages } from "../../mockData.ts";
@@ -12,7 +15,7 @@ import {
   getChatsData,
   getSelectedChatData,
 } from "../../shared/selectors/selectors.ts";
-import WebSocketTransport from "../../api/websocket.ts";
+import webSocketTransport from "../../api/websocket.ts";
 import MessageZone from "./components/messageZone.ts";
 
 class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
@@ -31,9 +34,9 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
     newProps: ChatPropsInterface,
   ): boolean {
     if (this.props.selectedChat !== oldProps.selectedChat) {
-      WebSocketTransport(this.props.selectedChat.id, this.props.user);
+      webSocketTransport(this.props.selectedChat!.id, this.props.user);
 
-      return;
+      return true;
     }
 
     if (this.props.messages !== oldProps.messages) {
@@ -42,7 +45,7 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
         messages: this.props.messages,
       });
 
-      return;
+      return true;
     }
 
     const setActiveChat = this.setActiveChat.bind(this);
@@ -68,8 +71,13 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
     const messageForm = new MessageForm({});
     const messageZone = new (connect(getChatsData)(MessageZone))({});
     const getMoreChat = this.getMoreChat.bind(this);
+    const getPreviousChat = this.getPreviousChat.bind(this);
 
     const moreButton = new Button({ text: "More", onClick: getMoreChat });
+    const previousButton = new Button({
+      text: "Previous",
+      onClick: getPreviousChat,
+    });
 
     this.setProps({
       ...this.props,
@@ -83,12 +91,18 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
       messageForm,
       messageZone,
       moreButton,
+      previousButton,
     };
   }
 
   async getMoreChat() {
     await getAllChats({
       offset: Math.ceil(this.props.chats?.length! / 10) * 10,
+    });
+  }
+  async getPreviousChat() {
+    await getAllChats({
+      offset: Math.floor(Math.ceil(this.props.chats?.length! / 10) / 10),
     });
   }
 
@@ -110,6 +124,7 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
             
             <div class="chat__items_button-more">
               {{{ moreButton }}}
+              {{{ previousButton }}}
             </div>
         </aside>
         

@@ -157,10 +157,6 @@ class FormRegistration extends Block<
         <div>
             <h1 class="registration__title">Registration</h1>
     
-            {{#if isLoadingAuth}}
-                <div>76</div>
-            {{/if}}
-            
             {{{ inputFirstName }}}
             {{{ inputSecondName }}}
             {{{ inputLogin }}}

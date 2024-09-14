@@ -29,6 +29,11 @@ class Router {
     return this;
   }
 
+  clear() {
+    this.routes = [];
+    return this;
+  }
+
   start() {
     const self = this;
 
