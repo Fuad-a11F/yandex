@@ -6,7 +6,11 @@ import * as Pages from "../pages";
 const authApi = new AuthApi();
 
 export const getUser = async () => {
-  return await authApi.me();
+  try {
+    return await authApi.me();
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const signIn = async (data: LoginInterface) => {

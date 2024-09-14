@@ -23,20 +23,35 @@ export const getAllChats = async (data: ChatsRequestInterface) => {
 };
 
 export const getChatToken = async (id: number) => {
-  return await chatApi.getChatToken(id);
+  try {
+    return await chatApi.getChatToken(id);
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const addNewChat = async (data: AddNewChatRequestInterface) => {
-  await chatApi.addNewChat(data);
+  try {
+    await chatApi.addNewChat(data);
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const addUserToChat = async (data: AddUserToChatRequestInterface) => {
-  const response = await chatApi.addUserToChat(data);
-  console.log(response);
+  try {
+    await chatApi.addUserToChat(data);
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const deleteUserFromChat = async (
   data: DeleteUserToChatRequestInterface,
 ) => {
-  await chatApi.deleteUserFromChat(data);
+  try {
+    await chatApi.deleteUserFromChat(data);
+  } catch (e) {
+    console.error(e);
+  }
 };

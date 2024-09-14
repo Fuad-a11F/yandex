@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vite --port 3000",
+    "dev": "npm run build  && node ./server.js",
     "build": "vite build",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
     "lint:styles": "stylelint **/*.scss"

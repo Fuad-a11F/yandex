@@ -4,8 +4,7 @@ const resourceApi = new ResourceApi();
 
 export const getResource = async (path: string) => {
   try {
-    const response = await resourceApi.getResources(path);
-    return response;
+    return await resourceApi.getResources(path);
   } catch (e) {
     console.error(e);
   }

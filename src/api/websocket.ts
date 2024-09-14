@@ -4,6 +4,8 @@ import { UserDtoInterface } from "../interface/api/authApiInterface.ts";
 const webSocketTransport = async (chatId: number, user: UserDtoInterface) => {
   const resp = await getChatToken(chatId);
 
+  if (!resp) return;
+
   if (!("token" in resp)) return;
 
   const socket = new WebSocket(

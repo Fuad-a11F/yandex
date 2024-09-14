@@ -9,31 +9,47 @@ import {
 const userApi = new UserApi();
 
 export const changeProfile = async (data: ChangeProfileRequestInterface) => {
-  const response = await userApi.changeProfile(data);
+  try {
+    const response = await userApi.changeProfile(data);
 
-  if (!("reason" in response)) {
-    window.store.set({ user: response });
+    if (!("reason" in response)) {
+      window.store.set({ user: response });
+    }
+  } catch (e) {
+    console.error(e);
   }
 };
 
 export const changeAvatar = async (data: FormData) => {
-  const response = await userApi.changeAvatar(data);
+  try {
+    const response = await userApi.changeAvatar(data);
 
-  if (!("reason" in response)) {
-    window.store.set({ user: response });
+    if (!("reason" in response)) {
+      window.store.set({ user: response });
+    }
+  } catch (e) {
+    console.error(e);
   }
 };
 
 export const changePassword = async (data: ChangePasswordRequestInterface) => {
-  await userApi.changePassword(data);
+  try {
+    await userApi.changePassword(data);
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const searchUser = async (
   data: SearchUserRequestInterface,
 ): Promise<SearchUserResponseInterface[] | undefined> => {
-  const response = await userApi.searchUser(data);
+  try {
+    const response = await userApi.searchUser(data);
 
-  if (!("reason" in response)) {
-    return response;
+    if (!("reason" in response)) {
+      return response;
+    }
+  } catch (e) {
+    console.error(e);
   }
 };
