@@ -21,6 +21,7 @@ export const signIn = async (data: LoginInterface) => {
 
     if (response) {
       if (response?.reason?.toString() === "User already in system") {
+        localStorage.setItem("auth", "true");
         window.router
           .clear()
           .use("/", Pages.Main)
@@ -49,6 +50,7 @@ export const signIn = async (data: LoginInterface) => {
       const user = await getUser();
 
       window.store.set({ user });
+
       window.router.go("/messenger");
     }
   } catch (e) {
@@ -70,8 +72,6 @@ export const signUp = async (data: RegistrationInterface) => {
       window.store.set({ errorAuth: response.reason.toString() });
     } else {
       localStorage.setItem("auth", "true");
-      const user = await getUser();
-
       window.router
         .clear()
         .use("/", Pages.Main)
@@ -80,6 +80,8 @@ export const signUp = async (data: RegistrationInterface) => {
         .use("/settings", Pages.Profile)
         .use("*", Pages.Page404)
         .start();
+
+      const user = await getUser();
 
       window.store.set({ user });
       window.router.go("/messenger");
