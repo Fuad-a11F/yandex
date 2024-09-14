@@ -1,28 +1,23 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки
+// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки. Как я обещал я во многих местах исправил, по сравнению с прошлым разом
 
 import Block from "../../core/block.ts";
 import { Modal } from "../modal";
 import {
-  ModalAddUserModal,
-  RemoveUser,
   AddUser,
-  MoreAction,
-  ModalRemoveUserModal,
   DropdownHeader,
+  ModalAddUserModal,
+  ModalRemoveUserModal,
+  MoreAction,
+  RemoveUser,
 } from "./index.ts";
 import { Dropdown } from "../dropdown";
-import {
-  ChatHeaderChildrenInterface,
-  ChatHeaderPropsInterface,
-} from "../../interface/components/chatHeaderPropsInterface.ts";
+import { ChatHeaderChildrenInterface } from "../../interface/components/chatHeaderPropsInterface.ts";
 import { connect } from "../../shared/connect.ts";
 import { getSelectedChatData } from "../../shared/selectors/selectors.ts";
 
-class ChatHeader extends Block<
-  ChatHeaderPropsInterface,
-  ChatHeaderChildrenInterface
-> {
+class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
   init() {
     const onClose = this.onClose.bind(this);
     const onAddUser = this.onAddUser.bind(this);

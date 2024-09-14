@@ -34,6 +34,7 @@ export const signIn = async (data: LoginInterface) => {
       window.router.go("/messenger");
     }
   } catch (e) {
+    console.log(e);
     window.store.set({ errorAuth: "Server error" });
   } finally {
     window.store.set({ isLoadingAuth: false });
@@ -65,6 +66,7 @@ export const signUp = async (data: RegistrationInterface) => {
       window.router.go("/messenger");
     }
   } catch (e) {
+    console.log(e);
     window.store.set({ errorAuth: "Server error" });
   } finally {
     window.store.set({ isLoadingAuth: false });
@@ -84,6 +86,7 @@ export const logout = async () => {
       window.router.go("/sign-in");
     }
   } catch (e) {
+    console.log(e);
     window.store.set({ errorAuth: "Server error" });
   } finally {
     window.store.set({ isLoadingAuth: false });

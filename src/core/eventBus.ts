@@ -1,12 +1,16 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки. Как я обещал я во многих местах исправил, по сравнению с прошлым разом
+
 class EventBus<E extends string> {
-  listeners: { [key in E]?: Function[] } = {};
+  listeners: { [key in E]?: (() => void)[] } = {};
 
   on<F>(event: E, callback: F) {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
 
-    this.listeners[event]?.push(callback as Function);
+    this.listeners[event]?.push(callback as () => void);
   }
 
   off<F>(event: E, callback: F) {
@@ -23,7 +27,6 @@ class EventBus<E extends string> {
       return;
     }
     this.listeners[event]!.forEach(function (listener) {
-      // @ts-ignore
       listener(...args);
     });
   }

@@ -35,11 +35,9 @@ class Router {
   }
 
   start() {
-    const self = this;
-
-    window.onpopstate = function (event: PopStateEvent) {
-      self.onRoute((event.currentTarget as Window).location.pathname);
-    }.bind(this);
+    window.onpopstate = (event: PopStateEvent) => {
+      this.onRoute((event.currentTarget as Window).location.pathname);
+    };
 
     this.onRoute(window.location.pathname);
   }

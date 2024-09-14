@@ -1,5 +1,6 @@
 import { UserDtoInterface } from "./api/authApiInterface.ts";
 import { ChatsResponseInterface } from "./api/chatInterface.ts";
+import { MessagesInterface } from "./api/messagesInterface.ts";
 
 export interface StoreDefaultValueInterface {
   user: UserDtoInterface | null;
@@ -7,6 +8,6 @@ export interface StoreDefaultValueInterface {
   errorAuth: string | null;
 
   chats: ChatsResponseInterface[];
-  messages: any[];
+  messages: MessagesInterface[];
   selectedChat: ChatsResponseInterface | null;
 }

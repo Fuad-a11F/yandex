@@ -6,15 +6,9 @@ import {
   passwordValidation,
 } from "../../shared/validation/validation.ts";
 import { validationFunctionForField } from "../../shared/validation/validationFunction.ts";
-import {
-  FormLoginChildrenInterface,
-  FormLoginPropsInterface,
-} from "../../interface/components/formLoginInterface.ts";
+import { FormLoginChildrenInterface } from "../../interface/components/formLoginInterface.ts";
 
-class FormLogin extends Block<
-  FormLoginPropsInterface,
-  FormLoginChildrenInterface
-> {
+class FormLogin extends Block<unknown, FormLoginChildrenInterface> {
   init() {
     const handleSignUp = this.handleSignUp.bind(this);
 

@@ -3,18 +3,12 @@ import { AuthForm, FormRegistration } from "../../components";
 import { getRegistrationValidateFields } from "../../shared/validation/inputsForValidate.ts";
 import validationFunction from "../../shared/validation/validationFunction.ts";
 import { RegistrationInterface } from "../../interface/auth/registrationInterface.ts";
-import {
-  RegistrationChildrenInterface,
-  RegistrationPropsInterface,
-} from "../../interface/modules/registration/registrationInterface.ts";
+import { RegistrationChildrenInterface } from "../../interface/modules/registration/registrationInterface.ts";
 import { signUp } from "../../services/auth.ts";
 import { connect } from "../../shared/connect.ts";
 import { getAuthData } from "../../shared/selectors/selectors.ts";
 
-export class Registration extends Block<
-  RegistrationPropsInterface,
-  RegistrationChildrenInterface
-> {
+export class Registration extends Block<object, RegistrationChildrenInterface> {
   init() {
     const formSubmit = this.formSubmit.bind(this);
 

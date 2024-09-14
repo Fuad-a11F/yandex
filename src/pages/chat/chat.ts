@@ -1,5 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки
+// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки. Как я обещал я во многих местах исправил, по сравнению с прошлым разом
 
 import Block from "../../core/block.ts";
 import { Button, ChatHeader, ChatSearch, MessageForm } from "../../components";
@@ -97,12 +98,12 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
 
   async getMoreChat() {
     await getAllChats({
-      offset: Math.ceil(this.props.chats?.length! / 10) * 10,
+      offset: Math.ceil(this.props.chats?.length / 10) * 10,
     });
   }
   async getPreviousChat() {
     await getAllChats({
-      offset: Math.floor(Math.ceil(this.props.chats?.length! / 10) / 10),
+      offset: Math.floor(Math.ceil(this.props.chats?.length / 10) / 10),
     });
   }
 

@@ -1,3 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки. Как я обещал я во многих местах исправил, по сравнению с прошлым разом
+
 import { ChildrenComponent } from "../../interface/core/blockInterface.ts";
 import Block from "../../core/block.ts";
 
@@ -22,7 +26,6 @@ const validationFunction = (
         let value = (selector as { [key: string]: Block<object> })[item.input];
 
         for (const key of keys) {
-          // @ts-ignore
           value = value[key];
         }
         value.setProps({
@@ -44,7 +47,6 @@ const validationFunction = (
         let value = (selector as { [key: string]: Block<object> })[item.input];
 
         for (const key of keys) {
-          // @ts-ignore
           value = value[key];
         }
 

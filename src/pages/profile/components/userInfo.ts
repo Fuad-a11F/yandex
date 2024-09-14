@@ -12,6 +12,7 @@ import {
   UserInfoChildrenInterface,
   UserInfoPropsInterface,
 } from "../../../interface/modules/profile/profilePropsInterface.ts";
+import { UserDtoInterface } from "../../../interface/api/authApiInterface.ts";
 
 class UserInfo extends Block<
   UserInfoPropsInterface,
@@ -27,9 +28,13 @@ class UserInfo extends Block<
 
           if (form) {
             const formData = new FormData(form as HTMLFormElement);
-            const formObject = Object.fromEntries(formData.entries()) as any;
+            const formObject = Object.fromEntries(
+              formData.entries(),
+            ) as unknown as UserDtoInterface;
 
-            props.formSubmit && props.formSubmit(formObject);
+            if (props.formSubmit) {
+              props.formSubmit(formObject);
+            }
           }
         },
       },

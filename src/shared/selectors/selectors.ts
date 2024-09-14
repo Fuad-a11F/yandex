@@ -1,5 +1,6 @@
 import { UserDtoInterface } from "../../interface/api/authApiInterface.ts";
 import { ChatPropsInterface } from "../../interface/modules/chat/chatInterface.ts";
+import { MessagesInterface } from "../../interface/api/messagesInterface.ts";
 
 export const getUser = ({ user }: { user: UserDtoInterface }) => ({
   user,
@@ -26,7 +27,7 @@ export const getChatsData = ({
   chats: ChatPropsInterface[];
   selectedChat: ChatPropsInterface;
   user: UserDtoInterface;
-  messages: any;
+  messages: MessagesInterface[];
 }) => ({
   chats,
   selectedChat,

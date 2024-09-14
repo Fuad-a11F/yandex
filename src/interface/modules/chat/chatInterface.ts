@@ -1,5 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки
+// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки. Как я обещал я во многих местах исправил, по сравнению с прошлым разом
 
 import {
   Button,
@@ -10,12 +11,11 @@ import {
 import ChatItem from "../../../components/chatItem/chatItem.ts";
 import MessageZone from "../../../pages/chat/components/messageZone.ts";
 import { UserDtoInterface } from "../../api/authApiInterface.ts";
+import { MessagesInterface } from "../../api/messagesInterface.ts";
 
-interface ChatsInterface {
+export interface ChatsInterface {
   id: number;
 }
-
-interface MessagesInterface {}
 
 export interface ChatPropsInterface {
   chats?: ChatsInterface[];

@@ -6,6 +6,7 @@ import { Store } from "./core/store.ts";
 import { StoreDefaultValueInterface } from "./interface/storeInterface.ts";
 import { getUser } from "./services/auth.ts";
 import { UserDtoInterface } from "./interface/api/authApiInterface.ts";
+import { MessagesInterface } from "./interface/api/messagesInterface.ts";
 
 declare global {
   interface Window {
@@ -60,7 +61,7 @@ Handlebars.registerHelper("correctFormatDate", function (date: string) {
 
 Handlebars.registerHelper(
   "ifCheckMessageAuthor",
-  function (this: unknown, messageItem: any, options) {
+  function (this: unknown, messageItem: MessagesInterface, options) {
     const user = window.store.getState().user;
 
     if (messageItem.user_id === user?.id) {
@@ -86,7 +87,12 @@ Handlebars.registerHelper(
 
 Handlebars.registerHelper(
   "ifDateIsUnique",
-  function (this: unknown, v1: any, v2: any, options) {
+  function (
+    this: unknown,
+    v1: MessagesInterface[],
+    v2: MessagesInterface,
+    options,
+  ) {
     for (let i = 0; i < v1.length; i++) {
       if (v1[i].id === v2.id) {
         if (!i) return options.fn(this);
@@ -105,6 +111,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     user = await getUser();
   } catch (error) {
+    console.log(error);
     window.router.go("/sign-in");
     return;
   }

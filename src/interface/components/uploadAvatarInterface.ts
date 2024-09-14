@@ -36,7 +36,7 @@ export interface AvatarModalChildrenInterface {
 }
 
 export interface AvatarFormPropsInterface {
-  formSubmit?: Function;
+  formSubmit?: (avatar: { avatar: File }) => void;
   events?: { submit: (e: SubmitEvent) => void };
   fileName?: string;
 }

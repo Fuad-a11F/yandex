@@ -11,19 +11,13 @@ export interface ChangeProfileRequestInterface {
   phone: "string";
 }
 
-export interface ChangeProfileResponseInterface {}
-
 export interface ChangeAvatarRequestInterface {
   avatar: File;
 }
 
-export interface ChangeAvatarResponseInterface {}
-
-export interface ChangePasswordRequestInterface {}
-
-export interface ChangePasswordResponseInterface {
-  oldPassword: "string";
-  newPassword: "string";
+export interface ChangePasswordRequestInterface {
+  newPassword: string;
+  oldPassword: string;
 }
 
 export interface SearchUserRequestInterface {

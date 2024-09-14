@@ -53,7 +53,7 @@ export interface AsidePropsInterface {
 
 export interface BackButtonPropsInterface {
   navigateBack: () => void;
-  events?: { click: Function };
+  events?: { click: () => void };
 }
 
 export interface AsideChildrenInterface {

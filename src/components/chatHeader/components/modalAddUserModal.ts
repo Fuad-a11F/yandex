@@ -71,7 +71,7 @@ class ModalAddUserModal extends Block<
 
     await addUserToChat({
       users: [isCheckUser[0].id],
-      chatId: this.props.selectedChat.id,
+      chatId: this.props.selectedChat!.id,
     });
 
     this.props.closeModal("modalAddUser");

@@ -13,7 +13,7 @@ export interface AuthFormChildrenInterface {
 }
 
 export interface FormPropsInterface {
-  formSubmit: Function;
+  formSubmit: (data: RegistrationInterface & LoginInterface) => void;
   events?: { submit: (e: SubmitEvent) => void };
 }
 

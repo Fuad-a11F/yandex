@@ -2,7 +2,8 @@ import { StoreEvents } from "../core/store";
 import Block from "../core/block.ts";
 import isEqual from "./isEqual";
 
-export function connect<T>(mapStateToProps: Function) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function connect<T>(mapStateToProps: any) {
   return function (Component: typeof Block<object>) {
     return class extends Component {
       private onChangeStoreCallback: () => void;

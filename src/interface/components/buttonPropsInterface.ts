@@ -1,5 +1,5 @@
 export interface ButtonPropsInterface {
-  onClick?: Function;
+  onClick?: (e: MouseEvent) => void;
   isLink?: boolean;
   isDanger?: boolean;
   type?: string;

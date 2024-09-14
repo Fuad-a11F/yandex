@@ -1,8 +1,8 @@
 import { Button, Dropdown, Input, Modal } from "../../components";
 import { AddUser, MoreAction, RemoveUser } from "../../components/chatHeader";
 import FormAction from "../../components/chatHeader/components/formAction.ts";
-
-export interface ChatHeaderPropsInterface {}
+import { ChatSearchChildrenInterface } from "./chatSearchPropsInterface.ts";
+import { ChatsInterface } from "../modules/chat/chatInterface.ts";
 
 export interface ChatHeaderChildrenInterface {
   moreAction: MoreAction;
@@ -27,17 +27,18 @@ export interface DropdownHeaderInterface {
 }
 
 export interface ModalUserModalPropsInterface {
-  selectedChat?: any;
+  selectedChat?: ChatsInterface;
   closeModal: (field: "modalRemoveUser" | "modalAddUser") => void;
 }
 
 export interface ModalUserModalChildrenInterface {
   formAction: FormAction;
-  selectedChat?: any;
+  selectedChat?: ChatSearchChildrenInterface;
 }
 
 export interface FormActionPropsInterface {
-  formSubmit?: Function;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formSubmit?: (data: any) => void;
   formId?: string;
   events?: { submit: (e: SubmitEvent) => void };
   errorMessage?: string;
@@ -45,7 +46,7 @@ export interface FormActionPropsInterface {
 export interface FormActionChildrenInterface {
   input: Input;
   button: Button;
-  formSubmit: Function;
+  formSubmit: () => void;
   formId: string;
 }
 

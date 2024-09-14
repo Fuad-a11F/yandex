@@ -1,10 +1,20 @@
 import Block from "../../core/block.ts";
 import { connect } from "../../shared/connect.ts";
-import { ChatPropsInterface } from "../../interface/modules/chat/chatInterface.ts";
+import { ChatsInterface } from "../../interface/modules/chat/chatInterface.ts";
+import { ChatItemInterface } from "../../interface/components/chatItemInterface.ts";
 
-class ChatItem extends Block {
-  constructor(props: any) {
-    super({ ...props, events: { click: () => props.setActiveChat(props) } });
+class ChatItem extends Block<ChatItemInterface> {
+  constructor(props: ChatItemInterface) {
+    super({
+      ...props,
+      events: {
+        click: () => {
+          if (props.setActiveChat) {
+            props.setActiveChat(props);
+          }
+        },
+      },
+    });
     this.setProps({ isActive: props.selectedChat?.id === props.id });
   }
 
@@ -46,7 +56,7 @@ class ChatItem extends Block {
 }
 
 export default connect(
-  ({ selectedChat }: { selectedChat: ChatPropsInterface }) => ({
+  ({ selectedChat }: { selectedChat: ChatsInterface }) => ({
     selectedChat,
   }),
 )(ChatItem);

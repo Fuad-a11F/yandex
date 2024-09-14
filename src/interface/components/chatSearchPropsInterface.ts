@@ -4,9 +4,9 @@ import AddChatButton from "../../components/chatSearch/components/addChatButton/
 import FormAction from "../../components/chatHeader/components/formAction.ts";
 
 export interface AddChatButtonPropsInterface {
-  addChatButton?: Function;
+  addChatButton?: () => void;
   events?: {
-    click?: Function;
+    click?: () => void;
   };
 }
 
@@ -19,7 +19,7 @@ export interface ChatSearchChildrenInterface {
 
 export interface ProfileButtonPropsInterface {
   handleProfileNavigate: () => void;
-  events?: { click: Function };
+  events?: { click: () => void };
 }
 
 export interface AddChatModalPropsInterface {
@@ -32,5 +32,5 @@ export interface AddChatModalChildrenInterface {
 
 export interface InputPropsInterface {
   searchChats: (value: string) => void;
-  events?: { blur?: Function };
+  events?: { blur?: (e: FocusEvent) => void };
 }

@@ -5,7 +5,7 @@ export interface InputPropsInterface {
   isError?: boolean;
   isProfileRow?: boolean;
   errorMessage?: string | null;
-  onBlur?: Function;
+  onBlur?: (e: string) => void;
   type?: string;
   value?: string;
   placeholder?: string;
@@ -16,9 +16,15 @@ export interface InputChildrenInterface {
 }
 
 export interface InputElementInterface {
-  onBlur?: Function;
   type?: string;
   value?: string;
   placeholder?: string;
   events?: { blur: (e: FocusEvent) => void };
+
+  name?: string;
+  isError?: boolean;
+  isProfileRow?: boolean;
+  errorMessage?: string | null;
+  onBlur?: (e: string) => void;
+  id?: string;
 }

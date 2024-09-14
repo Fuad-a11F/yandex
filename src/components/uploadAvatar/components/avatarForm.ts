@@ -3,6 +3,7 @@ import {
   AvatarFormChildrenInterface,
   AvatarFormPropsInterface,
 } from "../../../interface/components/uploadAvatarInterface.ts";
+import { ChangeAvatarRequestInterface } from "../../../interface/api/userInterface.ts";
 
 class AvatarForm extends Block<
   AvatarFormPropsInterface,
@@ -19,9 +20,13 @@ class AvatarForm extends Block<
 
           if (form) {
             const formData = new FormData(form);
-            const formObject = Object.fromEntries(formData.entries());
+            const formObject: ChangeAvatarRequestInterface = Object.fromEntries(
+              formData.entries(),
+            ) as unknown as ChangeAvatarRequestInterface;
 
-            props.formSubmit && props.formSubmit(formObject);
+            if (props.formSubmit) {
+              props.formSubmit(formObject);
+            }
           }
         },
       },
