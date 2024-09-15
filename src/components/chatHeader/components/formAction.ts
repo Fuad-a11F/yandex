@@ -29,6 +29,11 @@ class FormAction extends Block<
             }
           }
         },
+        keydown: (e: KeyboardEvent) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+          }
+        },
       },
     });
   }

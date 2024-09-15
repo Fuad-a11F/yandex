@@ -30,7 +30,7 @@ class ModalAddUserModal extends Block<
           "Login is wrong",
         ),
     });
-    const addButton = new Button({ text: "Add" });
+    const addButton = new Button({ text: "Add", type: "submit" });
 
     const formAction = new FormAction({
       input: loginInput,

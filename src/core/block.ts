@@ -170,6 +170,8 @@ class Block<Props = object, Children extends ChildrenComponent = object> {
       } else {
         const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
 
+        console.log(child);
+
         stub?.replaceWith(child.getContent()!);
       }
     });

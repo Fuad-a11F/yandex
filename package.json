@@ -4,8 +4,8 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "start": "vite --port 3000",
-    "dev": "npm run build  && node ./server.js",
+    "dev": "vite --port 3000",
+    "start": "npm run build  && node ./server.js",
     "build": "vite build",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
     "lint:styles": "stylelint **/*.scss"
@@ -28,6 +28,7 @@
     "vite": "^5.3.4"
   },
   "dependencies": {
+    "express": "^4.21.0",
     "handlebars": "^4.7.8",
     "prettier": "^3.3.3",
     "sass": "^1.77.8"

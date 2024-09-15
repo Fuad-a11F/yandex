@@ -40,7 +40,10 @@ export interface FormActionPropsInterface {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formSubmit?: (data: any) => void;
   formId?: string;
-  events?: { submit: (e: SubmitEvent) => void };
+  events?: {
+    submit?: (e: SubmitEvent) => void;
+    keyboard?: (e: KeyboardEvent) => void;
+  };
   errorMessage?: string;
 }
 export interface FormActionChildrenInterface {

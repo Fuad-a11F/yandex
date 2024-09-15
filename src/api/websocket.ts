@@ -40,19 +40,23 @@ const webSocketTransport = async (chatId: number, user: UserDtoInterface) => {
   socket.addEventListener("message", (event) => {
     console.log("Получены данные", event.data);
 
-    const data = JSON.parse(event.data);
+    try {
+      const data = JSON.parse(event.data);
 
-    window.store.set({
-      messages: [
-        ...window.store.getState().messages,
-        ...(Array.isArray(data) ? data.reverse() : [data]),
-      ],
-    });
+      window.store.set({
+        messages: [
+          ...window.store.getState().messages,
+          ...(Array.isArray(data) ? data.reverse() : [data]),
+        ],
+      });
 
-    const zone = document.getElementById("message_chat");
+      const zone = document.getElementById("message_chat");
 
-    if (zone) {
-      zone.scrollTop = zone?.scrollHeight + 30;
+      if (zone) {
+        zone.scrollTop = zone?.scrollHeight + 30;
+      }
+    } catch (e) {
+      console.error(e);
     }
   });
 
