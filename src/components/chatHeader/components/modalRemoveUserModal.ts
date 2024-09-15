@@ -3,7 +3,6 @@ import { Input } from "../../input";
 import { Button } from "../../button";
 import { loginValidation } from "../../../shared/validation/validation.ts";
 import FormAction from "./formAction.ts";
-import { validationFunctionForField } from "../../../shared/validation/validationFunction.ts";
 import {
   FormDataInterface,
   ModalUserModalChildrenInterface,
@@ -22,13 +21,12 @@ class ModalRemoveUserModal extends Block<
     const loginInput = new Input({
       name: "login",
       placeholder: "Login",
-      onBlur: (value: string) =>
-        validationFunctionForField(
-          loginValidation,
-          value,
-          this.children.formAction.children.input,
-          "Login is wrong",
-        ),
+      // onBlur: (value: string) =>
+      //     loginValidation,
+      //     value,
+      //     this.children.formAction.children.input,
+      //     "Login is wrong",
+      //   ),
     });
     const removeButton = new Button({ text: "Remove" });
 

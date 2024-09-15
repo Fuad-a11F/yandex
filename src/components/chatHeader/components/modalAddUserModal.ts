@@ -3,7 +3,6 @@ import { Input } from "../../input";
 import { Button } from "../../button";
 import { loginValidation } from "../../../shared/validation/validation.ts";
 import FormAction from "./formAction.ts";
-import { validationFunctionForField } from "../../../shared/validation/validationFunction.ts";
 import {
   FormDataInterface,
   ModalUserModalChildrenInterface,
@@ -22,13 +21,13 @@ class ModalAddUserModal extends Block<
     const loginInput = new Input({
       name: "login",
       placeholder: "Login",
-      onBlur: (value: string) =>
-        validationFunctionForField(
-          loginValidation,
-          value,
-          this.children.formAction.children.input,
-          "Login is wrong",
-        ),
+      // onBlur: (value: string) =>
+      //   validationFunctionForField(
+      //     loginValidation,
+      //     value,
+      //     this.children.formAction.children.input,
+      //     "Login is wrong",
+      //   ),
     });
     const addButton = new Button({ text: "Add", type: "submit" });
 
