@@ -47,6 +47,7 @@ class ModalAddUserModal extends Block<
 
   async formSubmit(data: FormDataInterface) {
     // Баг исправлен полностью, все работает корректно. Я предыдущих коммитах просто писал, что не получалось.. Но щяс работает корректно. Благо, не запорол дедлайн...
+    // Насчет блока "Можно улучшить" я все понял, к след спринту все сделаю.. Сейчас прсто очень не хочу нарушать(
     const inp: HTMLInputElement | null =
       document.querySelector("#addForm input");
     inp?.blur();
