@@ -1,0 +1,31 @@
+@import "../../assets/styles/colors";
+
+.input {
+  width: 100%;
+  margin-bottom: 20px;
+
+  input {
+    width: 100%;
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid $blue;
+    outline: none;
+  }
+
+  &__error {
+    span {
+      font-size: 12px;
+      color: $error;
+      margin-top: 6px;
+    }
+
+    input {
+      color: $error;
+      border-bottom: 1px solid $error;
+    }
+  }
+
+  &__profile {
+    margin-bottom: 0;
+  }
+}

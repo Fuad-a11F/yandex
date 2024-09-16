@@ -1,0 +1,35 @@
+<form>
+    <div class="messageForm">
+        {{#> Dropdown isVisible=isVisible bottom=45 left=5}}
+            <div class="messageForm__actions">
+                <div>
+                    <img src="./icons/photo.svg" alt="photo and video"><p>Фото или Видео</p>
+                </div>
+
+                <div>
+                    <img src="./icons/file.svg" alt="file"><p>Файл</p>
+                </div>
+
+                <div>
+                    <img src="./icons/location.svg" alt="location"><p>Локация</p>
+                </div>
+            </div>
+        {{/Dropdown}}
+
+        <div>
+            <img src="./icons/addFiles.svg" alt="add files icon" width="32" height="32">
+        </div>
+
+        <div class="messageForm__input">
+            <label>
+                <input name="message" type="text" placeholder="Message">
+            </label>
+        </div>
+
+        <div class="messageForm__send">
+            <button>
+                <img src="./icons/buttonArrow.svg" alt="send message" width="32" height="32">
+            </button>
+        </div>
+    </div>
+</form>
