@@ -10,6 +10,7 @@ import {
 } from "../../../interface/components/chatHeaderPropsInterface.ts";
 import { addUserToChat } from "../../../services/chat.ts";
 import { searchUser } from "../../../services/user.ts";
+import { validationFunctionForField } from "../../../shared/validation/validationFunction.ts";
 
 class ModalAddUserModal extends Block<
   ModalUserModalPropsInterface,
@@ -21,15 +22,13 @@ class ModalAddUserModal extends Block<
     const loginInput = new Input({
       name: "login",
       placeholder: "Login",
-      // Пришлось убрать валидацию на onBlur пока, чтоы успеть в рамках дедлайна(( Очень не хочу выходить за рамки( Обещаю исправить это к следующему спринту
-      // И все замечания из блока "Можно лучше" я понял. Все сделаю! Щяс просто очень не хочется нарушать дедлайн...
-      // onBlur: (value: string) =>
-      //   validationFunctionForField(
-      //     loginValidation,
-      //     value,
-      //     this.children.formAction.children.input,
-      //     "Login is wrong",
-      //   ),
+      onBlur: (value: string) =>
+        validationFunctionForField(
+          loginValidation,
+          value,
+          this.children.formAction,
+          "Login is wrong",
+        ),
     });
     const addButton = new Button({ text: "Add", type: "submit" });
 
