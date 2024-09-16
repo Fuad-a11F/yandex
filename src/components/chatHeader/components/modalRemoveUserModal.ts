@@ -46,8 +46,9 @@ class ModalRemoveUserModal extends Block<
   }
 
   async formSubmit(data: FormDataInterface) {
-    const inp: HTMLInputElement = document.querySelector("#removeForm input");
-    inp.blur();
+    const inp: HTMLInputElement | null =
+      document.querySelector("#removeForm input");
+    inp?.blur();
 
     this.children.formAction.children.input.setProps({
       isError: false,

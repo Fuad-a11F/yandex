@@ -46,8 +46,9 @@ class ModalAddUserModal extends Block<
   }
 
   async formSubmit(data: FormDataInterface) {
-    const inp: HTMLInputElement = document.querySelector("#addForm input");
-    inp.blur();
+    const inp: HTMLInputElement | null =
+      document.querySelector("#addForm input");
+    inp?.blur();
 
     this.children.formAction.children.input.setProps({
       isError: false,
