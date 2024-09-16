@@ -108,6 +108,9 @@ Handlebars.registerHelper(
 
 document.addEventListener("DOMContentLoaded", async () => {
   let user = null;
+
+  if (!localStorage.getItem("auth")) return;
+
   try {
     user = await getUser();
 

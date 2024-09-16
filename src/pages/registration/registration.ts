@@ -1,7 +1,6 @@
 import Block from "../../core/block.ts";
 import { AuthForm, FormRegistration } from "../../components";
 import { getRegistrationValidateFields } from "../../shared/validation/inputsForValidate.ts";
-import validationFunction from "../../shared/validation/validationFunction.ts";
 import { RegistrationInterface } from "../../interface/auth/registrationInterface.ts";
 import { RegistrationChildrenInterface } from "../../interface/modules/registration/registrationInterface.ts";
 import { signUp } from "../../services/auth.ts";
@@ -28,11 +27,16 @@ export class Registration extends Block<object, RegistrationChildrenInterface> {
   async formSubmit(data: RegistrationInterface) {
     const error = { isError: false };
 
-    validationFunction(
-      getRegistrationValidateFields(data),
-      this.children.authForm.children.formBody.children,
-      error,
-    );
+    const inputs: NodeListOf<HTMLInputElement> =
+      document.querySelectorAll("#signInForm input");
+
+    inputs.forEach((input) => {
+      input.blur();
+    });
+
+    getRegistrationValidateFields(data).forEach((input) => {
+      error.isError = !input.validateFunction(input.value);
+    });
 
     if (data.password !== data.repassword) {
       (
@@ -41,6 +45,8 @@ export class Registration extends Block<object, RegistrationChildrenInterface> {
         isError: true,
         errorMessage: "Passwords are different",
       });
+
+      error.isError = true;
     }
 
     if (error.isError) return;

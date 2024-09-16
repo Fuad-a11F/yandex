@@ -5,7 +5,6 @@
 import Block from "../../core/block.ts";
 import { AuthForm, FormLogin } from "../../components";
 import { getLoginValidateFields } from "../../shared/validation/inputsForValidate.ts";
-import validationFunction from "../../shared/validation/validationFunction.ts";
 import { LoginInterface } from "../../interface/auth/loginInterface.ts";
 import { LoginChildrenInterface } from "../../interface/modules/login/loginInterface.ts";
 import { signIn } from "../../services/auth.ts";
@@ -32,11 +31,16 @@ class Login extends Block<object, LoginChildrenInterface> {
   async formSubmit(data: LoginInterface) {
     const error = { isError: false };
 
-    validationFunction(
-      getLoginValidateFields(data),
-      this.children.authForm.children.formBody.children,
-      error,
-    );
+    const inputs: NodeListOf<HTMLInputElement> =
+      document.querySelectorAll("#signInForm input");
+
+    inputs.forEach((input) => {
+      input.blur();
+    });
+
+    getLoginValidateFields(data).forEach((input) => {
+      error.isError = !input.validateFunction(input.value);
+    });
 
     if (error.isError) return;
 
