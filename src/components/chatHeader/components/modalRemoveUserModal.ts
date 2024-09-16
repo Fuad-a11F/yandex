@@ -46,14 +46,9 @@ class ModalRemoveUserModal extends Block<
   }
 
   async formSubmit(data: FormDataInterface) {
-    if (!loginValidation(data.login)) {
-      this.children.formAction.children.input.setProps({
-        isError: true,
-        errorMessage: "Login is wrong",
-      });
+    const inp: HTMLInputElement = document.querySelector("#removeForm input");
+    inp.blur();
 
-      return;
-    }
     this.children.formAction.children.input.setProps({
       isError: false,
       errorMessage: null,
