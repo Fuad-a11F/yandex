@@ -27,9 +27,6 @@ export class Registration extends Block<object, RegistrationChildrenInterface> {
   async formSubmit(data: RegistrationInterface) {
     const error = { isError: false };
 
-    const dsf = "sdf";
-    const ds2f = "sdf";
-
     const inputs: NodeListOf<HTMLInputElement> =
       document.querySelectorAll("#signInForm input");
 
