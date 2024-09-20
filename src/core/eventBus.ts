@@ -30,6 +30,10 @@ class EventBus<E extends string> {
       listener(...args);
     });
   }
+
+  destroy() {
+    this.listeners = {};
+  }
 }
 
 export default EventBus;

@@ -1,6 +1,7 @@
 import { ApiOptionInterface } from "../interface/api/apiInterface.ts";
+import { apiBaseUrl } from "../shared/constants.ts";
 
-enum METHODS {
+export enum METHODS {
   GET = "GET",
   POST = "POST",
   PUT = "PUT",
@@ -8,17 +9,17 @@ enum METHODS {
 }
 
 class HTTPTransport {
-  private apiBaseUrl: string = "";
+  readonly url: string = "";
 
   constructor(apiPath: string) {
-    this.apiBaseUrl = `https://ya-praktikum.tech/api/v2/${apiPath}`;
+    this.url = `${apiPath}`;
   }
 
   get<TResponse>(
     url: string,
     options: ApiOptionInterface = {},
   ): Promise<TResponse> {
-    return this.request(`${this.apiBaseUrl}/${url}`, {
+    return this.request(`${apiBaseUrl}${this.url}/${url}`, {
       ...options,
       method: METHODS.GET,
     });
@@ -28,7 +29,7 @@ class HTTPTransport {
     url: string,
     options: ApiOptionInterface = {},
   ): Promise<TResponse> {
-    return this.request(`${this.apiBaseUrl}/${url}`, {
+    return this.request(`${apiBaseUrl}${this.url}/${url}`, {
       ...options,
       method: METHODS.POST,
     });
@@ -38,7 +39,7 @@ class HTTPTransport {
     url: string,
     options: ApiOptionInterface = {},
   ): Promise<TResponse> {
-    return this.request(`${this.apiBaseUrl}/${url}`, {
+    return this.request(`${apiBaseUrl}${this.url}/${url}`, {
       ...options,
       method: METHODS.PUT,
     });
@@ -48,7 +49,7 @@ class HTTPTransport {
     url: string,
     options: ApiOptionInterface = {},
   ): Promise<TResponse> {
-    return this.request(`${this.apiBaseUrl}/${url}`, {
+    return this.request(`${apiBaseUrl}${this.url}/${url}`, {
       ...options,
       method: METHODS.DELETE,
     });

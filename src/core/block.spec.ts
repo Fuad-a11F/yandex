@@ -63,7 +63,7 @@ describe("Block", () => {
     const event = new MouseEvent("click");
     pageComponent.element?.dispatchEvent(event);
 
-    return expect(handlerStub.calledOnce).to.be.true;
+    expect(handlerStub.calledOnce).to.equal(true);
   });
 
   it("Компонент должен вызвать dispatchComponentDidMount метод", () => {
@@ -76,6 +76,6 @@ describe("Block", () => {
     document.body.append(element!);
     clock.next();
 
-    return expect(spyCDM.calledOnce).to.be.true;
+    expect(spyCDM.calledOnce).to.equal(true);
   });
 });
