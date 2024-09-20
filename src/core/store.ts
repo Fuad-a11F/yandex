@@ -24,15 +24,15 @@ export class Store<State extends Record<string, any>> extends EventBus<string> {
     Store.__instance = this;
   }
 
-  public off<F>(event: string, callback: F) {
+  off<F>(event: string, callback: F) {
     super.off(event, callback);
   }
 
-  public getState(): State {
+  getState(): State {
     return this.state;
   }
 
-  public set(nextState: Record<string, unknown>) {
+  set(nextState: Record<string, unknown>) {
     const prevState = { ...this.state };
 
     this.state = { ...this.state, ...nextState };

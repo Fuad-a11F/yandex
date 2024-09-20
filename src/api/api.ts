@@ -19,6 +19,12 @@ class HTTPTransport {
     url: string,
     options: ApiOptionInterface = {},
   ): Promise<TResponse> {
+    const { data } = options;
+
+    if (data) {
+      url += this.objectToQueryString(data);
+    }
+
     return this.request(`${apiBaseUrl}${this.url}/${url}`, {
       ...options,
       method: METHODS.GET,
@@ -55,15 +61,23 @@ class HTTPTransport {
     });
   }
 
+  objectToQueryString(data: { [key: string]: unknown }) {
+    if (!data || Object.keys(data).length === 0) {
+      return "";
+    }
+
+    const queryString = Object.keys(data)
+      .map((key) => `${key}=${data[key]}`)
+      .join("&");
+
+    return `?${queryString}`;
+  }
+
   async request<TResponse>(
     url: string,
     options: ApiOptionInterface = {},
   ): Promise<TResponse> {
     const { method, data, headers } = options;
-
-    if (METHODS.GET === method && data) {
-      url += `?offset=${data?.offset || 0}&limit=${data?.limit || 10}&title=${data?.title || ""}`;
-    }
 
     const response = await fetch(url, {
       method: method || METHODS.GET,

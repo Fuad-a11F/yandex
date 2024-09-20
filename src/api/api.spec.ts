@@ -9,12 +9,12 @@ describe("Api", () => {
   });
 
   it("GET", async () => {
-    const http = new HTTPTransport("/test");
-    const requestStub = sinon.stub(http, "request").resolves();
+    const http = new HTTPTransport("test");
 
+    const requestStub = sinon.stub(http, "request").resolves();
     await http.get("", { data: { a: "1", b: "22" } });
 
-    const expectedUrl = `${apiBaseUrl}/test?a=1&b=22`;
+    const expectedUrl = `${apiBaseUrl}test/?a=1&b=22`;
 
     expect(
       requestStub.calledWithMatch(expectedUrl, { method: METHODS.GET }),

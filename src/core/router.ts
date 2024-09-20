@@ -8,8 +8,8 @@ import Block from "./block.ts";
 class Router {
   static __instance: Router | null = null;
 
-  _currentRoute: Route | null = null;
-  _rootQuery: string = "";
+  private currentRoute: Route | null = null;
+  private readonly rootQuery: string = "";
 
   routes: Route[] = [];
   history: History = window.history;
@@ -21,14 +21,14 @@ class Router {
 
     this.routes = [];
     this.history = window.history;
-    this._currentRoute = null;
-    this._rootQuery = rootQuery;
+    this.currentRoute = null;
+    this.rootQuery = rootQuery;
 
     Router.__instance = this;
   }
 
   use(pathname: string, block: typeof Block<object>) {
-    const route = new Route(pathname, block, { rootQuery: this._rootQuery });
+    const route = new Route(pathname, block, { rootQuery: this.rootQuery });
     this.routes.push(route);
     return this;
   }
@@ -77,11 +77,11 @@ class Router {
       return;
     }
 
-    if (this._currentRoute && this._currentRoute !== route) {
-      this._currentRoute._block?.getContent()?.remove();
+    if (this.currentRoute && this.currentRoute !== route) {
+      this.currentRoute._block?.getContent()?.remove();
     }
 
-    this._currentRoute = route;
+    this.currentRoute = route;
     route.render();
   }
 }
