@@ -4,9 +4,11 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "test": "mocha",
     "dev": "vite --port 3000",
     "start": "npm run build  && node ./server.js",
     "build": "vite build",
+    "ts-check": "tsc --noEmit",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
     "lint:styles": "stylelint **/*.scss",
     "lint:all": "npm-run-all lint lint:styles",
@@ -36,6 +38,10 @@
     "vite": "^5.3.4"
   },
   "dependencies": {
+    "@types/chai": "^4.3.19",
+    "@types/mocha": "^10.0.8",
+    "@types/sinon": "^17.0.3",
+    "chai": "^5.1.1",
     "express": "^4.21.0",
     "handlebars": "^4.7.8",
     "prettier": "^3.3.3",

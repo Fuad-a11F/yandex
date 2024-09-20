@@ -9,11 +9,6 @@
       "node_modules/@types",
       "typings"
     ],
-    "ts-node": {
-      "esm": true,
-      "experimentalSpecifierResolution": "node",
-      "transpileOnly": true,
-    },
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -26,6 +21,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node",
+    "transpileOnly": true,
   },
   "include": ["src"]
 }
