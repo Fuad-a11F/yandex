@@ -1,7 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки. Как я обещал я во многих местах исправил, по сравнению с прошлым разом
-
 import { nanoid } from "nanoid";
 import Handlebars from "handlebars";
 import EventBus from "./eventBus.ts";
@@ -17,7 +13,7 @@ class Block<Props = object, Children extends ChildrenComponent = object> {
 
   _element: HTMLElement | null = null;
   _id = nanoid(6);
-  eventBus;
+  eventBus: () => EventBus<string>;
   props: Props;
   children: Children;
 
@@ -36,7 +32,7 @@ class Block<Props = object, Children extends ChildrenComponent = object> {
 
   private addEvents() {
     const { events = {} } = this.props as Props & {
-      events: { [key: string]: () => void };
+      events: { [key: string]: (event: Event) => void };
     };
 
     Object.keys(events).forEach((eventName) => {
@@ -69,7 +65,11 @@ class Block<Props = object, Children extends ChildrenComponent = object> {
         const value = target[prop];
         return typeof value === "function" ? value.bind(target) : value;
       },
-      set: (target: { [key: string]: unknown }, prop: string, value) => {
+      set: (
+        target: { [key: string]: unknown },
+        prop: string,
+        value: unknown,
+      ) => {
         const oldTarget = { ...target };
         target[prop] = value;
         this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
@@ -115,7 +115,14 @@ class Block<Props = object, Children extends ChildrenComponent = object> {
     };
 
     Object.keys(events).forEach((eventName) => {
-      this._element?.removeEventListener(eventName, events[eventName]);
+      const handler = events[eventName];
+
+      if (typeof handler === "function") {
+        this._element?.removeEventListener(
+          eventName as keyof HTMLElementEventMap,
+          handler as EventListener,
+        );
+      }
     });
   }
 
@@ -140,14 +147,20 @@ class Block<Props = object, Children extends ChildrenComponent = object> {
   }
 
   private renderPrivate() {
-    const propsAndStubs: Props | Children = { ...this.props };
+    const propsAndStubs: Props | Children = {
+      ...this.props,
+    };
 
     Object.entries(this.children).forEach(([key, child]) => {
       if (Array.isArray(child)) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         propsAndStubs[key] = child.map(
           (item) => `<div data-id="${item._id}"></div>`,
         );
       } else {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
       }
     });

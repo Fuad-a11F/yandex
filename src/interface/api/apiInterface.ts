@@ -7,3 +7,8 @@ export interface ApiOptionInterface {
   };
   timeout?: number;
 }
+
+export type HTTPMethod = <R>(
+  url: string,
+  options?: ApiOptionInterface,
+) => Promise<R>;

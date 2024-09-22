@@ -7,6 +7,7 @@ import {
   DeleteUserToChatRequestInterface,
   ChatsRequestInterface,
   ChatsResponseInterface,
+  DeleteChatRequestInterface,
 } from "../interface/api/chatInterface.ts";
 
 const chatApi = new HTTPTransport("chats");
@@ -55,6 +56,16 @@ export default class ChatApi {
   ): Promise<void | ApiError> | void {
     try {
       return chatApi.delete<ApiError>("users", { data });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  deleteChat(
+    data: DeleteChatRequestInterface,
+  ): Promise<void | ApiError> | void {
+    try {
+      return chatApi.delete<ApiError>("", { data });
     } catch (e) {
       console.error(e);
     }

@@ -1,4 +1,7 @@
-import { ApiOptionInterface } from "../interface/api/apiInterface.ts";
+import {
+  ApiOptionInterface,
+  HTTPMethod,
+} from "../interface/api/apiInterface.ts";
 import { apiBaseUrl } from "../shared/constants.ts";
 
 export enum METHODS {
@@ -15,10 +18,10 @@ class HTTPTransport {
     this.url = `${apiPath}`;
   }
 
-  get<TResponse>(
-    url: string,
-    options: ApiOptionInterface = {},
-  ): Promise<TResponse> {
+  get: HTTPMethod = (url, options) => {
+    if (!options || !("data" in options))
+      return Promise.reject(new Error("Options or data not provided"));
+
     const { data } = options;
 
     if (data) {
@@ -29,37 +32,28 @@ class HTTPTransport {
       ...options,
       method: METHODS.GET,
     });
-  }
+  };
 
-  post<TResponse>(
-    url: string,
-    options: ApiOptionInterface = {},
-  ): Promise<TResponse> {
+  post: HTTPMethod = (url, options) => {
     return this.request(`${apiBaseUrl}${this.url}/${url}`, {
       ...options,
       method: METHODS.POST,
     });
-  }
+  };
 
-  put<TResponse>(
-    url: string,
-    options: ApiOptionInterface = {},
-  ): Promise<TResponse> {
+  put: HTTPMethod = (url: string, options: ApiOptionInterface = {}) => {
     return this.request(`${apiBaseUrl}${this.url}/${url}`, {
       ...options,
       method: METHODS.PUT,
     });
-  }
+  };
 
-  delete<TResponse>(
-    url: string,
-    options: ApiOptionInterface = {},
-  ): Promise<TResponse> {
+  delete: HTTPMethod = (url: string, options: ApiOptionInterface = {}) => {
     return this.request(`${apiBaseUrl}${this.url}/${url}`, {
       ...options,
       method: METHODS.DELETE,
     });
-  }
+  };
 
   objectToQueryString(data: { [key: string]: unknown }) {
     if (!data || Object.keys(data).length === 0) {
@@ -73,10 +67,7 @@ class HTTPTransport {
     return `?${queryString}`;
   }
 
-  async request<TResponse>(
-    url: string,
-    options: ApiOptionInterface = {},
-  ): Promise<TResponse> {
+  async request(url: string, options: ApiOptionInterface = {}) {
     const { method, data, headers } = options;
 
     const response = await fetch(url, {
@@ -103,13 +94,9 @@ class HTTPTransport {
         response.headers.get("content-type")?.includes("image")) &&
       !isJson
     ) {
-      const resultData = response.blob();
-
-      return resultData as unknown as TResponse;
+      return response.blob();
     } else {
-      const resultData = (await isJson) ? response.json() : undefined;
-
-      return resultData as unknown as TResponse;
+      return (await isJson) ? response.json() : undefined;
     }
   }
 }

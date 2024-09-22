@@ -8,6 +8,10 @@ class DropdownHeader extends Block<DropdownHeaderInterface> {
         {{{ addUser }}}       
         
         {{{ removeUser }}}
+        
+        {{{ changeAvatar }}}
+        
+        {{{ deleteChat }}}
     </div>
 `;
   }

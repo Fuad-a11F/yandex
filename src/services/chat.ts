@@ -3,6 +3,7 @@ import {
   AddNewChatRequestInterface,
   AddUserToChatRequestInterface,
   ChatsRequestInterface,
+  DeleteChatRequestInterface,
   DeleteUserToChatRequestInterface,
 } from "../interface/api/chatInterface.ts";
 
@@ -53,6 +54,14 @@ export const deleteUserFromChat = async (
 ) => {
   try {
     await chatApi.deleteUserFromChat(data);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const deleteChat = async (data: DeleteChatRequestInterface) => {
+  try {
+    return await chatApi.deleteChat(data);
   } catch (e) {
     console.error(e);
   }

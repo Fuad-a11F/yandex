@@ -44,3 +44,7 @@ export interface DeleteUserToChatRequestInterface {
   users: number[];
   chatId: number;
 }
+
+export interface DeleteChatRequestInterface {
+  chatId: number;
+}

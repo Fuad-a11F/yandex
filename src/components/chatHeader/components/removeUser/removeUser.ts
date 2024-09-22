@@ -1,5 +1,5 @@
-import Block from "../../../core/block.ts";
-import { RemoveUserPropsInterface } from "../../../interface/components/chatHeaderPropsInterface.ts";
+import Block from "../../../../core/block.ts";
+import { RemoveUserPropsInterface } from "../../../../interface/components/chatHeaderPropsInterface.ts";
 
 class RemoveUser extends Block<RemoveUserPropsInterface> {
   constructor(props: RemoveUserPropsInterface) {

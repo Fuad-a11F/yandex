@@ -1,16 +1,16 @@
-import Block from "../../../core/block.ts";
-import { Input } from "../../input";
-import { Button } from "../../button";
-import { loginValidation } from "../../../shared/validation/validation.ts";
-import FormAction from "./formAction.ts";
+import Block from "../../../../core/block.ts";
+import { Input } from "../../../input";
+import { Button } from "../../../button";
+import { loginValidation } from "../../../../shared/validation/validation.ts";
+import FormAction from "../formAction.ts";
 import {
   FormDataInterface,
   ModalUserModalChildrenInterface,
   ModalUserModalPropsInterface,
-} from "../../../interface/components/chatHeaderPropsInterface.ts";
-import { searchUser } from "../../../services/user.ts";
-import { deleteUserFromChat } from "../../../services/chat.ts";
-import { validationFunctionForField } from "../../../shared/validation/validationFunction.ts";
+} from "../../../../interface/components/chatHeaderPropsInterface.ts";
+import { searchUser } from "../../../../services/user.ts";
+import { deleteUserFromChat } from "../../../../services/chat.ts";
+import { validationFunctionForField } from "../../../../shared/validation/validationFunction.ts";
 
 class ModalRemoveUserModal extends Block<
   ModalUserModalPropsInterface,

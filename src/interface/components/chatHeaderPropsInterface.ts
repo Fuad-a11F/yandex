@@ -3,6 +3,8 @@ import { AddUser, MoreAction, RemoveUser } from "../../components/chatHeader";
 import FormAction from "../../components/chatHeader/components/formAction.ts";
 import { ChatSearchChildrenInterface } from "./chatSearchPropsInterface.ts";
 import { ChatsInterface } from "../modules/chat/chatInterface.ts";
+import DeleteChat from "../../components/chatHeader/components/deleteChat/deleteChat.ts";
+import ChangeAvatar from "../../components/chatHeader/components/changeAvatar/changeAvatar.ts";
 
 export interface ChatHeaderChildrenInterface {
   moreAction: MoreAction;
@@ -16,6 +18,21 @@ export interface AddUserPropsInterface {
   events?: { click: (e: MouseEvent) => void };
 }
 
+export interface ChangeAvatarPropsInterface {
+  onChangeAvatar: () => void;
+  events?: { click: (e: MouseEvent) => void };
+}
+
+export interface AddUserPropsInterface {
+  onAddUser: () => void;
+  events?: { click: (e: MouseEvent) => void };
+}
+
+export interface DeleteChatPropsInterface {
+  onDeleteChat: () => void;
+  events?: { click: (e: MouseEvent) => void };
+}
+
 export interface RemoveUserPropsInterface {
   onRemoveUser: () => void;
   events?: { click: (e: MouseEvent) => void };
@@ -24,6 +41,8 @@ export interface RemoveUserPropsInterface {
 export interface DropdownHeaderInterface {
   addUser: AddUser;
   removeUser: RemoveUser;
+  deleteChat: DeleteChat;
+  changeAvatar: ChangeAvatar;
 }
 
 export interface ModalUserModalPropsInterface {

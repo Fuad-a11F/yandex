@@ -1,23 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Тут ts ругается на реализацию синглтона я иак понимаю.. Не знаю даже как поправить.. А времеко разбираться нету уже(( дедлайн
-
 import EventBus from "./eventBus";
 
 export enum StoreEvents {
   Updated = "Updated",
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class Store<State extends Record<string, any>> extends EventBus<string> {
-  static __instance: Store<object> | null = null;
-  private state: State;
+export class Store<State> extends EventBus<string> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static __instance: Store<any> | null = null;
+  private state: State | null = null;
 
   constructor(defaultState: State) {
     if (Store.__instance) {
       return Store.__instance;
     }
-    super();
 
+    super();
     this.state = defaultState;
     this.set(defaultState);
 
@@ -29,13 +25,13 @@ export class Store<State extends Record<string, any>> extends EventBus<string> {
   }
 
   getState(): State {
-    return this.state;
+    return this.state as State;
   }
 
-  set(nextState: Record<string, unknown>) {
+  set(nextState: State | object) {
     const prevState = { ...this.state };
 
-    this.state = { ...this.state, ...nextState };
+    this.state = { ...this.state, ...nextState } as State;
 
     this.emit(StoreEvents.Updated, prevState, nextState);
   }

@@ -1,5 +1,5 @@
-import Block from "../../../core/block.ts";
-import { AddUserPropsInterface } from "../../../interface/components/chatHeaderPropsInterface.ts";
+import Block from "../../../../core/block.ts";
+import { AddUserPropsInterface } from "../../../../interface/components/chatHeaderPropsInterface.ts";
 
 class AddUser extends Block<AddUserPropsInterface> {
   constructor(props: AddUserPropsInterface) {

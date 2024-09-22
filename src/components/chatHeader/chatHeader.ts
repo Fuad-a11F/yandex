@@ -16,6 +16,9 @@ import { Dropdown } from "../dropdown";
 import { ChatHeaderChildrenInterface } from "../../interface/components/chatHeaderPropsInterface.ts";
 import { connect } from "../../shared/connect.ts";
 import { getSelectedChatData } from "../../shared/selectors/selectors.ts";
+import DeleteChat from "./components/deleteChat/deleteChat.ts";
+import { deleteChat, getAllChats } from "../../services/chat.ts";
+import ChangeAvatar from "./components/changeAvatar/changeAvatar.ts";
 
 class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
   init() {
@@ -23,13 +26,22 @@ class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
     const onAddUser = this.onAddUser.bind(this);
     const closeModal = this.closeModal.bind(this);
     const onRemoveUser = this.onRemoveUser.bind(this);
+    const onDeleteChat = this.onDeleteChat.bind(this);
+    const onChangeAvatar = this.onChangeAvatar.bind(this);
 
     const moreAction = new MoreAction({ onClose });
     const addUser = new AddUser({ onAddUser });
     const removeUser = new RemoveUser({ onRemoveUser });
+    const deleteChat = new DeleteChat({ onDeleteChat });
+    const changeAvatar = new ChangeAvatar({ onChangeAvatar });
 
     const dropdown = new Dropdown({
-      dropdownBody: new DropdownHeader({ addUser, removeUser }),
+      dropdownBody: new DropdownHeader({
+        addUser,
+        removeUser,
+        deleteChat,
+        changeAvatar,
+      }),
     });
 
     const modalAddUser = new Modal({
@@ -52,6 +64,15 @@ class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
     };
   }
 
+  async onDeleteChat() {
+    const answer = confirm("Do you want to delete chat?");
+
+    if (!answer) return;
+
+    await deleteChat({ chatId: this.props?.selectedChat?.id });
+    await getAllChats({});
+  }
+
   onClose() {
     this.children.dropdown.setProps({
       isVisible: !this.children.dropdown.props.isVisible,
@@ -72,6 +93,10 @@ class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
     this.children.dropdown.setProps({
       isVisible: !this.children.dropdown.props.isVisible,
     });
+  }
+
+  onChangeAvatar() {
+    alert("sdf");
   }
 
   closeModal(modal: "modalAddUser" | "modalRemoveUser") {
