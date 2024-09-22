@@ -20,7 +20,9 @@ class HTTPTransport {
 
   get: HTTPMethod = (url, options) => {
     if (!options || !("data" in options))
-      return Promise.reject(new Error("Options or data not provided"));
+      return this.request(`${apiBaseUrl}${this.url}/${url}`, {
+        method: METHODS.GET,
+      });
 
     const { data } = options;
 

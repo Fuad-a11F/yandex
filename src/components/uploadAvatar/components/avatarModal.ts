@@ -6,7 +6,6 @@ import {
   AvatarModalChildrenInterface,
   AvatarModalPropsInterface,
 } from "../../../interface/components/uploadAvatarInterface.ts";
-import { changeAvatar } from "../../../services/user.ts";
 
 class AvatarModal extends Block<
   AvatarModalPropsInterface,
@@ -44,15 +43,13 @@ class AvatarModal extends Block<
     if (!data.avatar.name) {
       this.setProps({ isError: true });
       return;
+    } else {
+      this.setProps({ isError: false });
     }
 
-    this.setProps({ isError: false });
-
-    const formData = new FormData();
-
-    formData.append("avatar", data.avatar);
-
-    await changeAvatar(formData);
+    if (this.props.formSubmitChangeAvatar) {
+      this.props.formSubmitChangeAvatar(data);
+    }
 
     if (this.props.handleCloseModal) {
       this.props.handleCloseModal();

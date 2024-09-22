@@ -17,7 +17,12 @@ import { ChatHeaderChildrenInterface } from "../../interface/components/chatHead
 import { connect } from "../../shared/connect.ts";
 import { getSelectedChatData } from "../../shared/selectors/selectors.ts";
 import DeleteChat from "./components/deleteChat/deleteChat.ts";
-import { deleteChat, getAllChats } from "../../services/chat.ts";
+import {
+  changeChatAvatar,
+  deleteChat,
+  getAllChats,
+} from "../../services/chat.ts";
+import AvatarModal from "../uploadAvatar/components/avatarModal.ts";
 import ChangeAvatar from "./components/changeAvatar/changeAvatar.ts";
 
 class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
@@ -28,6 +33,7 @@ class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
     const onRemoveUser = this.onRemoveUser.bind(this);
     const onDeleteChat = this.onDeleteChat.bind(this);
     const onChangeAvatar = this.onChangeAvatar.bind(this);
+    const formSubmitChangeAvatar = this.formSubmitChangeAvatar.bind(this);
 
     const moreAction = new MoreAction({ onClose });
     const addUser = new AddUser({ onAddUser });
@@ -54,12 +60,19 @@ class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
         closeModal,
       }),
     });
+    const changeAvatarModal = new Modal({
+      ModalBody: new (connect(getSelectedChatData)(AvatarModal))({
+        closeModal,
+        formSubmitChangeAvatar,
+      }),
+    });
 
     this.children = {
       ...this.children,
       moreAction,
       modalAddUser,
       modalRemoveUser,
+      changeAvatarModal,
       dropdown,
     };
   }
@@ -96,10 +109,23 @@ class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
   }
 
   onChangeAvatar() {
-    alert("sdf");
+    this.children.changeAvatarModal.setProps({ isVisible: true });
+    this.children.dropdown.setProps({
+      isVisible: !this.children.dropdown.props.isVisible,
+    });
   }
 
-  closeModal(modal: "modalAddUser" | "modalRemoveUser") {
+  async formSubmitChangeAvatar(data: { avatar: File }) {
+    const formData = new FormData();
+    console.log(data.avatar);
+    console.log(this.props?.selectedChat?.id);
+    formData.append("avatar", data.avatar);
+    formData.append("chatId", this.props?.selectedChat?.id);
+
+    await changeChatAvatar(formData);
+  }
+
+  closeModal(modal: "modalAddUser" | "modalRemoveUser" | "changeAvatarModal") {
     this.children[modal].setProps({ isVisible: false });
   }
 
@@ -122,7 +148,9 @@ class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
         
         {{{ modalAddUser }}}
         
-        {{{ modalRemoveUser }}}        
+        {{{ modalRemoveUser }}}    
+            
+        {{{ changeAvatarModal }}}        
   </div>
     `;
   }

@@ -66,3 +66,11 @@ export const deleteChat = async (data: DeleteChatRequestInterface) => {
     console.error(e);
   }
 };
+
+export const changeChatAvatar = async (data: FormData) => {
+  try {
+    return await chatApi.changeChatAvatar(data);
+  } catch (e) {
+    console.error(e);
+  }
+};

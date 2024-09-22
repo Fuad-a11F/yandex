@@ -70,4 +70,12 @@ export default class ChatApi {
       console.error(e);
     }
   }
+
+  changeChatAvatar(data: FormData): Promise<void | ApiError> | void {
+    try {
+      return chatApi.put<ApiError>("avatar", { data, headers: {} });
+    } catch (e) {
+      console.error(e);
+    }
+  }
 }

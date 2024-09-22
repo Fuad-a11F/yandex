@@ -5,6 +5,7 @@ import {
   UploadAvatarChildrenInterface,
   UploadAvatarPropsInterface,
 } from "../../interface/components/uploadAvatarInterface.ts";
+import { changeAvatar } from "../../services/user.ts";
 
 class UploadAvatar extends Block<
   UploadAvatarPropsInterface,
@@ -13,14 +14,26 @@ class UploadAvatar extends Block<
   init() {
     const handleClick = this.handleClick.bind(this);
     const handleCloseModal = this.handleCloseModal.bind(this);
+    const formSubmitChangeAvatar = this.formSubmitChangeAvatar.bind(this);
 
     this.children = {
       ...this.children,
       modal: new Modal({
-        ModalBody: new AvatarModal({ handleCloseModal }),
+        ModalBody: new AvatarModal({
+          handleCloseModal,
+          formSubmitChangeAvatar,
+        }),
       }),
       avatar: new Avatar({ handleClick, user: this.props.user }),
     };
+  }
+
+  async formSubmitChangeAvatar(data: { avatar: File }) {
+    const formData = new FormData();
+
+    formData.append("avatar", data.avatar);
+
+    await changeAvatar(formData);
   }
 
   componentDidUpdate(

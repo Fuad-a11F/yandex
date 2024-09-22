@@ -29,6 +29,7 @@ export interface AvatarModalPropsInterface {
   fileName?: null | string;
   isError?: boolean;
   handleCloseModal?: () => void;
+  formSubmitChangeAvatar?: (data: { avatar: File }) => void;
 }
 
 export interface AvatarModalChildrenInterface {
