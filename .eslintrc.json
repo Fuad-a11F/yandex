@@ -6,9 +6,7 @@
     "airbnb"
   ],
   "env": {
-    "node": true,
-    "browser": true,
-    "es2021": true
+    "node": true
   },
   "globals": {
     "global": "readonly"
