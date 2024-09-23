@@ -1,3 +1,5 @@
+/* global global */
+
 import { JSDOM } from "jsdom";
 
 const jsdom = new JSDOM(`<body></body>`);
