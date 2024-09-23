@@ -1,7 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки. Как я обещал я во многих местах исправил, по сравнению с прошлым разом
-
 import Block from "../../core/block.ts";
 import { Modal } from "../modal";
 import {
@@ -13,7 +9,10 @@ import {
   RemoveUser,
 } from "./index.ts";
 import { Dropdown } from "../dropdown";
-import { ChatHeaderChildrenInterface } from "../../interface/components/chatHeaderPropsInterface.ts";
+import {
+  ChatHeaderChildrenInterface,
+  ChatHeaderPropsInterface,
+} from "../../interface/components/chatHeaderPropsInterface.ts";
 import { connect } from "../../shared/connect.ts";
 import { getSelectedChatData } from "../../shared/selectors/selectors.ts";
 import DeleteChat from "./components/deleteChat/deleteChat.ts";
@@ -25,7 +24,10 @@ import {
 import AvatarModal from "../uploadAvatar/components/avatarModal.ts";
 import ChangeAvatar from "./components/changeAvatar/changeAvatar.ts";
 
-class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
+class ChatHeader extends Block<
+  ChatHeaderPropsInterface,
+  ChatHeaderChildrenInterface
+> {
   init() {
     const onClose = this.onClose.bind(this);
     const onAddUser = this.onAddUser.bind(this);
@@ -51,18 +53,22 @@ class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
     });
 
     const modalAddUser = new Modal({
-      ModalBody: new (connect(getSelectedChatData)(ModalAddUserModal))({
+      ModalBody: new (connect(getSelectedChatData)(
+        ModalAddUserModal as typeof Block<object>,
+      ))({
         closeModal,
       }),
     });
     const modalRemoveUser = new Modal({
-      ModalBody: new (connect(getSelectedChatData)(ModalRemoveUserModal))({
+      ModalBody: new (connect(getSelectedChatData)(
+        ModalRemoveUserModal as typeof Block<object>,
+      ))({
         closeModal,
       }),
     });
     const changeAvatarModal = new Modal({
       ModalBody: new (connect(getSelectedChatData)(AvatarModal))({
-        closeModal,
+        handleCloseModal: closeModal,
         formSubmitChangeAvatar,
       }),
     });
@@ -82,8 +88,10 @@ class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
 
     if (!answer) return;
 
-    await deleteChat({ chatId: this.props?.selectedChat?.id });
-    await getAllChats({});
+    if (this.props?.selectedChat?.id) {
+      await deleteChat({ chatId: this.props.selectedChat.id });
+      await getAllChats({});
+    }
   }
 
   onClose() {
@@ -108,7 +116,7 @@ class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
     });
   }
 
-  onChangeAvatar() {
+  async onChangeAvatar() {
     this.children.changeAvatarModal.setProps({ isVisible: true });
     this.children.dropdown.setProps({
       isVisible: !this.children.dropdown.props.isVisible,
@@ -117,16 +125,17 @@ class ChatHeader extends Block<unknown, ChatHeaderChildrenInterface> {
 
   async formSubmitChangeAvatar(data: { avatar: File }) {
     const formData = new FormData();
-    console.log(data.avatar);
-    console.log(this.props?.selectedChat?.id);
     formData.append("avatar", data.avatar);
-    formData.append("chatId", this.props?.selectedChat?.id);
+    formData.append("chatId", String(this.props?.selectedChat?.id));
 
-    await changeChatAvatar(formData);
+    await changeChatAvatar(formData as FormData);
+    await getAllChats({});
   }
 
   closeModal(modal: "modalAddUser" | "modalRemoveUser" | "changeAvatarModal") {
-    this.children[modal].setProps({ isVisible: false });
+    this.children[modal].setProps({
+      isVisible: false,
+    });
   }
 
   render() {

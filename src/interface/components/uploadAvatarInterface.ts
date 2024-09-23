@@ -28,7 +28,7 @@ export interface UploadFileInputPropsInterface {
 export interface AvatarModalPropsInterface {
   fileName?: null | string;
   isError?: boolean;
-  handleCloseModal?: () => void;
+  handleCloseModal?: (field: string) => void;
   formSubmitChangeAvatar?: (data: { avatar: File }) => void;
 }
 

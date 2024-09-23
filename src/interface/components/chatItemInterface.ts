@@ -9,4 +9,5 @@ export interface ChatItemInterface {
   id?: number;
   isActive?: boolean;
   events?: { click?: () => void };
+  avatar?: string;
 }

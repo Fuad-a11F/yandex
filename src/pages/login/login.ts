@@ -1,7 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки. Как я обещал я во многих местах исправил, по сравнению с прошлым разом
-
 import Block from "../../core/block.ts";
 import { AuthForm, FormLogin } from "../../components";
 import { getLoginValidateFields } from "../../shared/validation/inputsForValidate.ts";
@@ -16,7 +12,7 @@ class Login extends Block<object, LoginChildrenInterface> {
     const formSubmit = this.formSubmit.bind(this);
 
     const authForm = new AuthForm({
-      formBody: new (connect(getAuthData)(FormLogin))(
+      formBody: new (connect(getAuthData)(FormLogin as typeof Block<object>))(
         {},
       ) as unknown as FormLogin,
       formSubmit,

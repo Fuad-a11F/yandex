@@ -9,6 +9,7 @@ import ChatItem from "../../components/chatItem/chatItem.ts";
 import {
   ChatChildrenInterface,
   ChatPropsInterface,
+  ChatsInterface,
 } from "../../interface/modules/chat/chatInterface.ts";
 import { getAllChats } from "../../services/chat.ts";
 import { connect } from "../../shared/connect.ts";
@@ -35,7 +36,7 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
     newProps: ChatPropsInterface,
   ): boolean {
     if (this.props.selectedChat !== oldProps.selectedChat) {
-      webSocketTransport(this.props.selectedChat!.id, this.props.user);
+      webSocketTransport(this.props.selectedChat!.id, this.props.user!);
 
       return true;
     }
@@ -46,7 +47,7 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
         messages: this.props.messages,
       });
 
-      return true;
+      return false;
     }
 
     const setActiveChat = this.setActiveChat.bind(this);
@@ -55,7 +56,12 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
       ...this.children,
       chats:
         this.props.chats?.map(
-          (item) => new ChatItem({ ...item, setActiveChat }),
+          (item) =>
+            new (connect(
+              ({ selectedChat }: { selectedChat: ChatsInterface }) => ({
+                selectedChat,
+              }),
+            )(ChatItem))({ ...item, setActiveChat }),
         ) || [],
     };
 

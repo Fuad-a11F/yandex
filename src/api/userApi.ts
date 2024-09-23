@@ -14,7 +14,10 @@ export default class UserApi {
     data: ChangeProfileRequestInterface,
   ): Promise<SearchUserResponseInterface | ApiError | void> {
     try {
-      return userApi.put<SearchUserResponseInterface | ApiError>("profile", {
+      return userApi.put<
+        SearchUserResponseInterface | ApiError,
+        ChangeProfileRequestInterface
+      >("profile", {
         data,
       });
     } catch (e) {
@@ -26,7 +29,7 @@ export default class UserApi {
     data: FormData,
   ): Promise<SearchUserResponseInterface | ApiError | void> {
     try {
-      return userApi.put<SearchUserResponseInterface | ApiError>(
+      return userApi.put<SearchUserResponseInterface | ApiError, FormData>(
         "profile/avatar",
         {
           data,
@@ -42,7 +45,10 @@ export default class UserApi {
     data: ChangePasswordRequestInterface,
   ): Promise<void | ApiError> {
     try {
-      return userApi.put<void | ApiError>("password", { data });
+      return userApi.put<void | ApiError, ChangePasswordRequestInterface>(
+        "password",
+        { data },
+      );
     } catch (e) {
       console.error(e);
     }
@@ -52,7 +58,10 @@ export default class UserApi {
     data: SearchUserRequestInterface,
   ): Promise<SearchUserResponseInterface[] | ApiError | void> {
     try {
-      return userApi.post<SearchUserResponseInterface[] | ApiError>("search", {
+      return userApi.post<
+        SearchUserResponseInterface[] | ApiError,
+        SearchUserRequestInterface
+      >("search", {
         data,
       });
     } catch (e) {

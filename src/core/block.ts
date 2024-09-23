@@ -209,9 +209,44 @@ class Block<Props = object, Children extends ChildrenComponent = object> {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  componentDidUpdate(oldProps: Props, newProps: Props) {
-    console.log(oldProps, newProps);
+  deepEqual(obj1: unknown, obj2: unknown): boolean {
+    if (obj1 === obj2) {
+      return true;
+    }
+
+    if (
+      typeof obj1 !== "object" ||
+      typeof obj2 !== "object" ||
+      obj1 === null ||
+      obj2 === null
+    ) {
+      return false;
+    }
+
+    const keys1 = Object.keys(obj1 as Record<string, unknown>);
+    const keys2 = Object.keys(obj2 as Record<string, unknown>);
+
+    if (keys1.length !== keys2.length) {
+      return false;
+    }
+
+    for (const key of keys1) {
+      if (!keys2.includes(key)) {
+        return false;
+      }
+      const val1 = (obj1 as Record<string, unknown>)[key];
+      const val2 = (obj2 as Record<string, unknown>)[key];
+
+      if (!this.deepEqual(val1, val2)) {
+        return false;
+      }
+    }
+
     return true;
+  }
+
+  componentDidUpdate(oldProps: Props, newProps: Props) {
+    return !this.deepEqual(oldProps, newProps);
   }
 
   setProps = (nextProps: Props) => {

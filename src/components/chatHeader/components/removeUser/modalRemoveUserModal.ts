@@ -9,7 +9,10 @@ import {
   ModalUserModalPropsInterface,
 } from "../../../../interface/components/chatHeaderPropsInterface.ts";
 import { searchUser } from "../../../../services/user.ts";
-import { deleteUserFromChat } from "../../../../services/chat.ts";
+import {
+  deleteUserFromChat,
+  getAllUsersInChat,
+} from "../../../../services/chat.ts";
 import { validationFunctionForField } from "../../../../shared/validation/validationFunction.ts";
 
 class ModalRemoveUserModal extends Block<
@@ -43,6 +46,19 @@ class ModalRemoveUserModal extends Block<
       ...this.children,
       formAction,
     };
+  }
+
+  componentDidUpdate(
+    oldProps: ModalUserModalPropsInterface,
+    newProps: ModalUserModalPropsInterface,
+  ): boolean {
+    if (this.props.selectedChat?.id) {
+      getAllUsersInChat(this.props.selectedChat.id).then((result) => {
+        console.log(result);
+      });
+    }
+
+    return super.componentDidUpdate(oldProps, newProps);
   }
 
   async formSubmit(data: FormDataInterface) {

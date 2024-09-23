@@ -6,10 +6,15 @@ import { ChatsInterface } from "../modules/chat/chatInterface.ts";
 import DeleteChat from "../../components/chatHeader/components/deleteChat/deleteChat.ts";
 import ChangeAvatar from "../../components/chatHeader/components/changeAvatar/changeAvatar.ts";
 
+export interface ChatHeaderPropsInterface {
+  selectedChat: ChatsInterface;
+}
+
 export interface ChatHeaderChildrenInterface {
   moreAction: MoreAction;
   dropdown: Dropdown;
   modalAddUser: Modal;
+  changeAvatarModal: Modal;
   modalRemoveUser: Modal;
 }
 
@@ -61,14 +66,15 @@ export interface FormActionPropsInterface {
   formId?: string;
   events?: {
     submit?: (e: SubmitEvent) => void;
-    keyboard?: (e: KeyboardEvent) => void;
   };
   errorMessage?: string;
+  input?: Input;
+  button?: Button;
 }
 export interface FormActionChildrenInterface {
   input: Input;
   button: Button;
-  formSubmit: () => void;
+  formSubmit: (data: unknown) => void;
   formId: string;
 }
 

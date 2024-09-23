@@ -1,7 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки. Как я обещал я во многих местах исправил, по сравнению с прошлым разом
-
 import { ChildrenComponent } from "../../interface/core/blockInterface.ts";
 import Block from "../../core/block.ts";
 
@@ -12,6 +8,28 @@ interface FieldsInterface {
   input: string;
 }
 
+const getLastBlock = (
+  selectorContinue: string | null = null,
+  selector: ChildrenComponent,
+  item: FieldsInterface,
+) => {
+  if (!selectorContinue) return;
+
+  const keys = selectorContinue.split(".");
+
+  let value: Block<object> = (selector as { [key: string]: Block<object> })[
+    item.input
+  ];
+
+  for (const key of keys) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    value = value[key];
+  }
+
+  return value;
+};
+
 const validationFunction = (
   fields: FieldsInterface[],
   selector: ChildrenComponent,
@@ -21,13 +39,10 @@ const validationFunction = (
   fields.forEach((item) => {
     if (!item.validateFunction(item.value)) {
       if (selectorContinue) {
-        const keys = selectorContinue.split(".");
+        const value = getLastBlock(selectorContinue, selector, item);
 
-        let value = (selector as { [key: string]: Block<object> })[item.input];
+        if (!value) return;
 
-        for (const key of keys) {
-          value = value[key];
-        }
         value.setProps({
           isError: true,
           errorMessage: item.errorMessage,
@@ -42,13 +57,9 @@ const validationFunction = (
       error.isError = true;
     } else {
       if (selectorContinue) {
-        const keys = selectorContinue.split(".");
+        const value = getLastBlock(selectorContinue, selector, item);
 
-        let value = (selector as { [key: string]: Block<object> })[item.input];
-
-        for (const key of keys) {
-          value = value[key];
-        }
+        if (!value) return;
 
         value.setProps({
           isError: false,

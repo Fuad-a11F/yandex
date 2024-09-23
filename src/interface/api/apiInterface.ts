@@ -1,14 +1,11 @@
-export interface ApiOptionInterface {
+export interface ApiOptionInterface<T = unknown> {
   headers?: { [key: string]: string };
   method?: "GET" | "POST" | "PUT" | "DELETE";
-  data?: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key: string]: any;
-  };
+  data?: T;
   timeout?: number;
 }
 
-export type HTTPMethod = <R>(
+export type HTTPMethod = <R, T>(
   url: string,
-  options?: ApiOptionInterface,
+  options?: ApiOptionInterface<T>,
 ) => Promise<R>;

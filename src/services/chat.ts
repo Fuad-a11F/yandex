@@ -59,6 +59,14 @@ export const deleteUserFromChat = async (
   }
 };
 
+export const getAllUsersInChat = async (data: number) => {
+  try {
+    return await chatApi.getAllUsersInChat(data);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 export const deleteChat = async (data: DeleteChatRequestInterface) => {
   try {
     return await chatApi.deleteChat(data);

@@ -1,7 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// Обещаю исправить к след спринту.. Уже дедлайн очень сильно поджимает, очень не хочется срывать сроки. Как я обещал я во многих местах исправил, по сравнению с прошлым разом
-
 import Block from "../../core/block.ts";
 import { Button, UploadAvatar } from "../../components";
 import { UserInfo } from "./index.ts";
@@ -67,7 +63,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
 
       this.children = {
         ...this.children,
-        userInfo,
+        userInfo: userInfo as unknown as UserInfo,
       };
     }
 
@@ -75,7 +71,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
       ...this.children,
       buttonChangeData,
       buttonChangePassword,
-      uploadAvatar,
+      uploadAvatar: uploadAvatar as unknown as UploadAvatar,
       buttonLogout,
       aside,
     };
@@ -94,7 +90,7 @@ class Profile extends Block<ProfilePropsInterface, ProfileChildrenInterface> {
 
     this.children = {
       ...this.children,
-      userInfo,
+      userInfo: userInfo as unknown as UserInfo,
     };
     return super.componentDidUpdate(oldProps, newProps);
   }

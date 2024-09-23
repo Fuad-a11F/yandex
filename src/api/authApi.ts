@@ -14,7 +14,10 @@ export default class AuthApi {
     data: RegistrationRequestInterface,
   ): Promise<RegistrationResponseInterface | void> {
     try {
-      return authApi.post<RegistrationResponseInterface>("signup", {
+      return authApi.post<
+        RegistrationResponseInterface,
+        RegistrationRequestInterface
+      >("signup", {
         data,
       });
     } catch (e) {
@@ -24,7 +27,7 @@ export default class AuthApi {
 
   async signIn(data: LoginRequestInterface): Promise<void | ApiError> {
     try {
-      return authApi.post<ApiError>("signin", {
+      return authApi.post<ApiError, LoginRequestInterface>("signin", {
         data,
       });
     } catch (e) {
@@ -34,7 +37,7 @@ export default class AuthApi {
 
   async me(): Promise<UserResponseInterface | void> {
     try {
-      return authApi.get<UserResponseInterface>("user");
+      return authApi.get<UserResponseInterface, unknown>("user");
     } catch (e) {
       console.error(e);
     }
@@ -42,7 +45,7 @@ export default class AuthApi {
 
   async logout(): Promise<void | ApiError> {
     try {
-      return authApi.post<ApiError>("logout");
+      return authApi.post<ApiError, unknown>("logout");
     } catch (e) {
       console.error(e);
     }

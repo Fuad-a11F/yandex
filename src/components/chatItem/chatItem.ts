@@ -1,7 +1,6 @@
 import Block from "../../core/block.ts";
-import { connect } from "../../shared/connect.ts";
-import { ChatsInterface } from "../../interface/modules/chat/chatInterface.ts";
 import { ChatItemInterface } from "../../interface/components/chatItemInterface.ts";
+import { getResource } from "../../services/resource.ts";
 
 class ChatItem extends Block<ChatItemInterface> {
   constructor(props: ChatItemInterface) {
@@ -15,7 +14,17 @@ class ChatItem extends Block<ChatItemInterface> {
         },
       },
     });
+
     this.setProps({ isActive: props.selectedChat?.id === props.id });
+  }
+
+  init() {
+    if (this.props.avatar) {
+      getResource(this.props.avatar).then((response) => {
+        const imageURL = URL.createObjectURL(response as Blob);
+        this.setProps({ avatar: imageURL });
+      });
+    }
   }
 
   render() {
@@ -55,8 +64,4 @@ class ChatItem extends Block<ChatItemInterface> {
   }
 }
 
-export default connect(
-  ({ selectedChat }: { selectedChat: ChatsInterface }) => ({
-    selectedChat,
-  }),
-)(ChatItem);
+export default ChatItem;

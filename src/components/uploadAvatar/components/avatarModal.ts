@@ -52,7 +52,7 @@ class AvatarModal extends Block<
     }
 
     if (this.props.handleCloseModal) {
-      this.props.handleCloseModal();
+      this.props.handleCloseModal("changeAvatarModal");
     }
   }
 

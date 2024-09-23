@@ -17,7 +17,9 @@ export default class ChatApi {
     data: ChatsRequestInterface,
   ): Promise<ChatsResponseInterface[]> | void {
     try {
-      return chatApi.get<ChatsResponseInterface[]>("", { data });
+      return chatApi.get<ChatsResponseInterface[], ChatsRequestInterface>("", {
+        data,
+      });
     } catch (e) {
       console.error(e);
     }
@@ -27,7 +29,10 @@ export default class ChatApi {
     data: AddNewChatRequestInterface,
   ): Promise<AddNewChatResponseInterface | ApiError> | void {
     try {
-      return chatApi.post<AddNewChatResponseInterface | ApiError>("", { data });
+      return chatApi.post<
+        AddNewChatResponseInterface | ApiError,
+        AddNewChatRequestInterface
+      >("", { data });
     } catch (e) {
       console.error(e);
     }
@@ -35,7 +40,22 @@ export default class ChatApi {
 
   getChatToken(id: number): Promise<{ token: string } | ApiError> | void {
     try {
-      return chatApi.post<{ token: string } | ApiError>(`token/${id}`, {});
+      return chatApi.post<{ token: string } | ApiError, number>(
+        `token/${id}`,
+        {},
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  getAllUsersInChat(
+    chatId: number,
+  ): Promise<{ token: string } | ApiError> | void {
+    try {
+      return chatApi.get<{ id: number } | ApiError, number>(
+        `${chatId}/users`,
+        {},
+      );
     } catch (e) {
       console.error(e);
     }
@@ -45,7 +65,9 @@ export default class ChatApi {
     data: AddUserToChatRequestInterface,
   ): Promise<void | ApiError> | void {
     try {
-      return chatApi.put<ApiError>("users", { data });
+      return chatApi.put<ApiError, AddUserToChatRequestInterface>("users", {
+        data,
+      });
     } catch (e) {
       console.error(e);
     }
@@ -55,7 +77,10 @@ export default class ChatApi {
     data: DeleteUserToChatRequestInterface,
   ): Promise<void | ApiError> | void {
     try {
-      return chatApi.delete<ApiError>("users", { data });
+      return chatApi.delete<ApiError, DeleteUserToChatRequestInterface>(
+        "users",
+        { data },
+      );
     } catch (e) {
       console.error(e);
     }
@@ -65,7 +90,7 @@ export default class ChatApi {
     data: DeleteChatRequestInterface,
   ): Promise<void | ApiError> | void {
     try {
-      return chatApi.delete<ApiError>("", { data });
+      return chatApi.delete<ApiError, DeleteChatRequestInterface>("", { data });
     } catch (e) {
       console.error(e);
     }
@@ -73,7 +98,7 @@ export default class ChatApi {
 
   changeChatAvatar(data: FormData): Promise<void | ApiError> | void {
     try {
-      return chatApi.put<ApiError>("avatar", { data, headers: {} });
+      return chatApi.put<ApiError, FormData>("avatar", { data, headers: {} });
     } catch (e) {
       console.error(e);
     }
