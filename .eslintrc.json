@@ -8,9 +8,6 @@
   "env": {
     "node": true
   },
-  "globals": {
-    "global": "readonly"
-  },
   "parserOptions": {
     "ecmaVersion": 12,
     "sourceType": "module"
