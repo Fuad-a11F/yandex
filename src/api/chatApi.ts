@@ -48,14 +48,9 @@ export default class ChatApi {
       console.error(e);
     }
   }
-  getAllUsersInChat(
-    chatId: number,
-  ): Promise<{ token: string } | ApiError> | void {
+  getAllUsersInChat(chatId: number): Promise<ApiError> | void {
     try {
-      return chatApi.get<{ id: number } | ApiError, number>(
-        `${chatId}/users`,
-        {},
-      );
+      return chatApi.get<ApiError, number>(`${chatId}/users`, {});
     } catch (e) {
       console.error(e);
     }
