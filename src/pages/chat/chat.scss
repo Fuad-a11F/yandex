@@ -13,8 +13,9 @@
     overflow: auto;
 
     &_button-more {
-      max-width: 100px;
-      margin: 20px auto 0;
+      margin: 20px;
+      display: flex;
+      gap: 20px;
     }
 
     &_wrapper {
@@ -132,6 +133,12 @@
       text-align: center;
       margin-bottom: 55px;
       font-weight: 500;
+    }
+
+    &_delete {
+      display: flex;
+      flex-direction: column;
+      gap: 10px
     }
 
     form {

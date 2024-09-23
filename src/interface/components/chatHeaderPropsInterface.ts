@@ -1,10 +1,12 @@
 import { Button, Dropdown, Input, Modal } from "../../components";
 import { AddUser, MoreAction, RemoveUser } from "../../components/chatHeader";
-import FormAction from "../../components/chatHeader/components/formAction.ts";
 import { ChatSearchChildrenInterface } from "./chatSearchPropsInterface.ts";
 import { ChatsInterface } from "../modules/chat/chatInterface.ts";
 import DeleteChat from "../../components/chatHeader/components/deleteChat/deleteChat.ts";
 import ChangeAvatar from "../../components/chatHeader/components/changeAvatar/changeAvatar.ts";
+import FormAction from "../../components/chatHeader/components/formAction.ts";
+import User from "../../components/chatHeader/components/removeUser/user.ts";
+import { UserDtoInterface } from "../api/authApiInterface.ts";
 
 export interface ChatHeaderPropsInterface {
   selectedChat: ChatsInterface;
@@ -16,6 +18,15 @@ export interface ChatHeaderChildrenInterface {
   modalAddUser: Modal;
   changeAvatarModal: Modal;
   modalRemoveUser: Modal;
+}
+
+export interface UserPropsInterface {
+  user: UserDtoInterface;
+  selectedChat: ChatsInterface;
+}
+
+export interface UserChildrenInterface {
+  button: Button;
 }
 
 export interface AddUserPropsInterface {
@@ -52,12 +63,15 @@ export interface DropdownHeaderInterface {
 
 export interface ModalUserModalPropsInterface {
   selectedChat?: ChatsInterface;
-  closeModal: (field: "modalRemoveUser" | "modalAddUser") => void;
+  closeModal?: (field: "modalRemoveUser" | "modalAddUser") => void;
+  isLoading: boolean;
 }
 
 export interface ModalUserModalChildrenInterface {
-  formAction: FormAction;
   selectedChat?: ChatSearchChildrenInterface;
+  formAction?: FormAction;
+  button?: Button;
+  users?: User[];
 }
 
 export interface FormActionPropsInterface {

@@ -9,6 +9,7 @@ import {
   ChatsResponseInterface,
   DeleteChatRequestInterface,
 } from "../interface/api/chatInterface.ts";
+import { UserDtoInterface } from "../interface/api/authApiInterface.ts";
 
 const chatApi = new HTTPTransport("chats");
 
@@ -48,9 +49,9 @@ export default class ChatApi {
       console.error(e);
     }
   }
-  getAllUsersInChat(chatId: number): Promise<ApiError> | void {
+  getAllUsersInChat(chatId: number): Promise<UserDtoInterface[]> | void {
     try {
-      return chatApi.get<ApiError, number>(`${chatId}/users`, {});
+      return chatApi.get<UserDtoInterface[], number>(`${chatId}/users`, {});
     } catch (e) {
       console.error(e);
     }

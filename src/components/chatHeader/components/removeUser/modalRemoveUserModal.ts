@@ -1,99 +1,66 @@
 import Block from "../../../../core/block.ts";
-import { Input } from "../../../input";
-import { Button } from "../../../button";
-import { loginValidation } from "../../../../shared/validation/validation.ts";
-import FormAction from "../formAction.ts";
 import {
-  FormDataInterface,
   ModalUserModalChildrenInterface,
   ModalUserModalPropsInterface,
 } from "../../../../interface/components/chatHeaderPropsInterface.ts";
-import { searchUser } from "../../../../services/user.ts";
-import {
-  deleteUserFromChat,
-  getAllUsersInChat,
-} from "../../../../services/chat.ts";
-import { validationFunctionForField } from "../../../../shared/validation/validationFunction.ts";
+import { getAllUsersInChat } from "../../../../services/chat.ts";
+import User from "./user.ts";
+import { connect } from "../../../../shared/connect.ts";
+import { getSelectedChatData } from "../../../../shared/selectors/selectors.ts";
 
 class ModalRemoveUserModal extends Block<
   ModalUserModalPropsInterface,
   ModalUserModalChildrenInterface
 > {
-  init() {
-    const formSubmit = this.formSubmit.bind(this);
-
-    const loginInput = new Input({
-      name: "login",
-      placeholder: "Login",
-      onBlur: (value: string) =>
-        validationFunctionForField(
-          loginValidation,
-          value,
-          this.children.formAction,
-          "Login is wrong",
-        ),
-    });
-    const removeButton = new Button({ text: "Remove" });
-
-    const formAction = new FormAction({
-      input: loginInput,
-      button: removeButton,
-      formSubmit,
-      formId: "removeForm",
-    });
-
-    this.children = {
-      ...this.children,
-      formAction,
-    };
-  }
-
   componentDidUpdate(
     oldProps: ModalUserModalPropsInterface,
     newProps: ModalUserModalPropsInterface,
   ): boolean {
-    if (this.props.selectedChat?.id) {
+    if (
+      (this.props.selectedChat?.id &&
+        oldProps.selectedChat?.id !== newProps.selectedChat?.id) ||
+      oldProps.forceUpdate !== newProps.forceUpdate
+    ) {
+      this.setProps({ isLoading: true });
+      const rerender = this.rerender.bind(this);
+
       getAllUsersInChat(this.props.selectedChat.id).then((result) => {
-        console.log(result);
+        if (result) {
+          this.children = {
+            ...this.children,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            users: result.map(
+              (item) =>
+                new (connect(getSelectedChatData)(
+                  User as typeof Block<object>,
+                ))({
+                  user: item,
+                  rerender,
+                }),
+            ),
+          };
+          this.setProps({ isLoading: false });
+        }
       });
     }
 
-    return super.componentDidUpdate(oldProps, newProps);
+    return true;
   }
 
-  async formSubmit(data: FormDataInterface) {
-    const inp: HTMLInputElement | null =
-      document.querySelector("#removeForm input");
-    inp?.blur();
-
-    this.children.formAction.children.input.setProps({
-      isError: false,
-      errorMessage: null,
-    });
-
-    const isCheckUser = await searchUser(data);
-
-    if (!isCheckUser) return;
-
-    if (isCheckUser.length === 0 || isCheckUser[0].login !== data.login) {
-      this.children.formAction.setProps({ errorMessage: "User not found" });
-
-      return;
-    }
-
-    await deleteUserFromChat({
-      users: [isCheckUser[0].id],
-      chatId: this.props.selectedChat!.id,
-    });
-
-    this.props.closeModal("modalRemoveUser");
+  rerender() {
+    this.setProps({ forceUpdate: (this.props.forceUpdate || 1) + 1 });
   }
 
   render() {
     return `<div class="modal__actionUser">
         <h3>Remove user</h3>
-
-      {{{ formAction }}}
+        
+        <div class="modal__actionUser_delete">
+          {{#each users as |user|}}
+            {{{ user }}}
+          {{/each}}
+        </div>
     </div>`;
   }
 }

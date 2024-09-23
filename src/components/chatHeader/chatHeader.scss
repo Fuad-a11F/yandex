@@ -8,6 +8,16 @@
   border-bottom: 1px solid $light_gray_2;
   margin-bottom: 10px;
 
+  &__choose_delete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+      max-width: 100px;
+    }
+  }
+
   &__info {
     display: flex;
     align-items: center;

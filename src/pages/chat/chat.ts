@@ -130,8 +130,8 @@ class Chat extends Block<ChatPropsInterface, ChatChildrenInterface> {
             </div>
             
             <div class="chat__items_button-more">
-              {{{ moreButton }}}
               {{{ previousButton }}}
+              {{{ moreButton }}}
             </div>
         </aside>
         

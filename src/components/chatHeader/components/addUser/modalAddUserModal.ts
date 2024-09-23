@@ -22,13 +22,16 @@ class ModalAddUserModal extends Block<
     const loginInput = new Input({
       name: "login",
       placeholder: "Login",
-      onBlur: (value: string) =>
-        validationFunctionForField(
-          loginValidation,
-          value,
-          this.children.formAction.children.input,
-          "Login is wrong",
-        ),
+      onBlur: (value: string) => {
+        if (this.children.formAction?.children.input) {
+          validationFunctionForField(
+            loginValidation,
+            value,
+            this.children.formAction.children.input,
+            "Login is wrong",
+          );
+        }
+      },
     });
     const addButton = new Button({ text: "Add", type: "submit" });
 
@@ -50,7 +53,7 @@ class ModalAddUserModal extends Block<
       document.querySelector("#addForm input");
     inp?.blur();
 
-    this.children.formAction.children.input.setProps({
+    this.children.formAction?.children.input.setProps({
       isError: false,
       errorMessage: null,
     });
@@ -60,7 +63,7 @@ class ModalAddUserModal extends Block<
     if (!isCheckUser) return;
 
     if (isCheckUser.length === 0 || isCheckUser[0].login !== data.login) {
-      this.children.formAction.setProps({ errorMessage: "User not found" });
+      this.children.formAction?.setProps({ errorMessage: "User not found" });
 
       return;
     }
@@ -70,7 +73,7 @@ class ModalAddUserModal extends Block<
       chatId: this.props.selectedChat!.id,
     });
 
-    this.props.closeModal("modalAddUser");
+    this.props.closeModal!("modalAddUser");
   }
 
   render() {
