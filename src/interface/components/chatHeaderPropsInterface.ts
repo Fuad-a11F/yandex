@@ -23,6 +23,7 @@ export interface ChatHeaderChildrenInterface {
 export interface UserPropsInterface {
   user: UserDtoInterface;
   selectedChat: ChatsInterface;
+  rerender: () => void;
 }
 
 export interface UserChildrenInterface {
@@ -64,7 +65,8 @@ export interface DropdownHeaderInterface {
 export interface ModalUserModalPropsInterface {
   selectedChat?: ChatsInterface;
   closeModal?: (field: "modalRemoveUser" | "modalAddUser") => void;
-  isLoading: boolean;
+  isLoading?: boolean;
+  forceUpdate?: number;
 }
 
 export interface ModalUserModalChildrenInterface {

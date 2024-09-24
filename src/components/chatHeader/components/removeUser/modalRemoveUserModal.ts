@@ -24,25 +24,27 @@ class ModalRemoveUserModal extends Block<
       this.setProps({ isLoading: true });
       const rerender = this.rerender.bind(this);
 
-      getAllUsersInChat(this.props.selectedChat.id).then((result) => {
-        if (result) {
-          this.children = {
-            ...this.children,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            users: result.map(
-              (item) =>
-                new (connect(getSelectedChatData)(
-                  User as typeof Block<object>,
-                ))({
-                  user: item,
-                  rerender,
-                }),
-            ),
-          };
-          this.setProps({ isLoading: false });
-        }
-      });
+      if (this.props.selectedChat?.id) {
+        getAllUsersInChat(this.props.selectedChat.id).then((result) => {
+          if (result) {
+            this.children = {
+              ...this.children,
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              users: result.map(
+                (item) =>
+                  new (connect(getSelectedChatData)(
+                    User as typeof Block<object>,
+                  ))({
+                    user: item,
+                    rerender,
+                  }),
+              ),
+            };
+            this.setProps({ isLoading: false });
+          }
+        });
+      }
     }
 
     return true;
