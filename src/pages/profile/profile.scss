@@ -1,0 +1,55 @@
+@import "../../assets/styles/colors";
+
+.profile {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  min-height: 100vh;
+
+  &__back {
+    background: $light_gray;
+    border-right: 1px solid $light_gray_2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      border: none;
+    }
+
+    img {
+      transform: rotate(180deg);
+      cursor: pointer;
+    }
+  }
+
+  &__name {
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 60px;
+  }
+
+  &__information {
+    width: 530px;
+    margin: 0 auto;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__avatar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  &__buttons {
+    margin-top: 60px;
+  }
+
+  &__button_save {
+    margin: 60px auto 0;
+    width: 300px;
+  }
+}
