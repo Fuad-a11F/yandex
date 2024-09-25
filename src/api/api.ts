@@ -43,14 +43,14 @@ class HTTPTransport {
     });
   };
 
-  put: HTTPMethod = (url: string, options: ApiOptionInterface = {}) => {
+  put: HTTPMethod = (url, options) => {
     return this.request(`${apiBaseUrl}${this.url}/${url}`, {
       ...options,
       method: METHODS.PUT,
     });
   };
 
-  delete: HTTPMethod = (url: string, options: ApiOptionInterface = {}) => {
+  delete: HTTPMethod = (url, options) => {
     return this.request(`${apiBaseUrl}${this.url}/${url}`, {
       ...options,
       method: METHODS.DELETE,
